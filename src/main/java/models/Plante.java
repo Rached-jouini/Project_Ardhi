@@ -1,13 +1,13 @@
 package models;
 
 public class Plante {
-    int id;
-    String nom;
-    String type;
-    String date_debut_plantation;
-    String date_fin_plantation;
-    String besoin_eau;
-    String description;
+    private int id;
+    private String nom;
+    private String type;
+    private String date_debut_plantation;
+    private String date_fin_plantation;
+    private String besoin_eau;
+    private String description;
 
     public Plante() {
     }

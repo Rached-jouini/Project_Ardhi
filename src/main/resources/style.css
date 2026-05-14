@@ -1,0 +1,150 @@
+/* style.css - Ardhi Design System */
+
+.root {
+    -fx-font-family: "Inter", "System", sans-serif;
+    -fx-background-color: #F3F4F6; /* Gris très clair */
+}
+
+/* Titres */
+.title-page {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D5D34; /* Vert foncé */
+}
+
+/* Labels */
+.label-standard {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6B7280; /* Gris moyen */
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #1F2937; /* Fond foncé */
+    -fx-padding: 20;
+    -fx-spacing: 15;
+}
+
+.sidebar-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-padding: 0 0 20 0;
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #D1D5DB;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 15;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+}
+
+.sidebar-button-active {
+    -fx-background-color: #2D5D34;
+    -fx-text-fill: white;
+}
+
+/* Cartes / Conteneurs */
+.card {
+    -fx-background-color: #FFFFFF; /* Blanc pur */
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-padding: 25;
+}
+
+/* Boutons */
+.button-primary {
+    -fx-background-color: #2D5D34;
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-padding: 10 20 10 20;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.button-primary:hover {
+    -fx-background-color: #3b7a44;
+}
+
+.button-secondary {
+    -fx-background-color: #10B981; /* Vert émeraude */
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-padding: 10 20 10 20;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.button-alert {
+    -fx-background-color: #F87171; /* Rouge corail */
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-padding: 10 20 10 20;
+    -fx-font-weight: bold;
+}
+
+/* Champs de texte */
+.text-field {
+    -fx-background-color: #F9FAFB;
+    -fx-background-radius: 10;
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+}
+
+.text-field:focused {
+    -fx-border-color: #2D5D34;
+    -fx-background-color: white;
+}
+
+/* TableView Styles */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15;
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 15;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #F9FAFB;
+    -fx-background-radius: 15 15 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #374151;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #F3F4F6 transparent;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #ECFDF5;
+}
+
+/* ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

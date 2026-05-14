@@ -1,0 +1,108 @@
+MODELE LINKEDIN PROFESSIONNEL - MODULE "GESTION GROUPE ET FEED" (FR)
+
+==================================================
+GROUPE : [Nom du groupe]
+ETUDIANT : [Nom et prenom]
+PROJET : [Nom du projet]
+MODULE : Gestion Groupe et Feed
+ROLE : [Backend / Frontend / Integration / Test]
+==================================================
+
+[INTRODUCTION PERSONNALISEE - 2 a 4 lignes]
+Exemple :
+Ravi(e) de presenter ma contribution sur le module Gestion Groupe et Feed de notre projet.
+Ce module a ete pense pour structurer les interactions entre utilisateurs et securiser la publication des contenus.
+
+[CONTENU PRINCIPAL]
+Dans notre projet, le module "Gestion Groupe et Feed" a ete concu pour :
+- organiser les utilisateurs en groupes collaboratifs,
+- centraliser les publications dans un feed dynamique,
+- garantir la qualite des contenus via une moderation texte et image.
+
+Fonctionnalites metier implementees :
+1) Gestion des groupes
+- Creation, modification et suppression de groupes (selon permissions)
+- Ajout/retrait de membres
+- Controle des droits d'administration
+
+// SCREENSHOT 1 A AJOUTER :
+// Interface "Gestion des groupes" (liste des groupes + formulaire de creation/modification)
+
+2) Gestion du feed
+- Creation et publication de posts
+- Affichage chronologique dans le feed
+- Mise a jour/suppression des publications (CRUD)
+- [Optionnel] Reactions, commentaires, filtrage
+
+// SCREENSHOT 2 A AJOUTER :
+// Ecran du feed avec plusieurs publications visibles
+
+3) APIs utilisees (a personnaliser selon votre stack)
+- API interne Groupes : endpoints CRUD groupes et membres
+  Exemples : `POST /api/groups`, `PUT /api/groups/{id}`, `POST /api/groups/{id}/members`
+- API interne Feed : endpoints CRUD posts
+  Exemples : `POST /api/posts`, `GET /api/posts`, `DELETE /api/posts/{id}`
+- API de moderation de texte : analyse du contenu avant publication
+  Exemple : verification toxicite, haine, harcelement, contenu explicite
+- API de moderation d'image : controle des images uploades
+  Exemple : detection contenu sensible/violent avant validation finale
+
+4) Moderation des contenus (texte + image)
+- Pre-verification du texte au moment de la soumission
+- Blocage ou signalement automatique des contenus non conformes
+- Analyse des images avant affichage dans le feed
+- Message de retour utilisateur en cas de refus/moderation
+
+// SCREENSHOT 3 A AJOUTER :
+// Exemple d'un texte refuse/modere avec message de validation
+
+// SCREENSHOT 4 A AJOUTER :
+// Exemple de moderation d'image (acceptation/refus)
+
+5) Qualite technique et robustesse
+- Validation des champs obligatoires
+- Gestion des exceptions et des reponses d'erreur API
+- Journalisation des actions critiques (publication/suppression/moderation)
+- Tests fonctionnels sur les cas nominaux et limites
+
+Mes contributions personnelles (a adapter) :
+- [Contribution technique 1]
+- [Contribution technique 2]
+- [Contribution technique 3]
+
+Technologies et outils :
+- Backend : [Java/Spring Boot ou Symfony, etc.]
+- Frontend : [JavaFX/Angular/React, etc.]
+- Base de donnees : [MySQL/PostgreSQL]
+- APIs externes : [Nom API moderation texte] + [Nom API moderation image]
+- Outils : [Git, Postman, Docker, etc.]
+
+Impact du module :
+Ce module ameliore la communication entre utilisateurs tout en renforcant la conformite
+et la securite des publications grace a la moderation automatisee texte/image.
+
+[SECTION "CAPTURES D'ECRAN" A GARDER DANS LE TEXTE]
+Capture 1 : Ecran de gestion des groupes [AJOUTER IMAGE ICI]
+Capture 2 : Feed des publications [AJOUTER IMAGE ICI]
+Capture 3 : Moderation de texte (exemple de blocage/alerte) [AJOUTER IMAGE ICI]
+Capture 4 : Moderation d'image (exemple de validation/refus) [AJOUTER IMAGE ICI]
+
+[CONCLUSION]
+Fier(e) d'avoir contribue a un module qui combine logique metier, integration d'APIs et exigences de moderation de contenu dans un contexte reel.
+
+Hashtags suggerees :
+#GestionDeGroupe #Feed #APIs #ContentModeration #SoftwareEngineering #ProjetUniversitaire #TeamWork
+
+==================================================
+VERSION COURTE (si besoin)
+==================================================
+
+J'ai travaille sur le module "Gestion Groupe et Feed" de notre projet academique.
+J'ai implemente les APIs de gestion des groupes et des publications, puis integre une moderation automatisee du texte et des images avant publication.
+Cette experience m'a permis de renforcer mes competences en architecture API, qualite logicielle et securisation des contenus.
+
+Captures jointes :
+- Gestion des groupes
+- Feed des publications
+- Moderation de texte
+- Moderation d'image
