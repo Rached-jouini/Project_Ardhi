@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<title>Ardhi — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --green-deep:  #063D2F;
+  --green-main:  #085041;
+  --green-mid:   #0D6B56;
+  --green-light: #5DCAA5;
+  --green-pale:  #E8F5F0;
+  --amber:       #EF9F27;
+  --amber-pale:  #FFF8E1;
+  --violet:      #2E2780;
+  --violet-pale: #EDE7F6;
+  --red:         #8B2200;
+  --red-pale:    #FBE9E7;
+  --blue:        #0C447C;
+  --blue-pale:   #E3F2FD;
+  --cream:       #FAF8F3;
+  --white:       #FFFFFF;
+  --text-dark:   #111810;
+  --text-mid:    #4A5568;
+  --text-soft:   #8A9BA8;
+  --border:      #E2E8E4;
+  --sidebar-w:   240px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; font-size: 14px; }
+
+/* ══ SIDEBAR ══ */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--green-deep);
+  display: flex; flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+  position: relative; z-index: 10;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+.sb-logo {
+  display: flex; align-items: center; gap: 10px;
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.sb-logo-icon {
+  width: 36px; height: 36px;
+  background: var(--green-light);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sb-logo-icon svg { width: 20px; height: 20px; fill: var(--green-deep); }
+.sb-logo-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 2px; }
+.sb-logo-sub { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 1px; }
+
+.sb-section-label {
+  font-size: 10px; font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase; letter-spacing: 1.2px;
+  padding: 20px 20px 8px;
+}
+
+.sb-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 20px;
+  color: rgba(255,255,255,0.55);
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+.sb-item:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.85); }
+.sb-item.active {
+  background: rgba(93,202,165,0.12);
+  color: var(--green-light);
+  border-left-color: var(--green-light);
+}
+.sb-item svg { width: 17px; height: 17px; flex-shrink: 0; }
+.sb-badge {
+  margin-left: auto;
+  background: var(--red);
+  color: #fff; font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: 10px;
+}
+
+.sb-bottom {
+  margin-top: auto;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 20px;
+}
+.sb-user { display: flex; align-items: center; gap: 10px; }
+.sb-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: var(--green-deep); font-size: 13px;
+}
+.sb-user-name { font-size: 13px; font-weight: 600; color: #fff; }
+.sb-user-role { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 1px; }
+
+/* ══ MAIN ══ */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* Header */
+.header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 28px;
+  height: 60px;
+  flex-shrink: 0;
+}
+.search-box {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  flex: 1; max-width: 380px;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+.search-box svg { width: 15px; height: 15px; flex-shrink: 0; }
+.header-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+.notif-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--cream); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; position: relative;
+}
+.notif-btn svg { width: 17px; height: 17px; color: var(--text-mid); }
+.notif-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red); border: 2px solid #fff;
+  position: absolute; top: 6px; right: 6px;
+}
+.header-user { display: flex; align-items: center; gap: 10px; }
+.header-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--green-main);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: #fff; font-size: 13px;
+}
+.header-name { font-size: 13px; font-weight: 600; }
+.header-role { font-size: 11px; color: var(--text-soft); }
+
+/* Content area */
+.content { flex: 1; overflow-y: auto; padding: 24px 28px; }
+.content::-webkit-scrollbar { width: 5px; }
+.content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Page sections */
+.page { display: none; }
+.page.active { display: block; }
+
+/* Page title */
+.page-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+.page-sub { font-size: 13px; color: var(--text-soft); margin-bottom: 24px; }
+
+/* Hero banner */
+.hero {
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%);
+  padding: 32px 36px;
+  margin-bottom: 24px;
+  position: relative; overflow: hidden;
+  color: #fff;
+}
+.hero::before {
+  content:'';
+  position:absolute; top:-60px; right:-60px;
+  width:260px; height:260px; border-radius:50%;
+  background: rgba(93,202,165,0.1);
+}
+.hero::after {
+  content:'';
+  position:absolute; bottom:-40px; right:80px;
+  width:180px; height:180px; border-radius:50%;
+  background: rgba(93,202,165,0.06);
+}
+.hero-tag { font-size: 11px; font-weight: 600; color: var(--green-light); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+.hero-sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+/* Stats grid */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--white); border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 20px;
+  transition: box-shadow 0.2s;
+}
+.stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.stat-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.stat-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.stat-icon svg { width: 20px; height: 20px; }
+.stat-trend { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; }
+.trend-up { background: #E8F5E9; color: #2E7D32; }
+.trend-down { background: #FFEBEE; color: #C62828; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--text-dark); }
+.stat-label { font-size: 12px; color: var(--text-soft); margin-top: 3px; }
+
+/* 2-col layout */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+/* Card */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.card-head {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-title { font-size: 14px; font-weight: 600; color: var(--text-dark); }
+.card-sub { font-size: 11px; color: var(--text-soft); margin-top: 2px; }
+.card-body { padding: 20px; }
+.card-action {
+  font-size: 12px; font-weight: 500; color: var(--green-main);
+  cursor: pointer; text-decoration: none;
+}
+
+/* MAP placeholder */
+.map-container {
+  width: 100%; height: 320px;
+  background: #E8F0EC;
+  position: relative; overflow: hidden;
+  border-radius: 0 0 12px 12px;
+}
+.map-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+}
+.map-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(6,61,47,0.4));
+  pointer-events: none;
+}
+.map-pins { position: absolute; inset: 0; }
+.pin {
+  position: absolute;
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer;
+}
+.pin-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.pin-label {
+  background: #fff;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 6px; border-radius: 4px;
+  margin-top: 3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  white-space: nowrap;
+  color: var(--text-dark);
+}
+.map-legend {
+  position: absolute; bottom: 12px; left: 12px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 8px; padding: 8px 12px;
+  display: flex; gap: 12px;
+}
+.leg-item { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 500; color: var(--text-mid); }
+.leg-dot { width: 8px; height: 8px; border-radius: 50%; }
+.map-coord {
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 11px; font-weight: 500; color: var(--text-mid);
+}
+
+/* Table */
+.table { width: 100%; border-collapse: collapse; }
+.table th { font-size: 11px; font-weight: 600; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.6px; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+.table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); }
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: var(--cream); }
+
+/* Badge */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+}
+.badge-green { background: var(--green-pale); color: var(--green-main); }
+.badge-amber { background: var(--amber-pale); color: #7A4500; }
+.badge-red   { background: var(--red-pale);   color: var(--red); }
+.badge-blue  { background: var(--blue-pale);  color: var(--blue); }
+.badge-gray  { background: #F5F5F5; color: #555; }
+
+/* Progress bar */
+.progress { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: 6px; }
+.progress-fill { height: 100%; border-radius: 3px; }
+
+/* Alert item */
+.alert-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.alert-item:last-child { border-bottom: none; }
+.alert-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.alert-icon svg { width: 18px; height: 18px; }
+.alert-msg { font-size: 13px; font-weight: 500; color: var(--text-dark); }
+.alert-time { font-size: 11px; color: var(--text-soft); margin-top: 2px; }
+
+/* Equipment row */
+.equip-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.equip-row:last-child { border-bottom: none; }
+.equip-icon { width: 38px; height: 38px; border-radius: 8px; background: var(--amber-pale); display: flex; align-items: center; justify-content: center; }
+.equip-icon svg { width: 18px; height: 18px; color: #7A4500; }
+.equip-name { font-size: 13px; font-weight: 600; }
+.equip-count { font-size: 11px; color: var(--text-soft); }
+.equip-right { margin-left: auto; text-align: right; }
+
+/* Event card */
+.event-item {
+  display: flex; gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.event-item:last-child { border-bottom: none; }
+.event-date-box { width: 44px; text-align: center; background: var(--green-pale); border-radius: 8px; padding: 6px 4px; flex-shrink: 0; }
+.event-day { font-size: 18px; font-weight: 700; color: var(--green-main); line-height: 1; }
+.event-month { font-size: 10px; font-weight: 600; color: var(--green-mid); text-transform: uppercase; }
+.event-name { font-size: 13px; font-weight: 600; }
+.event-loc { font-size: 11px; color: var(--text-soft); margin-top: 2px; }
+
+/* Chart container */
+.chart-wrap { position: relative; height: 200px; }
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; background: var(--cream); border-radius: 8px; padding: 4px; margin-bottom: 20px; }
+.tab { flex: 1; text-align: center; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 500; color: var(--text-soft); cursor: pointer; transition: all 0.2s; }
+.tab.active { background: var(--white); color: var(--green-main); font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR ══ -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.34L5.71 21l1-1C8.22 18.5 10 17 12 17c4 0 7-3 7-7V3l-2 5z"/></svg>
+    </div>
+    <div>
+      <div class="sb-logo-name">ARDHI</div>
+      <div class="sb-logo-sub">Plateforme AgriTech</div>
+    </div>
+  </div>
+
+  <div class="sb-section-label">Navigation</div>
+
+  <div class="sb-item active" onclick="showPage('overview', this)">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    Vue d'ensemble
+  </div>
+
+  <div class="sb-section-label">G1 · Comptes</div>
+  <div class="sb-item" onclick="showPage('comptes', this)">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Gestion des Comptes
+  </div>
+
+  <div class="sb-section-label">G2 · Terrains</div>
+  <div class="sb-item" onclick="showPage('terrains', this)">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Gestion des Terrains
+  </div>
+
+  <div class="sb-section-label">G3 · Équipements</div>
+  <div class="sb-item" onclick="showPage('equipements', this)">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+    Gestion des Équipements
+  </div>
+
+  <div class="sb-section-label">G4 · Finance</div>
+  <div class="sb-item" onclick="showPage('finance', this)">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    Gestion Financière
+  </div>
+
+  <div class="sb-section-label">G5 · Activités</div>
+  <div class="sb-item" onclick="showPage('activites', this)">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Activités &amp; Événements
+    <span class="sb-badge">3</span>
+  </div>
+
+  <div class="sb-section-label">Système</div>
+  <div class="sb-item" onclick="showPage('alertes', this)">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    Alertes Météo
+    <span class="sb-badge">2</span>
+  </div>
+  <div class="sb-item" onclick="showPage('parametres', this)">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Paramètres
+  </div>
+
+  <div class="sb-bottom">
+    <div class="sb-user">
+      <div class="sb-avatar">MA</div>
+      <div>
+        <div class="sb-user-name">Mohamed Ali</div>
+        <div class="sb-user-role">Agriculteur</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="search-box">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Rechercher terrains, équipements...
+    </div>
+    <div class="header-right">
+      <div class="notif-btn">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <div class="notif-dot"></div>
+      </div>
+      <div class="header-user">
+        <div class="header-avatar">MA</div>
+        <div>
+          <div class="header-name">Mohamed Ali</div>
+          <div class="header-role">Agriculteur · Sfax</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- ══════════ PAGE: OVERVIEW ══════════ -->
+    <div class="page active" id="page-overview">
+      <div class="hero">
+        <div class="hero-tag">Tableau de bord</div>
+        <div class="hero-title">Bienvenue sur Ardhi</div>
+        <div class="hero-sub">Gestion intelligente de vos terres agricoles louées — Tunisie</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <div class="stat-icon" style="background:var(--green-pale)">
+              <svg fill="none" viewBox="0 0 24 24" stroke="var(--green-main)" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            </div>
+            <span class="stat-trend trend-up">+2</span>
+          </div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Terrains loués</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <div class="stat-icon" style="background:var(--amber-pale)">
+              <svg fill="none" viewBox="0 0 24 24" stroke="#7A4500" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            </div>
+            <span class="stat-trend trend-up">+1</span>
+          </div>
+          <div class="stat-num">5</div>
+          <div class="stat-label">Équipements loués</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <div class="stat-icon" style="background:var(--violet-pale)">
+              <svg fill="none" viewBox="0 0 24 24" stroke="var(--violet)" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <span class="stat-trend trend-up">+9%</span>
+          </div>
+          <div class="stat-num">12 400<span style="font-size:16px"> TND</span></div>
+          <div class="stat-label">Gains estimés / saison</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top">
+            <div class="stat-icon" style="background:var(--red-pale)">
+              <svg fill="none" viewBox="0 0 24 24" stroke="var(--red)" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span class="stat-trend trend-up">3 actives</span>
+          </div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Activités en cours</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <!-- Map card -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Localisation des Terrains</div>
+              <div class="card-sub">Vue satellite — API Maps</div>
+            </div>
+            <span class="card-action">Voir tout →</span>
+          </div>
+          <div class="map-container">
+            <!-- SVG Map simulation -->
+            <svg width="100%" height="100%" viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+              <!-- background terrain -->
+              <rect width="600" height="320" fill="#C8D8B0"/>
+              <!-- Fields zones -->
+              <polygon points="60,80 180,60 220,140 100,160" fill="#6B8F3A" opacity="0.7"/>
+              <polygon points="180,60 300,50 330,120 220,140" fill="#8BAF4A" opacity="0.6"/>
+              <polygon points="350,100 480,80 500,180 370,200" fill="#5A7A2E" opacity="0.75"/>
+              <polygon points="100,200 240,180 260,260 110,270" fill="#7A9F40" opacity="0.6"/>
+              <!-- Roads -->
+              <line x1="0" y1="170" x2="600" y2="170" stroke="#D4C080" stroke-width="5" opacity="0.8"/>
+              <line x1="280" y1="0" x2="280" y2="320" stroke="#D4C080" stroke-width="4" opacity="0.6"/>
+              <!-- Water -->
+              <ellipse cx="480" cy="260" rx="80" ry="40" fill="#6BAED6" opacity="0.5"/>
+              <text x="475" y="265" font-size="10" fill="#2171B5" text-anchor="middle" font-family="Arial">Barrage</text>
+              <!-- Trees -->
+              <circle cx="340" cy="60" r="8" fill="#2D6A1F" opacity="0.6"/>
+              <circle cx="355" cy="55" r="6" fill="#2D6A1F" opacity="0.6"/>
+              <circle cx="530" cy="90" r="7" fill="#2D6A1F" opacity="0.6"/>
+
+              <!-- Pin T1 -->
+              <circle cx="140" cy="110" r="10" fill="#085041" stroke="white" stroke-width="2"/>
+              <text x="140" y="114" font-size="9" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">T1</text>
+              <rect x="108" y="88" width="64" height="16" rx="3" fill="white"/>
+              <text x="140" y="99" font-size="9" fill="#085041" text-anchor="middle" font-family="Arial" font-weight="bold">Terrain Sfax</text>
+
+              <!-- Pin T2 -->
+              <circle cx="250" cy="90" r="10" fill="#085041" stroke="white" stroke-width="2"/>
+              <text x="250" y="94" font-size="9" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">T2</text>
+              <rect x="218" y="68" width="64" height="16" rx="3" fill="white"/>
+              <text x="250" y="79" font-size="9" fill="#085041" text-anchor="middle" font-family="Arial" font-weight="bold">Terrain Sousse</text>
+
+              <!-- Pin T3 -->
+              <circle cx="425" cy="140" r="10" fill="#5DCAA5" stroke="white" stroke-width="2"/>
+              <text x="425" y="144" font-size="9" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">T3</text>
+              <rect x="393" y="118" width="64" height="16" rx="3" fill="white"/>
+              <text x="425" y="129" font-size="9" fill="#085041" text-anchor="middle" font-family="Arial" font-weight="bold">Terrain Gabès</text>
+
+              <!-- Legend -->
+              <rect x="10" y="280" width="200" height="30" rx="5" fill="white" opacity="0.9"/>
+              <circle cx="30" cy="295" r="6" fill="#085041"/>
+              <text x="42" y="299" font-size="9" fill="#333" font-family="Arial">Terrain loué</text>
+              <circle cx="105" cy="295" r="6" fill="#5DCAA5"/>
+              <text x="117" y="299" font-size="9" fill="#333" font-family="Arial">Disponible</text>
+              <!-- GPS coords -->
+              <rect x="470" y="10" width="120" height="20" rx="4" fill="white" opacity="0.9"/>
+              <text x="530" y="23" font-size="9" fill="#555" text-anchor="middle" font-family="Arial">33.8°N, 10.2°E — Tunisie</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Finance summary -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Bilan Financier</div>
+              <div class="card-sub">Saison en cours</div>
+            </div>
+            <span class="card-action" onclick="showPage('finance', document.querySelector('[onclick*=finance]'))">Détails →</span>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrap">
+              <canvas id="chartFinance"></canvas>
+            </div>
+            <div style="display:flex;gap:16px;margin-top:16px">
+              <div style="flex:1;background:var(--green-pale);border-radius:8px;padding:12px;text-align:center">
+                <div style="font-size:11px;color:var(--green-main);font-weight:600;margin-bottom:4px">GAINS</div>
+                <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--green-main)">12 400 TND</div>
+              </div>
+              <div style="flex:1;background:var(--red-pale);border-radius:8px;padding:12px;text-align:center">
+                <div style="font-size:11px;color:var(--red);font-weight:600;margin-bottom:4px">DÉPENSES</div>
+                <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--red)">7 200 TND</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <!-- Recent activities -->
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Activités Récentes</div><div class="card-sub">G5 · Activités & Événements</div></div>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table class="table">
+              <thead><tr><th>Culture</th><th>Terrain</th><th>Statut</th><th>Récolte</th></tr></thead>
+              <tbody>
+                <tr><td><b>Tomates</b></td><td>T1 · Sfax</td><td><span class="badge badge-green">En cours</span></td><td>Juin 2025</td></tr>
+                <tr><td><b>Olives</b></td><td>T2 · Sousse</td><td><span class="badge badge-amber">Plantation</span></td><td>Oct 2025</td></tr>
+                <tr><td><b>Dattes</b></td><td>T3 · Gabès</td><td><span class="badge badge-blue">Planifiée</span></td><td>Sep 2025</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Upcoming events -->
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Événements à venir</div><div class="card-sub">G5 · Foires agricoles</div></div>
+          </div>
+          <div class="card-body">
+            <div class="event-item">
+              <div class="event-date-box"><div class="event-day">15</div><div class="event-month">Mai</div></div>
+              <div>
+                <div class="event-name">Foire Agricole de Tunis</div>
+                <div class="event-loc">🇹🇳 Tunis — Local · Tomates, Olives</div>
+                <div style="margin-top:5px"><span class="badge badge-green">Inscrit</span></div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date-box"><div class="event-day">22</div><div class="event-month">Juin</div></div>
+              <div>
+                <div class="event-name">Expo Dattes Méditerranée</div>
+                <div class="event-loc">🌍 Sfax — International · Dattes</div>
+                <div style="margin-top:5px"><span class="badge badge-amber">En attente</span></div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date-box"><div class="event-day">08</div><div class="event-month">Juil</div></div>
+              <div>
+                <div class="event-name">Salon Olive &amp; Huile</div>
+                <div class="event-loc">🇹🇳 Sousse — Local · Olives</div>
+                <div style="margin-top:5px"><span class="badge badge-gray">Ouvert</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PAGE: TERRAINS ══════════ -->
+    <div class="page" id="page-terrains">
+      <div class="page-title">Gestion des Terrains</div>
+      <div class="page-sub">G2 · Classification, location et suivi des parcelles</div>
+
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--green-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--green-main)" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span class="stat-trend trend-up">Loués</span></div>
+          <div class="stat-num">3</div><div class="stat-label">Terrains actifs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--blue-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="1.8"><path d="M12 22s8-4 8-10V5"/><path d="M2 12h20"/></svg></div><span class="stat-trend trend-up">Total</span></div>
+          <div class="stat-num">47 ha</div><div class="stat-label">Superficie totale</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--amber-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="#7A4500" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><span class="stat-trend trend-up">Actif</span></div>
+          <div class="stat-num">3</div><div class="stat-label">Locations en cours</div>
+        </div>
+      </div>
+
+      <!-- Full map -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-head">
+          <div><div class="card-title">Carte des Terrains — API Maps</div><div class="card-sub">Vue satellite · Cliquez sur un terrain pour voir les détails</div></div>
+          <span class="badge badge-green">🛰 Connecté</span>
+        </div>
+        <div class="map-container" style="height:380px">
+          <svg width="100%" height="100%" viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="380" fill="#B8CCA0"/>
+            <polygon points="40,80 200,55 250,180 80,200" fill="#5A8A2E" opacity="0.75"/>
+            <polygon points="200,55 380,45 410,160 250,180" fill="#6FA035" opacity="0.65"/>
+            <polygon points="450,90 630,70 660,210 470,230" fill="#4A7A25" opacity="0.8"/>
+            <polygon points="80,240 280,215 300,320 90,330" fill="#7AAF3A" opacity="0.6"/>
+            <polygon points="500,260 680,245 690,340 510,345" fill="#8CC040" opacity="0.5"/>
+            <line x1="0" y1="210" x2="800" y2="210" stroke="#D4C080" stroke-width="6" opacity="0.7"/>
+            <line x1="370" y1="0" x2="370" y2="380" stroke="#D4C080" stroke-width="5" opacity="0.6"/>
+            <line x1="0" y1="120" x2="200" y2="120" stroke="#D4C080" stroke-width="3" opacity="0.5"/>
+            <ellipse cx="680" cy="310" rx="90" ry="45" fill="#5B9BD5" opacity="0.55"/>
+            <text x="680" y="315" font-size="11" fill="#1A5276" text-anchor="middle" font-family="Arial" font-weight="bold">Barrage</text>
+
+            <!-- T1 Pin -->
+            <circle cx="145" cy="128" r="14" fill="#085041" stroke="white" stroke-width="2.5"/>
+            <text x="145" y="133" font-size="10" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">T1</text>
+            <rect x="100" y="100" width="90" height="20" rx="4" fill="white" opacity="0.95"/>
+            <text x="145" y="113" font-size="9" fill="#085041" text-anchor="middle" font-family="Arial" font-weight="bold">Sfax · 18ha · Loué</text>
+
+            <!-- T2 Pin -->
+            <circle cx="305" cy="105" r="14" fill="#085041" stroke="white" stroke-width="2.5"/>
+            <text x="305" y="110" font-size="10" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">T2</text>
+            <rect x="258" y="78" width="94" height="20" rx="4" fill="white" opacity="0.95"/>
+            <text x="305" y="91" font-size="9" fill="#085041" text-anchor="middle" font-family="Arial" font-weight="bold">Sousse · 16ha · Loué</text>
+
+            <!-- T3 Pin -->
+            <circle cx="555" cy="150" r="14" fill="#5DCAA5" stroke="white" stroke-width="2.5"/>
+            <text x="555" y="155" font-size="10" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">T3</text>
+            <rect x="508" y="123" width="94" height="20" rx="4" fill="white" opacity="0.95"/>
+            <text x="555" y="136" font-size="9" fill="#085041" text-anchor="middle" font-family="Arial" font-weight="bold">Gabès · 13ha · Loué</text>
+
+            <!-- Legend -->
+            <rect x="12" y="345" width="230" height="26" rx="5" fill="white" opacity="0.92"/>
+            <circle cx="30" cy="358" r="7" fill="#085041"/>
+            <text x="43" y="362" font-size="9" fill="#333" font-family="Arial">Terrain loué</text>
+            <circle cx="115" cy="358" r="7" fill="#5DCAA5"/>
+            <text x="128" y="362" font-size="9" fill="#333" font-family="Arial">Disponible</text>
+            <circle cx="190" cy="358" r="7" fill="#EF9F27"/>
+            <text x="203" y="362" font-size="9" fill="#333" font-family="Arial">En attente</text>
+            <rect x="620" y="10" width="170" height="20" rx="4" fill="white" opacity="0.9"/>
+            <text x="705" y="23" font-size="9" fill="#555" text-anchor="middle" font-family="Arial">📍 33.8°N, 10.2°E — Tunisie</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Terrain list -->
+      <div class="card">
+        <div class="card-head"><div class="card-title">Liste des Terrains</div><span class="badge badge-green">3 actifs</span></div>
+        <div style="padding:0">
+          <table class="table">
+            <thead><tr><th>ID</th><th>Région</th><th>Superficie</th><th>Type de sol</th><th>Culture adaptée</th><th>Accès eau</th><th>Statut</th></tr></thead>
+            <tbody>
+              <tr><td><b>T1</b></td><td>Sfax</td><td>18 ha</td><td>Argileux</td><td>Tomates, Légumes</td><td>🌧 Pluie + Irrigation</td><td><span class="badge badge-green">Loué</span></td></tr>
+              <tr><td><b>T2</b></td><td>Sousse</td><td>16 ha</td><td>Limoneux</td><td>Olives, Amandes</td><td>💧 Barrage proche</td><td><span class="badge badge-green">Loué</span></td></tr>
+              <tr><td><b>T3</b></td><td>Gabès</td><td>13 ha</td><td>Sableux</td><td>Dattes, Palmiers</td><td>🌊 Oasis</td><td><span class="badge badge-green">Loué</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PAGE: EQUIPEMENTS ══════════ -->
+    <div class="page" id="page-equipements">
+      <div class="page-title">Gestion des Équipements</div>
+      <div class="page-sub">G3 · Location, retour et vérification par ID</div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--amber-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="#7A4500" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><span class="stat-trend trend-up">Dispo</span></div>
+          <div class="stat-num">12</div><div class="stat-label">Équipements disponibles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--blue-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="stat-trend trend-down">En cours</span></div>
+          <div class="stat-num">5</div><div class="stat-label">En location actuellement</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--red-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--red)" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div><span class="stat-trend trend-down">Urgent</span></div>
+          <div class="stat-num">1</div><div class="stat-label">Retour en retard</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--green-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--green-main)" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="stat-trend trend-up">+3%</span></div>
+          <div class="stat-num">94%</div><div class="stat-label">Taux de disponibilité</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><div class="card-title">Mes locations actives</div></div>
+          <div class="card-body">
+            <div class="equip-row">
+              <div class="equip-icon"><svg fill="none" viewBox="0 0 24 24" stroke="#7A4500" stroke-width="1.8" width="18" height="18"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+              <div><div class="equip-name">Tracteur TP-200</div><div class="equip-count">ID: EQ-0042 · Depuis 12 Avr</div></div>
+              <div class="equip-right"><span class="badge badge-green">Actif</span><div style="font-size:11px;color:var(--text-soft);margin-top:3px">Retour: 20 Avr</div></div>
+            </div>
+            <div class="equip-row">
+              <div class="equip-icon"><svg fill="none" viewBox="0 0 24 24" stroke="#7A4500" stroke-width="1.8" width="18" height="18"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <div><div class="equip-name">Pompe à eau PW-50</div><div class="equip-count">ID: EQ-0078 · Depuis 10 Avr</div></div>
+              <div class="equip-right"><span class="badge badge-amber">Retard</span><div style="font-size:11px;color:var(--red);margin-top:3px">Retour: 15 Avr ⚠</div></div>
+            </div>
+            <div class="equip-row">
+              <div class="equip-icon"><svg fill="none" viewBox="0 0 24 24" stroke="#7A4500" stroke-width="1.8" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+              <div><div class="equip-name">Semoir SR-120</div><div class="equip-count">ID: EQ-0091 · Depuis 08 Avr</div></div>
+              <div class="equip-right"><span class="badge badge-green">Actif</span><div style="font-size:11px;color:var(--text-soft);margin-top:3px">Retour: 22 Avr</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title">Équipements disponibles</div></div>
+          <div class="card-body">
+            <table class="table">
+              <thead><tr><th>Équipement</th><th>Dispo</th><th>Prix/jour</th></tr></thead>
+              <tbody>
+                <tr><td><b>Tracteur TP-300</b></td><td><span class="badge badge-green">3/5</span></td><td>45 TND</td></tr>
+                <tr><td><b>Moissonneuse MX-4</b></td><td><span class="badge badge-green">2/2</span></td><td>80 TND</td></tr>
+                <tr><td><b>Pulvérisateur PL-80</b></td><td><span class="badge badge-amber">1/3</span></td><td>30 TND</td></tr>
+                <tr><td><b>Charrue CH-250</b></td><td><span class="badge badge-green">4/4</span></td><td>25 TND</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PAGE: FINANCE ══════════ -->
+    <div class="page" id="page-finance">
+      <div class="page-title">Gestion Financière &amp; Statistiques</div>
+      <div class="page-sub">G4 · Contrats, crédits et bilan financier personnel</div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--green-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--green-main)" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><span class="stat-trend trend-up">+9%</span></div>
+          <div class="stat-num">12 400<span style="font-size:14px"> TND</span></div><div class="stat-label">Gains estimés</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--red-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--red)" stroke-width="1.8"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/></svg></div><span class="stat-trend trend-down">-2%</span></div>
+          <div class="stat-num">7 200<span style="font-size:14px"> TND</span></div><div class="stat-label">Dépenses totales</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--violet-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--violet)" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="stat-trend trend-up">Bilan</span></div>
+          <div class="stat-num">5 200<span style="font-size:14px"> TND</span></div><div class="stat-label">Bénéfice net</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-top"><div class="stat-icon" style="background:var(--amber-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="#7A4500" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="stat-trend trend-up">Actif</span></div>
+          <div class="stat-num">1</div><div class="stat-label">Contrat en cours</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><div class="card-title">Évolution Financière</div><div class="card-sub">Gains vs Dépenses — 6 mois</div></div>
+          <div class="card-body"><div class="chart-wrap" style="height:240px"><canvas id="chartFinance2"></canvas></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title">Mon Contrat</div></div>
+          <div class="card-body">
+            <div style="background:var(--green-pale);border-radius:10px;padding:16px;margin-bottom:14px">
+              <div style="font-size:11px;color:var(--green-main);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Contrat #CT-2025-042</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div><div style="font-size:11px;color:var(--text-soft)">Terrain</div><div style="font-weight:600">T1 · Sfax (18 ha)</div></div>
+                <div><div style="font-size:11px;color:var(--text-soft)">Durée</div><div style="font-weight:600">36 mois</div></div>
+                <div><div style="font-size:11px;color:var(--text-soft)">Loyer mensuel</div><div style="font-weight:600">380 TND</div></div>
+                <div><div style="font-size:11px;color:var(--text-soft)">Statut</div><div><span class="badge badge-green">Actif</span></div></div>
+              </div>
+            </div>
+            <div style="background:var(--violet-pale);border-radius:10px;padding:16px">
+              <div style="font-size:11px;color:var(--violet);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Crédit Agricole #CR-2025-018</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div><div style="font-size:11px;color:var(--text-soft)">Montant accordé</div><div style="font-weight:600">5 000 TND</div></div>
+                <div><div style="font-size:11px;color:var(--text-soft)">Taux intérêt</div><div style="font-weight:600">1%</div></div>
+                <div><div style="font-size:11px;color:var(--text-soft)">Remboursé</div><div style="font-weight:600">1 200 TND</div></div>
+                <div><div style="font-size:11px;color:var(--text-soft)">Score fraude</div><div><span class="badge badge-green">✓ 96/100</span></div></div>
+              </div>
+              <div class="progress" style="margin-top:12px"><div class="progress-fill" style="width:24%;background:var(--violet)"></div></div>
+              <div style="font-size:10px;color:var(--text-soft);margin-top:4px">Remboursement: 24% — 3 800 TND restants</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PAGE: ACTIVITES ══════════ -->
+    <div class="page" id="page-activites">
+      <div class="page-title">Activités &amp; Événements</div>
+      <div class="page-sub">G5 · Déclaration de cultures, preuves photo et foires agricoles</div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><div class="card-title">Mes Activités Agricoles</div></div>
+          <div style="padding:0">
+            <table class="table">
+              <thead><tr><th>Culture</th><th>Terrain</th><th>Quantité</th><th>Récolte</th><th>Statut</th></tr></thead>
+              <tbody>
+                <tr><td><b>🍅 Tomates</b></td><td>T1 · Sfax</td><td>4.5 T</td><td>Juin 2025</td><td><span class="badge badge-green">En cours</span></td></tr>
+                <tr><td><b>🫒 Olives</b></td><td>T2 · Sousse</td><td>2.8 T</td><td>Oct 2025</td><td><span class="badge badge-amber">Plantation</span></td></tr>
+                <tr><td><b>🌴 Dattes</b></td><td>T3 · Gabès</td><td>3.2 T</td><td>Sep 2025</td><td><span class="badge badge-blue">Planifiée</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title">Événements Agricoles</div></div>
+          <div class="card-body">
+            <div class="event-item">
+              <div class="event-date-box"><div class="event-day">15</div><div class="event-month">Mai</div></div>
+              <div style="flex:1">
+                <div class="event-name">Foire Agricole de Tunis</div>
+                <div class="event-loc">🇹🇳 Local · Tomates, Olives</div>
+                <div style="margin-top:6px;display:flex;gap:8px;align-items:center">
+                  <span class="badge badge-green">Inscrit</span>
+                  <span style="font-size:11px;color:var(--text-soft)">48 places restantes</span>
+                </div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date-box"><div class="event-day">22</div><div class="event-month">Juin</div></div>
+              <div style="flex:1">
+                <div class="event-name">Expo Dattes Méditerranée</div>
+                <div class="event-loc">🌍 International · Sfax</div>
+                <div style="margin-top:6px;display:flex;gap:8px;align-items:center">
+                  <span class="badge badge-amber">En attente</span>
+                  <span style="font-size:11px;color:var(--text-soft)">12 places restantes</span>
+                </div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date-box"><div class="event-day">08</div><div class="event-month">Juil</div></div>
+              <div style="flex:1">
+                <div class="event-name">Salon Olive &amp; Huile</div>
+                <div class="event-loc">🇹🇳 Local · Sousse</div>
+                <div style="margin-top:6px">
+                  <button onclick="alert('Inscription confirmée!')" style="background:var(--green-main);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer">S'inscrire</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PAGE: COMPTES ══════════ -->
+    <div class="page" id="page-comptes">
+      <div class="page-title">Gestion des Comptes</div>
+      <div class="page-sub">G1 · Profil utilisateur et rôles du système</div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><div class="card-title">Mon Profil</div></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+              <div style="width:64px;height:64px;border-radius:50%;background:var(--green-main);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff">MA</div>
+              <div><div style="font-size:18px;font-weight:700">Mohamed Ali</div><div style="font-size:13px;color:var(--text-soft)">Agriculteur · Sfax, Tunisie</div><div style="margin-top:6px"><span class="badge badge-green">Compte actif</span></div></div>
+            </div>
+            <div style="display:grid;gap:12px">
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-soft);font-size:13px">Email</span><span style="font-weight:500">m.ali@ardhi.tn</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-soft);font-size:13px">Téléphone</span><span style="font-weight:500">+216 98 123 456</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-soft);font-size:13px">Rôle</span><span class="badge badge-green">Agriculteur</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0"><span style="color:var(--text-soft);font-size:13px">Inscrit le</span><span style="font-weight:500">15 Jan 2025</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">Rôles du système</div></div>
+          <div style="padding:0">
+            <table class="table">
+              <thead><tr><th>Rôle</th><th>Gestion</th><th>Statut</th></tr></thead>
+              <tbody>
+                <tr><td><b>Admin système</b></td><td>G1 · Comptes</td><td><span class="badge badge-green">Actif</span></td></tr>
+                <tr><td><b>Expert agronome</b></td><td>G2 · Terrains</td><td><span class="badge badge-green">Actif</span></td></tr>
+                <tr><td><b>Gest. équipements</b></td><td>G3 · Équipements</td><td><span class="badge badge-green">Actif</span></td></tr>
+                <tr><td><b>Expert financier</b></td><td>G4 · Finance</td><td><span class="badge badge-green">Actif</span></td></tr>
+                <tr><td><b>Organisateur</b></td><td>G5 · Événements</td><td><span class="badge badge-green">Actif</span></td></tr>
+                <tr><td><b>Agriculteur</b></td><td>Toutes G</td><td><span class="badge badge-blue">Vous</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PAGE: ALERTES ══════════ -->
+    <div class="page" id="page-alertes">
+      <div class="page-title">Alertes Météo</div>
+      <div class="page-sub">Données en temps réel — API Météo · API Maps</div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><div class="card-title">Alertes actives</div><span class="badge badge-red">2 urgentes</span></div>
+          <div class="card-body">
+            <div class="alert-item">
+              <div class="alert-icon" style="background:var(--red-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--red)" stroke-width="1.8" width="18" height="18"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div><div class="alert-msg">⚠ Risque de sécheresse — Terrain T1 (Sfax)</div><div class="alert-time">Aujourd'hui 08:30 · Humidité: 18%</div></div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-icon" style="background:var(--blue-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="1.8" width="18" height="18"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><line x1="8" y1="16" x2="8" y2="21"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="16" y1="16" x2="16" y2="21"/></svg></div>
+              <div><div class="alert-msg">🌧 Pluies prévues — Terrain T2 (Sousse)</div><div class="alert-time">Demain 14:00 · Précip: 22mm</div></div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-icon" style="background:var(--green-pale)"><svg fill="none" viewBox="0 0 24 24" stroke="var(--green-main)" stroke-width="1.8" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="alert-msg">✓ Conditions optimales — Terrain T3 (Gabès)</div><div class="alert-time">Aujourd'hui · Température: 24°C</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">Météo par terrain</div></div>
+          <div class="card-body">
+            <div style="display:grid;gap:12px">
+              <div style="background:var(--red-pale);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-weight:600">T1 · Sfax</div><div style="font-size:12px;color:var(--text-soft)">Aridité élevée</div></div>
+                <div style="text-align:right"><div style="font-size:24px;font-weight:700;color:var(--red)">34°C</div><div style="font-size:11px;color:var(--text-soft)">💧 18% humidité</div></div>
+              </div>
+              <div style="background:var(--blue-pale);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-weight:600">T2 · Sousse</div><div style="font-size:12px;color:var(--text-soft)">Pluie demain</div></div>
+                <div style="text-align:right"><div style="font-size:24px;font-weight:700;color:var(--blue)">22°C</div><div style="font-size:11px;color:var(--text-soft)">🌧 68% humidité</div></div>
+              </div>
+              <div style="background:var(--green-pale);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-weight:600">T3 · Gabès</div><div style="font-size:12px;color:var(--text-soft)">Conditions optimales</div></div>
+                <div style="text-align:right"><div style="font-size:24px;font-weight:700;color:var(--green-main)">24°C</div><div style="font-size:11px;color:var(--text-soft)">☀ 45% humidité</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PAGE: PARAMETRES ══════════ -->
+    <div class="page" id="page-parametres">
+      <div class="page-title">Paramètres</div>
+      <div class="page-sub">Configuration du compte et préférences</div>
+      <div class="card" style="max-width:600px">
+        <div class="card-head"><div class="card-title">Préférences</div></div>
+        <div class="card-body" style="display:grid;gap:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
+            <div><div style="font-weight:500">Notifications météo</div><div style="font-size:12px;color:var(--text-soft)">Recevoir les alertes pour vos terrains</div></div>
+            <div style="width:44px;height:24px;background:var(--green-main);border-radius:12px;cursor:pointer;position:relative"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;right:3px;top:3px"></div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
+            <div><div style="font-weight:500">Alertes fraude IA</div><div style="font-size:12px;color:var(--text-soft)">Surveillance automatique des contrats</div></div>
+            <div style="width:44px;height:24px;background:var(--green-main);border-radius:12px;cursor:pointer;position:relative"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;right:3px;top:3px"></div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0">
+            <div><div style="font-weight:500">Langue</div><div style="font-size:12px;color:var(--text-soft)">Langue de l'interface</div></div>
+            <span class="badge badge-green">Français</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+</div><!-- end main -->
+
+<script>
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (el) el.classList.add('active');
+
+  // Init charts when needed
+  if (name === 'overview') initChartOverview();
+  if (name === 'finance')  initChartFinance();
+}
+
+// Chart overview
+function initChartOverview() {
+  const ctx = document.getElementById('chartFinance');
+  if (!ctx || ctx._chart) return;
+  ctx._chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Loyer terrain', 'Location équip.', 'Crédit', 'Gain net'],
+      datasets: [{ data: [3800, 1800, 1600, 5200], backgroundColor: ['#085041','#8B5000','#2E2780','#5DCAA5'], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { font: { size: 11 }, boxWidth: 12 } } } }
+  });
+}
+
+function initChartFinance() {
+  const ctx = document.getElementById('chartFinance2');
+  if (!ctx || ctx._chart) return;
+  ctx._chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Nov','Déc','Jan','Fév','Mar','Avr'],
+      datasets: [
+        { label: 'Gains', data: [1800,2100,1900,2400,2200,2000], backgroundColor: '#5DCAA5', borderRadius: 6 },
+        { label: 'Dépenses', data: [1100,1300,1050,1400,1200,1150], backgroundColor: '#EF9F27', borderRadius: 6 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: { size: 11 }, boxWidth: 12 } } },
+      scales: { x: { grid: { display: false } }, y: { grid: { color: '#F0F0F0' }, ticks: { font: { size: 11 } } } }
+    }
+  });
+}
+
+// Init on load
+window.onload = () => { initChartOverview(); };
+</script>
+</body>
+</html>

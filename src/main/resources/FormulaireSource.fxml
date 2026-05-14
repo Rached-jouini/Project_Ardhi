@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="20.0" style="-fx-background-color: white; -fx-padding: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FormulaireSourceController">
+   <children>
+      <Label text="Ajouter une Source" textFill="#085041">
+         <font><Font name="System Bold" size="20.0" /></font>
+      </Label>
+      
+      <VBox spacing="5.0">
+         <children>
+            <Label text="Nom de la source (ex: Banque)" textFill="#4B5563" />
+            <TextField fx:id="nomField" prefHeight="40.0" style="-fx-background-radius: 10;" />
+         </children>
+      </VBox>
+      
+      <VBox spacing="5.0">
+         <children>
+            <Label text="Type de financement" textFill="#4B5563" />
+            <ComboBox fx:id="typeCombo" prefHeight="40.0" prefWidth="400.0" style="-fx-background-radius: 10;" />
+         </children>
+      </VBox>
+      
+      <VBox spacing="5.0">
+         <children>
+            <Label text="Montant (DT)" textFill="#4B5563" />
+            <TextField fx:id="montantField" prefHeight="40.0" style="-fx-background-radius: 10;" />
+         </children>
+      </VBox>
+      
+      <HBox alignment="CENTER_RIGHT" spacing="15.0">
+         <children>
+            <Button onAction="#annulerAction" style="-fx-background-color: #F3F4F6; -fx-background-radius: 10; -fx-padding: 10 20;" text="Annuler" />
+            <Button onAction="#enregistrerAction" style="-fx-background-color: #085041; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 25; -fx-font-weight: bold;" text="Enregistrer" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

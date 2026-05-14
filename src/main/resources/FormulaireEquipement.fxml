@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="950.0" style="-fx-background-color: #F3F4F6;"
+    xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="controllers.FormulaireEquipementController">
+   <children>
+      <VBox alignment="CENTER" spacing="20.0"
+            AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0"
+            AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="20.0">
+         <children>
+
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="15">
+               <children>
+                  <Button onAction="#retourAction"
+                          style="-fx-background-color: #E5E7EB; -fx-background-radius: 10; -fx-padding: 8 15; -fx-cursor: hand;"
+                          text="← Retour" />
+                  <Label text="Ajouter un Équipement" textFill="#2d5d34">
+                     <font><Font name="System Bold" size="26.0" /></font>
+                  </Label>
+               </children>
+            </HBox>
+
+            <!-- Main Card -->
+            <HBox spacing="25.0"
+                  style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 15, 0, 0, 8);">
+               <children>
+
+                  <!-- LEFT: Informations générales + cycle de vie -->
+                  <VBox spacing="18.0" HBox.hgrow="ALWAYS">
+                     <children>
+
+                        <!-- Section 1: Infos générales -->
+                        <Label text="📋  Informations Générales" textFill="#2d5d34">
+                           <font><Font name="System Bold" size="14.0" /></font>
+                        </Label>
+
+                        <HBox spacing="12">
+                           <children>
+                              <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Nom de l'équipement" textFill="#6B7280"><font><Font size="11"/></font></Label>
+                                    <TextField fx:id="nomTextField" prefHeight="40.0" promptText="Ex: John Deere 5075E" style="-fx-background-radius: 10;" />
+                                 </children>
+                              </VBox>
+                              <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Catégorie" textFill="#6B7280"><font><Font size="11"/></font></Label>
+                                    <TextField fx:id="typeTextField" prefHeight="40.0" promptText="tracteur / outil / drone..." style="-fx-background-radius: 10;" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <HBox spacing="12">
+                           <children>
+                              <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Quantité Totale" textFill="#6B7280"><font><Font size="11"/></font></Label>
+                                    <TextField fx:id="qteTotaleTextField" prefHeight="40.0" promptText="Ex: 5" style="-fx-background-radius: 10;" />
+                                 </children>
+                              </VBox>
+                              <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Quantité Disponible" textFill="#6B7280"><font><Font size="11"/></font></Label>
+                                    <TextField fx:id="qteDispoTextField" prefHeight="40.0" promptText="Ex: 5" style="-fx-background-radius: 10;" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <HBox spacing="12">
+                           <children>
+                              <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="État" textFill="#6B7280"><font><Font size="11"/></font></Label>
+                                    <ComboBox fx:id="etatComboBox" prefHeight="40.0" prefWidth="200.0" style="-fx-background-radius: 10;" />
+                                 </children>
+                              </VBox>
+                              <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Prix location / jour (DT)" textFill="#6B7280"><font><Font size="11"/></font></Label>
+                                    <TextField fx:id="prixTextField" prefHeight="40.0" promptText="Ex: 150.00" style="-fx-background-radius: 10;" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <!-- Photo -->
+                        <VBox spacing="4">
+                           <children>
+                              <Label text="Photo" textFill="#6B7280"><font><Font size="11"/></font></Label>
+                              <HBox spacing="10">
+                                 <children>
+                                    <TextField fx:id="photoTextField" editable="false" prefHeight="40.0"
+                                               promptText="Aucune image sélectionnée" HBox.hgrow="ALWAYS"
+                                               style="-fx-background-radius: 10;" />
+                                    <Button onAction="#choisirPhotoAction" prefHeight="40.0"
+                                            style="-fx-background-color: #2d5d34; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;"
+                                            text="📁 Parcourir" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+
+                        <!-- Section 2: Cycle de vie -->
+                        <Separator />
+                        <Label text="🔄  Cycle de Vie &amp; Remplacement" textFill="#B45309">
+                           <font><Font name="System Bold" size="14.0" /></font>
+                        </Label>
+
+                        <HBox spacing="12">
+                           <children>
+                              <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Date de mise en service" textFill="#6B7280"><font><Font size="11"/></font></Label>
+                                    <DatePicker fx:id="dateMiseEnServicePicker" prefHeight="40.0" prefWidth="200.0"
+                                                promptText="Date d'achat / mise en service"
+                                                style="-fx-background-radius: 10;" />
+                                 </children>
+                              </VBox>
+                              <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Durée de vie (années)" textFill="#6B7280"><font><Font size="11"/></font></Label>
+                                    <TextField fx:id="dureeVieTextField" prefHeight="40.0"
+                                               promptText="Ex: 10 (tracteur), 3 (PC)..."
+                                               style="-fx-background-radius: 10;" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <!-- Info box -->
+                        <HBox spacing="8" style="-fx-background-color: #FEF3C7; -fx-padding: 10 15; -fx-background-radius: 10;">
+                           <children>
+                              <Label text="💡" />
+                              <Label text="Ces informations permettent au système de détecter automatiquement les équipements à remplacer."
+                                     textFill="#92400E" wrapText="true" HBox.hgrow="ALWAYS">
+                                 <font><Font size="11"/></font>
+                              </Label>
+                           </children>
+                        </HBox>
+
+                     </children>
+                  </VBox>
+
+                  <!-- RIGHT: Aperçu photo -->
+                  <VBox alignment="CENTER" prefWidth="220.0" spacing="12.0"
+                        style="-fx-background-color: #F9FAFB; -fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15; -fx-padding: 20;">
+                     <children>
+                        <Label text="🖼️" style="-fx-font-size: 30;"/>
+                        <Label text="Aperçu des Photos" textFill="#6b7280">
+                           <font><Font name="System Bold" size="12"/></font>
+                        </Label>
+                        
+                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="280.0" prefWidth="180.0" 
+                                    style="-fx-background-color: transparent; -fx-background: transparent;">
+                           <content>
+                              <FlowPane fx:id="photosContainer" hgap="10" vgap="10" alignment="TOP_CENTER" 
+                                        style="-fx-padding: 5;">
+                                 <!-- Les images s'ajouteront ici -->
+                              </FlowPane>
+                           </content>
+                        </ScrollPane>
+
+                        <Label text="Sélectionnez une ou plusieurs photos"
+                               textFill="#9CA3AF" wrapText="true" textAlignment="CENTER">
+                           <font><Font size="10"/></font>
+                        </Label>
+                     </children>
+                  </VBox>
+
+               </children>
+            </HBox>
+
+            <!-- Buttons -->
+            <HBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Button onAction="#ajouterEquipementAction" prefHeight="48.0" prefWidth="220.0"
+                          style="-fx-background-color: #2d5d34; -fx-text-fill: white; -fx-background-radius: 12; -fx-font-weight: bold; -fx-font-size: 14; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(45,93,52,0.4), 10, 0, 0, 4);"
+                          text="✅  ENREGISTRER" />
+                  <Button onAction="#retourAction" prefHeight="48.0" prefWidth="150.0"
+                          style="-fx-background-color: #9CA3AF; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand;"
+                          text="ANNULER" />
+               </children>
+            </HBox>
+
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

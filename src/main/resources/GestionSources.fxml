@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="800.0" prefWidth="1000.0" spacing="30.0" style="-fx-background-color: #F8FAFC; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GestionSourcesController">
+   <children>
+      
+      <!-- Header -->
+      <HBox alignment="CENTER_LEFT" spacing="20.0">
+         <children>
+            <VBox>
+               <children>
+                  <Label text="Mes Comptes &amp; Cartes" textFill="#111827">
+                     <font><Font name="System Bold" size="28.0" /></font>
+                  </Label>
+                  <Label text="Gérez vos sources de financement et vos cartes bancaires" textFill="#6B7280" />
+               </children>
+            </VBox>
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button onAction="#ouvrirAjoutSource" style="-fx-background-color: #063D2F; -fx-text-fill: white; -fx-background-radius: 12; -fx-padding: 12 25; -fx-font-weight: bold; -fx-cursor: hand;" text="+ Ajouter un compte" />
+         </children>
+      </HBox>
+
+      <Separator opacity="0.3" />
+
+      <!-- Cards Container -->
+      <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox fx:id="mainContainer" spacing="10.0" style="-fx-background-color: transparent;">
+               <!-- Les titres et les listes de cartes seront ajoutés ici -->
+               <padding>
+                  <Insets bottom="20.0" right="20.0" top="10.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+
+   </children>
+</VBox>

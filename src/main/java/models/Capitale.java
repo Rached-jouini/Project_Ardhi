@@ -9,8 +9,19 @@ public class Capitale {
     private String devise;
     private LocalDate date_creation;
     private String description;
+    private double seuil_alerte;
 
     public Capitale() {
+    }
+
+    public Capitale(int id, double montant_initial, double montant_actuel, String devise, LocalDate date_creation, String description, double seuil_alerte) {
+        this.id = id;
+        this.montant_initial = montant_initial;
+        this.montant_actuel = montant_actuel;
+        this.devise = devise;
+        this.date_creation = date_creation;
+        this.description = description;
+        this.seuil_alerte = seuil_alerte;
     }
 
     public Capitale(int id, double montant_initial, double montant_actuel, String devise, LocalDate date_creation, String description) {
@@ -20,14 +31,26 @@ public class Capitale {
         this.devise = devise;
         this.date_creation = date_creation;
         this.description = description;
+        this.seuil_alerte = 0.0;
     }
 
+    public Capitale(double montant_initial, double montant_actuel, String devise, LocalDate date_creation, String description, double seuil_alerte) {
+        this.montant_initial = montant_initial;
+        this.montant_actuel = montant_actuel;
+        this.devise = devise;
+        this.date_creation = date_creation;
+        this.description = description;
+        this.seuil_alerte = seuil_alerte;
+    }
+
+    // Nouveau constructeur de compatibilite (sans seuil_alerte)
     public Capitale(double montant_initial, double montant_actuel, String devise, LocalDate date_creation, String description) {
         this.montant_initial = montant_initial;
         this.montant_actuel = montant_actuel;
         this.devise = devise;
         this.date_creation = date_creation;
         this.description = description;
+        this.seuil_alerte = 0.0; // Valeur par defaut
     }
 
     public int getId() {
@@ -77,6 +100,14 @@ public class Capitale {
         this.description = description;
     }
 
+    public double getSeuil_alerte() {
+        return seuil_alerte;
+    }
+
+    public void setSeuil_alerte(double seuil_alerte) {
+        this.seuil_alerte = seuil_alerte;
+    }
+
     @Override
     public String toString() {
         return "Capitale{" + "id=" + id
@@ -84,6 +115,7 @@ public class Capitale {
                 + ", montant_actuel=" + montant_actuel
                 + ", devise=" + devise
                 + ", date_creation=" + date_creation
-                + ", description=" + description + '}';
+                + ", description=" + description 
+                + ", seuil_alerte=" + seuil_alerte + '}';
     }
 }

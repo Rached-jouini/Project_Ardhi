@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Rectangle?>
+
+<HBox prefHeight="550.0" prefWidth="850.0" spacing="0.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 10);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FormulaireCarteController">
+   <children>
+      
+      <!-- Left Side: Form -->
+      <VBox prefWidth="500.0" spacing="25.0" style="-fx-padding: 40;">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <Label text="💳" style="-fx-font-size: 24;" />
+                  <Label text="Nouvelle Carte Bancaire" textFill="#1E293B">
+                     <font><Font name="System Bold" size="22.0" /></font>
+                  </Label>
+               </children>
+            </HBox>
+
+            <VBox spacing="8.0">
+               <children>
+                  <Label text="Numéro de la Carte" textFill="#64748B" />
+                  <TextField fx:id="numeroField" onKeyTyped="#onNumeroTyped" prefHeight="45.0" promptText="0000 0000 0000 0000" style="-fx-background-radius: 10; -fx-border-color: #E2E8F0; -fx-border-radius: 10; -fx-font-size: 14;" />
+               </children>
+            </VBox>
+
+            <VBox spacing="8.0">
+               <children>
+                  <Label text="Nom du Titulaire" textFill="#64748B" />
+                  <TextField fx:id="nomTitulaireField" onKeyTyped="#onNomTyped" prefHeight="45.0" promptText="NOM COMPLET" style="-fx-background-radius: 10; -fx-border-color: #E2E8F0; -fx-border-radius: 10; -fx-font-size: 14;" />
+               </children>
+            </VBox>
+
+            <HBox spacing="20.0">
+               <children>
+                  <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Date d'Expiration" textFill="#64748B" />
+                        <TextField fx:id="expiryField" onKeyTyped="#onExpiryTyped" prefHeight="45.0" promptText="MM/YY" style="-fx-background-radius: 10; -fx-border-color: #E2E8F0; -fx-border-radius: 10;" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="CVV" textFill="#64748B" />
+                        <PasswordField fx:id="cvvField" prefHeight="45.0" promptText="123" style="-fx-background-radius: 10; -fx-border-color: #E2E8F0; -fx-border-radius: 10;" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <VBox spacing="8.0">
+               <children>
+                  <Label text="Solde Initial (DT)" textFill="#64748B" />
+                  <TextField fx:id="soldeField" onKeyTyped="#onSoldeTyped" prefHeight="45.0" promptText="0.00" style="-fx-background-radius: 10; -fx-border-color: #E2E8F0; -fx-border-radius: 10; -fx-font-weight: bold;" />
+               </children>
+            </VBox>
+
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button onAction="#annuler" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #F8FAFC; -fx-text-fill: #64748B; -fx-background-radius: 10; -fx-cursor: hand;" text="Annuler" />
+                  <Button onAction="#enregistrer" prefHeight="45.0" prefWidth="150.0" style="-fx-background-color: #063D2F; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-weight: bold; -fx-cursor: hand;" text="Enregistrer Carte" />
+               </children>
+               <VBox.margin><Insets top="10.0" /></VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+
+      <!-- Right Side: Visual Card Preview -->
+      <VBox alignment="CENTER" prefWidth="350.0" spacing="30.0" style="-fx-background-color: #F8FAFC; -fx-background-radius: 0 20 20 0; -fx-padding: 30;">
+         <children>
+            <Label text="Aperçu de la carte" textFill="#64748B">
+               <font><Font name="System Italic" size="13.0" /></font>
+            </Label>
+            
+            <!-- The Card Visual -->
+            <VBox fx:id="visualCard" prefHeight="180.0" prefWidth="290.0" spacing="25.0" style="-fx-background-color: linear-gradient(to bottom right, #1E293B, #0F172A); -fx-background-radius: 20; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 10);">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#FCD34D" height="30.0" stroke="TRANSPARENT" width="40.0" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="cardTypeLabel" text="VISA" textFill="WHITE">
+                           <font><Font name="System Bold Italic" size="18.0" /></font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  
+                  <Label fx:id="previewNumber" text="**** **** **** ****" textFill="WHITE">
+                     <font><Font name="System Bold" size="20.0" /></font>
+                  </Label>
+                  
+                  <HBox alignment="BOTTOM_LEFT">
+                     <children>
+                        <VBox spacing="2.0">
+                           <children>
+                              <Label text="TITULAIRE" textFill="WHITE" opacity="0.6" style="-fx-font-size: 9;" />
+                              <Label fx:id="previewName" text="NOM COMPLET" textFill="WHITE">
+                                 <font><Font name="System Bold" size="13.0" /></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <VBox spacing="2.0">
+                           <children>
+                              <Label text="EXP" textFill="WHITE" opacity="0.6" style="-fx-font-size: 9;" />
+                              <Label fx:id="previewExpiry" text="MM/YY" textFill="WHITE">
+                                 <font><Font name="System Bold" size="13.0" /></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+
+            <VBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <Label fx:id="previewSolde" text="0.00 DT" textFill="#063D2F">
+                     <font><Font name="System Bold" size="24.0" /></font>
+                  </Label>
+                  <Label text="SOLDE INITIAL" textFill="#64748B" style="-fx-font-size: 10;" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+
+   </children>
+</HBox>

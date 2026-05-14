@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainLayoutController">
+   
+   <!-- SIDEBAR (GAUCHE) -->
+   <left>
+      <VBox prefWidth="260.0" style="-fx-background-color: #063D2F;" BorderPane.alignment="CENTER">
+         <children>
+            <!-- Logo Section -->
+            <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-padding: 30 20 40 20;">
+               <children>
+                  <VBox style="-fx-background-color: #10B981; -fx-background-radius: 8; -fx-padding: 8;">
+                     <children>
+                        <Label text="🌱" textFill="WHITE">
+                           <font><Font size="20.0" /></font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="ARDHI" textFill="WHITE">
+                           <font><Font name="System Bold" size="22.0" /></font>
+                        </Label>
+                        <Label text="Plateforme AgriTech" textFill="#5DCAA5" style="-fx-font-size: 10;" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Navigation Links -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox spacing="5.0" style="-fx-padding: 0 15 0 15;">
+                     <children>
+                        <Label text="NAVIGATION" textFill="#5DCAA5" opacity="0.6">
+                           <font><Font name="System Bold" size="10.0" /></font>
+                           <VBox.margin><Insets bottom="5.0" left="10.0" /></VBox.margin>
+                        </Label>
+                        <Button fx:id="btnOverview" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" prefHeight="45.0" style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-background-radius: 10;" text="  ⊞  Vue d'ensemble" />
+                        
+                        <!-- GESTION ÉQUIPEMENTS -->
+                        <Label text="GESTION ÉQUIPEMENTS" textFill="#5DCAA5" opacity="0.6">
+                           <font><Font name="System Bold" size="10.0" /></font>
+                           <VBox.margin><Insets bottom="5.0" left="10.0" top="15.0" /></VBox.margin>
+                        </Label>
+                        <Button fx:id="btnEquipement" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" onAction="#showEquipement" prefHeight="45.0" style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-background-radius: 10;" text="  🚜  Location Équipements" />
+
+                        <Label text="GESTION FINANCIÈRE" textFill="#5DCAA5" opacity="0.6">
+                           <font><Font name="System Bold" size="10.0" /></font>
+                           <VBox.margin><Insets bottom="5.0" left="10.0" top="15.0" /></VBox.margin>
+                        </Label>
+                        <Button fx:id="btnFinance" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" onAction="#showFinance" prefHeight="45.0" style="-fx-background-color: #085041; -fx-text-fill: white; -fx-background-radius: 10; -fx-border-color: #10B981; -fx-border-width: 0 0 0 4;" text="  📊  Dashboard Financier" />
+                        <Button fx:id="btnTransactions" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" onAction="#showTransactions" prefHeight="45.0" style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-background-radius: 10;" text="  💸  Transactions" />
+                        <Button fx:id="btnWallets" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" onAction="#showWallets" prefHeight="45.0" style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-background-radius: 10;" text="  💳  Mes Comptes &amp; Cartes" />
+
+                        
+                        <Label text="SYSTEME &amp; CONFIG" textFill="#5DCAA5" opacity="0.6">
+                           <font><Font name="System Bold" size="10.0" /></font>
+                           <VBox.margin><Insets bottom="5.0" left="10.0" top="15.0" /></VBox.margin>
+                        </Label>
+                        <Button fx:id="btnSettings" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" onAction="#showAdmin" prefHeight="45.0" style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-background-radius: 10;" text="  ⚙  Administration Financière" />
+                        <Button fx:id="btnAdminEquip" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" onAction="#showAdminEquip" prefHeight="45.0" style="-fx-background-color: transparent; -fx-text-fill: #E5E7EB; -fx-background-radius: 10;" text="  🛠  Administration Équipements" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+
+            <!-- User Profile Section -->
+            <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-padding: 20; -fx-background-color: #042F25;">
+               <children>
+                  <Circle fill="#10B981" radius="20.0" />
+                  <VBox>
+                     <children>
+                        <Label text="Mohamed Ali" textFill="WHITE">
+                           <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <Label text="Agriculteur - Sfax" textFill="#5DCAA5" style="-fx-font-size: 10;" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </left>
+
+   <!-- MAIN CONTENT AREA -->
+   <center>
+      <StackPane fx:id="contentArea" style="-fx-background-color: #F8FAFC;" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

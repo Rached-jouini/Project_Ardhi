@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane prefHeight="480.0" prefWidth="440.0"
+    style="-fx-background-color: transparent;"
+    xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="controllers.ConfirmationLocationController">
+   <children>
+      <VBox spacing="0"
+            AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
+            style="-fx-background-color: white; -fx-background-radius: 24; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 30, 0, 0, 10);">
+         <children>
+
+            <!-- Hero Section verte -->
+            <VBox alignment="CENTER" spacing="12"
+                  style="-fx-background-color: linear-gradient(to bottom, #063D2F, #0d8a5e); -fx-padding: 35 30 30 30; -fx-background-radius: 24 24 0 0;">
+               <children>
+                  <!-- Icône succès animée -->
+                  <StackPane alignment="CENTER">
+                     <children>
+                        <Circle radius="40"
+                                style="-fx-fill: rgba(255,255,255,0.15);"/>
+                        <Circle radius="32"
+                                style="-fx-fill: rgba(255,255,255,0.2);"/>
+                        <Label text="✅" style="-fx-font-size: 36;"/>
+                     </children>
+                  </StackPane>
+
+                  <Label text="Location Confirmée !" textFill="white">
+                     <font><Font name="System Bold" size="22.0" /></font>
+                  </Label>
+                  <Label text="Votre réservation a été enregistrée avec succès."
+                         textFill="#A7F3D0" wrapText="true" textAlignment="CENTER">
+                     <font><Font size="12.0" /></font>
+                  </Label>
+               </children>
+            </VBox>
+
+            <!-- Détails de la location -->
+            <VBox spacing="12" VBox.vgrow="ALWAYS"
+                  style="-fx-padding: 25 30;">
+               <children>
+
+                  <Label text="Récapitulatif de la location" textFill="#374151">
+                     <font><Font name="System Bold" size="14.0" /></font>
+                  </Label>
+
+                  <!-- Info équipements -->
+                  <HBox spacing="12" alignment="CENTER_LEFT"
+                        style="-fx-background-color: #F0FDF4; -fx-padding: 12 15; -fx-background-radius: 12;">
+                     <children>
+                        <Label text="📦" style="-fx-font-size: 18;"/>
+                        <VBox spacing="2">
+                           <children>
+                              <Label text="Équipements loués" textFill="#6B7280">
+                                 <font><Font size="10"/></font>
+                              </Label>
+                              <Label fx:id="equipementsLabel" text="—" textFill="#065F46" wrapText="true">
+                                 <font><Font name="System Bold" size="13"/></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <!-- Dates + durée -->
+                  <HBox spacing="10">
+                     <children>
+                        <!-- Date début -->
+                        <VBox spacing="2" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: #EFF6FF; -fx-padding: 12 15; -fx-background-radius: 12;">
+                           <children>
+                              <Label text="📅 Début" textFill="#6B7280"><font><Font size="10"/></font></Label>
+                              <Label fx:id="dateDebutLabel" text="—" textFill="#1D4ED8">
+                                 <font><Font name="System Bold" size="12"/></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <!-- Flèche -->
+                        <Label text="→" textFill="#94A3B8" style="-fx-font-size: 18;" VBox.vgrow="ALWAYS"/>
+                        <!-- Date fin -->
+                        <VBox spacing="2" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: #EFF6FF; -fx-padding: 12 15; -fx-background-radius: 12;">
+                           <children>
+                              <Label text="🏁 Fin" textFill="#6B7280"><font><Font size="10"/></font></Label>
+                              <Label fx:id="dateFinLabel" text="—" textFill="#1D4ED8">
+                                 <font><Font name="System Bold" size="12"/></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <!-- Durée -->
+                        <VBox spacing="2" alignment="CENTER"
+                              style="-fx-background-color: #FEF3C7; -fx-padding: 12 12; -fx-background-radius: 12;">
+                           <children>
+                              <Label text="⏱" style="-fx-font-size: 14;"/>
+                              <Label fx:id="dureeLabel" text="—" textFill="#92400E">
+                                 <font><Font name="System Bold" size="12"/></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <!-- Paiement + Total -->
+                  <HBox spacing="10">
+                     <children>
+                        <VBox spacing="2" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: #F8FAFC; -fx-padding: 12 15; -fx-background-radius: 12; -fx-border-color: #E2E8F0; -fx-border-radius: 12; -fx-border-width: 1;">
+                           <children>
+                              <Label text="💳 Paiement" textFill="#6B7280"><font><Font size="10"/></font></Label>
+                              <Label fx:id="paiementLabel" text="—" textFill="#374151">
+                                 <font><Font name="System Bold" size="12"/></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox spacing="2" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: #063D2F; -fx-padding: 12 15; -fx-background-radius: 12;">
+                           <children>
+                              <Label text="TOTAL TTC" textFill="#A7F3D0">
+                                 <font><Font name="System Bold" size="10"/></font>
+                              </Label>
+                              <Label fx:id="totalLabel" text="0.00 DT" textFill="white">
+                                 <font><Font name="System Bold" size="20"/></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+               </children>
+            </VBox>
+
+            <!-- Bouton Fermer -->
+            <HBox alignment="CENTER" style="-fx-padding: 0 30 25 30;">
+               <children>
+                  <Button onAction="#fermer" prefHeight="48" prefWidth="380"
+                          style="-fx-background-color: linear-gradient(to right, #063D2F, #0d6e52); -fx-text-fill: white; -fx-background-radius: 14; -fx-font-size: 14; -fx-font-weight: bold; -fx-cursor: hand;"
+                          text="Fermer" />
+               </children>
+            </HBox>
+
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

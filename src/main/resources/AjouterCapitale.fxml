@@ -1,14 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.AjouterCapitaleController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: #E5E7EB;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterCapitaleController">
+   <children>
+      <VBox alignment="TOP_CENTER" spacing="25.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <!-- Titre Principal -->
+            <Label text="Admin Capital Settings ⚙" textFill="#2d5d34">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
+            
+            <HBox spacing="30.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <!-- SECTION GAUCHE : FORMULAIRE -->
+                  <VBox prefWidth="450.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 8); -fx-padding: 30;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                           <children>
+                              <Label text="💰">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <VBox>
+                                 <children>
+                                    <Label text="CONFIGURATION DU" textFill="#b58d3d">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="CAPITAL INITIAL" textFill="#2d5d34">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        
+                        <VBox spacing="8.0">
+                           <children>
+                              <Label text="Montant Capital Initial" textFill="#4b5563">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="montantInitialTextField" prefHeight="45.0" style="-fx-background-radius: 10; -fx-border-color: #D1D5DB; -fx-border-radius: 10;" />
+                           </children>
+                        </VBox>
 
+                        <VBox spacing="8.0">
+                           <children>
+                              <Label text="Devise" textFill="#4b5563">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="deviseComboBox" prefHeight="45.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-border-color: #D1D5DB; -fx-border-radius: 10;" />
+                           </children>
+                        </VBox>
+
+                        <VBox spacing="8.0">
+                           <children>
+                              <Label text="Description" textFill="#4b5563">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextArea fx:id="descriptionTextArea" prefHeight="120.0" style="-fx-background-radius: 10; -fx-border-color: #D1D5DB; -fx-border-radius: 10;" />
+                           </children>
+                        </VBox>
+
+                        <HBox spacing="15.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#ajouterCapitaleAction" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #2d5d34; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-weight: bold;" text="Mettre à Jour" />
+                              <Button mnemonicParsing="false" onAction="#retourAction" prefHeight="45.0" prefWidth="150.0" style="-fx-background-color: #9CA3AF; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-weight: bold;" text="Annuler" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+
+                  <!-- SECTION DROITE : TYPES DE SOURCE -->
+                  <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 8); -fx-padding: 30;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                           <children>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Gestion des Types de" textFill="#4b5563">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Source de Revenu" textFill="#111827">
+                                       <font>
+                                          <Font name="System Bold" size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <Button mnemonicParsing="false" style="-fx-background-color: #2d5d34; -fx-text-fill: white; -fx-background-radius: 10;" text="+ Ajouter Nouveau Type">
+                                 <padding>
+                                    <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                 </padding>
+                              </Button>
+                           </children>
+                        </HBox>
+                        
+                        <TableView fx:id="sourceTypeTable" prefHeight="400.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #E5E7EB;">
+                          <columns>
+                            <TableColumn fx:id="colId" prefWidth="100.0" text="ID" />
+                            <TableColumn fx:id="colNom" prefWidth="300.0" text="Type de Source" />
+                            <TableColumn fx:id="colAction" prefWidth="150.0" text="Actions" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="680.0" prefWidth="520.0"
+    style="-fx-background-color: transparent;"
+    xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="controllers.PanierController">
+   <children>
+      <VBox spacing="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+            style="-fx-background-color: white; -fx-background-radius: 24; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 30, 0, 0, 10);">
+         <children>
+
+            <!-- Header gradient -->
+            <HBox alignment="CENTER_LEFT" spacing="12.0"
+                  style="-fx-background-color: linear-gradient(to right, #063D2F, #0d6e52); -fx-padding: 25 30 20 30; -fx-background-radius: 24 24 0 0;">
+               <children>
+                  <VBox HBox.hgrow="ALWAYS" spacing="3">
+                     <children>
+                        <Label text="🛒  Mon Panier" textFill="white">
+                           <font><Font name="System Bold" size="22.0" /></font>
+                        </Label>
+                        <Label fx:id="cartSummaryLabel" text="0 article(s)" textFill="#A7F3D0">
+                           <font><Font size="12.0" /></font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Button onAction="#close"
+                          style="-fx-background-color: rgba(255,255,255,0.15); -fx-background-radius: 50; -fx-padding: 8 12; -fx-cursor: hand;"
+                          text="✕" textFill="white">
+                     <font><Font size="14" /></font>
+                  </Button>
+               </children>
+            </HBox>
+
+            <!-- Articles List -->
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                        style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent; -fx-padding: 0;">
+               <content>
+                  <VBox fx:id="cartItemsContainer" spacing="10.0" style="-fx-padding: 20 25;">
+                     <!-- Articles added here dynamically -->
+                  </VBox>
+               </content>
+            </ScrollPane>
+
+            <!-- Bottom Section -->
+            <VBox spacing="14.0"
+                  style="-fx-background-color: #F8FAFC; -fx-padding: 20 25 25 25; -fx-background-radius: 0 0 24 24; -fx-border-color: #E2E8F0; -fx-border-width: 1 0 0 0;">
+               <children>
+
+                  <!-- Dates Row -->
+                  <HBox spacing="12.0">
+                     <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="📅  Date Début" textFill="#374151">
+                                 <font><Font name="System Bold" size="12.0" /></font>
+                              </Label>
+                              <DatePicker fx:id="dateDebutPicker" prefHeight="38.0" prefWidth="220.0"
+                                          style="-fx-background-radius: 10; -fx-border-color: #D1D5DB; -fx-border-radius: 10;" />
+                           </children>
+                        </VBox>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="📅  Date Fin" textFill="#374151">
+                                 <font><Font name="System Bold" size="12.0" /></font>
+                              </Label>
+                              <DatePicker fx:id="dateFinPicker" prefHeight="38.0" prefWidth="220.0"
+                                          style="-fx-background-radius: 10; -fx-border-color: #D1D5DB; -fx-border-radius: 10;" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <!-- Duration Info -->
+                  <HBox alignment="CENTER" spacing="8"
+                        style="-fx-background-color: #EFF6FF; -fx-padding: 8 15; -fx-background-radius: 10;">
+                     <children>
+                        <Label text="⏱" />
+                        <Label fx:id="durationLabel" text="Durée : 1 jour(s)" textFill="#1D4ED8">
+                           <font><Font name="System Bold" size="12" /></font>
+                        </Label>
+                     </children>
+                  </HBox>
+
+                  <!-- Separator -->
+                  <Separator opacity="0.4" />
+
+                  <!-- Total Row -->
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label text="TOTAL" textFill="#6B7280">
+                                 <font><Font name="System Bold" size="11.0" /></font>
+                              </Label>
+                              <Label fx:id="totalLabel" text="0.00 DT" textFill="#063D2F">
+                                 <font><Font name="System Bold" size="26.0" /></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER_RIGHT" spacing="3">
+                           <children>
+                              <Label text="Wallet disponible :" textFill="#6B7280">
+                                 <font><Font size="11" /></font>
+                              </Label>
+                              <Label fx:id="walletBalanceLabel" text="—" textFill="#10B981">
+                                 <font><Font name="System Bold" size="13" /></font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <!-- Choix du Budget (Wallet) -->
+                  <VBox spacing="6">
+                     <children>
+                        <Label text="📂  Budget à impacter (Wallet)" textFill="#374151">
+                           <font><Font name="System Bold" size="12.0" /></font>
+                        </Label>
+                        <ComboBox fx:id="walletSelectionCombo" prefHeight="40.0" prefWidth="470.0" 
+                                  promptText="Chargement des budgets..."
+                                  style="-fx-background-radius: 10; -fx-background-color: white; -fx-border-color: #D1D5DB; -fx-border-radius: 10; -fx-font-size: 13;" />
+                     </children>
+                  </VBox>
+
+                  <!-- Payment Mode -->
+                  <VBox spacing="6">
+                     <children>
+                        <Label text="💳  Mode de Paiement" textFill="#374151">
+                           <font><Font name="System Bold" size="12.0" /></font>
+                        </Label>
+                        <ComboBox fx:id="paiementCombo" prefHeight="40.0" prefWidth="470.0"
+                                  promptText="Choisir un moyen de paiement..."
+                                  style="-fx-background-radius: 10; -fx-background-color: white; -fx-border-color: #D1D5DB; -fx-border-radius: 10; -fx-font-size: 13;" />
+                     </children>
+                  </VBox>
+
+                  <!-- Section Carte Bancaire (masquée par défaut) -->
+                  <VBox fx:id="carteBancaireSection" spacing="8.0" managed="false" visible="false"
+                        style="-fx-background-color: #F0FDF4; -fx-padding: 15; -fx-background-radius: 12; -fx-border-color: #10B981; -fx-border-radius: 12; -fx-border-width: 1;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="8">
+                           <children>
+                              <Label text="💳" style="-fx-font-size: 16;"/>
+                              <Label text="Sélectionner votre carte" textFill="#065F46">
+                                 <font><Font name="System Bold" size="13.0" /></font>
+                              </Label>
+                           </children>
+                        </HBox>
+
+                        <ComboBox fx:id="carteCombo" prefHeight="42.0" prefWidth="440.0"
+                                  promptText="Choisir une carte bancaire..."
+                                  style="-fx-background-radius: 10; -fx-background-color: white; -fx-border-color: #6EE7B7; -fx-border-radius: 10; -fx-font-size: 13;" />
+
+                        <!-- Info solde carte -->
+                        <HBox fx:id="soldCarteBox" alignment="CENTER_LEFT" spacing="10" visible="false" managed="false"
+                              style="-fx-background-color: white; -fx-padding: 10 15; -fx-background-radius: 10; -fx-border-color: #D1FAE5; -fx-border-radius: 10; -fx-border-width: 1;">
+                           <children>
+                              <Label text="💰" />
+                              <Label text="Solde disponible :" textFill="#374151">
+                                 <font><Font size="12"/></font>
+                              </Label>
+                              <Label fx:id="soldCarteLabel" text="—" textFill="#059669">
+                                 <font><Font name="System Bold" size="14"/></font>
+                              </Label>
+                              <Region HBox.hgrow="ALWAYS"/>
+                              <Label fx:id="soldCarteStatusLabel" text="" >
+                                 <font><Font name="System Bold" size="11"/></font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Confirm Button -->
+                  <Button fx:id="confirmBtn" onAction="#validerLocation" prefHeight="50.0" prefWidth="470.0"
+                          style="-fx-background-color: linear-gradient(to right, #063D2F, #0d6e52); -fx-text-fill: white; -fx-background-radius: 14; -fx-font-size: 15; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(6,61,47,0.4), 10, 0, 0, 5);"
+                          text="✅  CONFIRMER LA LOCATION" />
+
+               </children>
+            </VBox>
+
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

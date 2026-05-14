@@ -10,8 +10,26 @@ public class TransactionFinanciere {
     private int source_type_id;
     private int source_id;
     private String description;
+    private Integer wallet_id;
+    private String modePaiement;
 
     public TransactionFinanciere() {
+    }
+
+    public String getModePaiement() {
+        return modePaiement;
+    }
+
+    public void setModePaiement(String modePaiement) {
+        this.modePaiement = modePaiement;
+    }
+
+    public Integer getWalletId() {
+        return wallet_id;
+    }
+
+    public void setWalletId(Integer wallet_id) {
+        this.wallet_id = wallet_id;
     }
 
     public TransactionFinanciere(LocalDate date_operation, int id, String type, double montant, int source_type_id, int source_id, String description) {

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="550.0" prefWidth="450.0" style="-fx-background-color: white; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FormulaireWalletController">
+   <children>
+      <VBox spacing="20.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <Label text="Nouveau Budget" textFill="#063D2F">
+               <font><Font name="System Bold" size="24.0" /></font>
+            </Label>
+            
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Nom du budget (ex: Engrais, Salaires...)" textFill="#6B7280" />
+                  <TextField fx:id="nomField" prefHeight="45.0" style="-fx-background-radius: 10;" />
+               </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Montant Alloué (DT)" textFill="#6B7280" />
+                  <TextField fx:id="montantField" prefHeight="45.0" style="-fx-background-radius: 10; -fx-font-size: 16; -fx-font-weight: bold;" />
+               </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Limite de Découvert Autorisé (DT)" textFill="#EF4444" style="-fx-font-weight: bold;" />
+                  <TextField fx:id="decouvertField" prefHeight="45.0" promptText="0.00" style="-fx-background-radius: 10; -fx-border-color: #FEE2E2; -fx-border-radius: 10;" />
+                  <Label text="Exemple: 500 DT permet de depenser jusqu'a -500 DT." textFill="#9CA3AF" style="-fx-font-size: 10;" />
+               </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Description" textFill="#6B7280" />
+                  <TextArea fx:id="descField" prefHeight="80.0" style="-fx-background-radius: 10;" />
+               </children>
+            </VBox>
+
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Button onAction="#enregistrerWallet" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #063D2F; -fx-text-fill: white; -fx-background-radius: 12; -fx-font-weight: bold;" text="CRÉER LE BUDGET" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

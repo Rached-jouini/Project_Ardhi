@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="750.0" prefWidth="520.0" style="-fx-background-color: white; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FormulaireTransactionController">
+   <children>
+      <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <content>
+            <VBox spacing="25.0" style="-fx-padding: 30;">
+               <children>
+                  <!-- Header with Icon -->
+                  <HBox alignment="CENTER_LEFT" spacing="15.0">
+                     <children>
+                        <Label style="-fx-background-color: #ECFDF5; -fx-padding: 12; -fx-background-radius: 15;" text="💸" textFill="#059669"><font><Font size="22.0" /></font></Label>
+                        <VBox>
+                           <children>
+                              <Label text="Nouvelle Transaction" textFill="#111827">
+                                 <font><Font name="System Bold" size="24.0" /></font>
+                              </Label>
+                              <Label text="Enregistrez vos flux de tresorerie" textFill="#6B7280" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+      
+                  <Separator opacity="0.4" />
+      
+                  <!-- Type Selector Buttons -->
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" text="Sens du flux" textFill="#374151" />
+                        <HBox spacing="15.0">
+                           <children>
+                              <ToggleButton fx:id="btnRevenu" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" selected="true" style="-fx-background-color: #ECFDF5; -fx-text-fill: #059669; -fx-background-radius: 12; -fx-font-weight: bold; -fx-cursor: hand;" text="🟢 REVENU (+)">
+                                 <toggleGroup><ToggleGroup fx:id="typeGroup" /></toggleGroup>
+                              </ToggleButton>
+                              <ToggleButton fx:id="btnDepense" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #FEE2E2; -fx-text-fill: #EF4444; -fx-background-radius: 12; -fx-font-weight: bold; -fx-cursor: hand;" text="🔴 DEPENSE (-)" toggleGroup="$typeGroup" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+      
+                  <!-- Amount Input -->
+                  <VBox spacing="8.0">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" text="Montant" textFill="#374151" />
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #F9FAFB; -fx-background-radius: 12; -fx-padding: 5 15; -fx-border-color: #E5E7EB; -fx-border-radius: 12;">
+                           <children>
+                              <Label style="-fx-font-weight: bold;" text="DT" textFill="#9CA3AF" />
+                              <TextField fx:id="montantField" prefHeight="40.0" promptText="0.00" style="-fx-background-color: transparent; -fx-font-size: 18; -fx-font-weight: bold;" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+      
+                  <!-- Wallet Choice -->
+                  <VBox spacing="8.0">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" text="Budget (Wallet) concerné" textFill="#374151" />
+                        <ComboBox fx:id="walletCombo" prefHeight="50.0" prefWidth="410.0" promptText="Selectionner une enveloppe..." style="-fx-background-color: #F9FAFB; -fx-background-radius: 12; -fx-border-color: #E5E7EB; -fx-border-radius: 12;" />
+                     </children>
+                  </VBox>
+      
+                  <!-- Mode de Paiement -->
+                  <VBox spacing="8.0">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" text="Mode de Paiement" textFill="#374151" />
+                        <ComboBox fx:id="modePaiementCombo" onAction="#handleModePaiementChange" prefHeight="50.0" prefWidth="410.0" promptText="Espèces, Carte, Virement..." style="-fx-background-color: #F9FAFB; -fx-background-radius: 12; -fx-border-color: #E5E7EB; -fx-border-radius: 12;" />
+                     </children>
+                  </VBox>
+
+                  <!-- Section Carte (Conditionnelle) -->
+                  <VBox fx:id="cardSelectionBox" managed="false" spacing="8.0" visible="false">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" text="Choisir la Carte" textFill="#374151" />
+                        <ComboBox fx:id="cardCombo" prefHeight="50.0" prefWidth="410.0" promptText="Sélectionner une carte..." style="-fx-background-color: #F0F9FF; -fx-background-radius: 12; -fx-border-color: #7DD3FC; -fx-border-radius: 12;" />
+                     </children>
+                  </VBox>
+      
+                  <!-- SMS Phone Number with Prefix -->
+                  <VBox spacing="8.0">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" text="Numéro du Destinataire (SMS)" textFill="#374151" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <ComboBox fx:id="prefixCombo" prefHeight="45.0" prefWidth="120.0" style="-fx-background-radius: 12; -fx-background-color: #F3F4F6;" />
+                              <TextField fx:id="phoneField" prefHeight="45.0" promptText="99 000 111" style="-fx-background-radius: 12; -fx-background-color: white; -fx-border-color: #E5E7EB; -fx-border-radius: 12;" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+      
+                  <!-- Description -->
+                  <VBox spacing="8.0">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" text="Notes additionnelles" textFill="#374151" />
+                        <TextArea fx:id="descField" prefHeight="80.0" promptText="Ex: Achat engrais azote..." style="-fx-background-radius: 12; -fx-padding: 5;" wrapText="true" />
+                     </children>
+                  </VBox>
+      
+                  <Button onAction="#enregistrerTransaction" prefHeight="55.0" prefWidth="410.0" style="-fx-background-color: #063D2F; -fx-text-fill: white; -fx-background-radius: 15; -fx-font-size: 16; -fx-font-weight: bold; -fx-cursor: hand;" text="CONFIRMER L'OPÉRATION" />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,382 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+.shell{display:flex;height:680px;border-radius:14px;overflow:hidden;border:0.5px solid var(--color-border-tertiary)}
+.left-panel{width:240px;background:#0f1a14;display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.left-panel::-webkit-scrollbar{width:3px}
+.left-panel::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1)}
+.lp-header{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.lp-logo{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.lp-logo-icon{width:28px;height:28px;background:#5DCAA5;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.lp-logo-name{font-size:15px;font-weight:700;color:#fff;letter-spacing:2px}
+.lp-tabs{display:flex;gap:4px}
+.lp-tab{padding:5px 10px;border-radius:6px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.4);cursor:pointer}
+.lp-tab.on{background:rgba(93,202,165,0.15);color:#5DCAA5}
+.terrain-item{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;transition:background 0.15s}
+.terrain-item:hover{background:rgba(255,255,255,0.04)}
+.terrain-item.sel{background:rgba(93,202,165,0.1);border-left:3px solid #5DCAA5}
+.ti-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.ti-name{font-size:13px;font-weight:600;color:#fff}
+.ti-loc{font-size:10px;color:rgba(255,255,255,0.35);margin-top:1px}
+.ti-score{font-size:18px;font-weight:700;color:#5DCAA5}
+.ti-deg{font-size:10px;color:rgba(255,255,255,0.4)}
+.ti-rows{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.ti-metric{background:rgba(255,255,255,0.04);border-radius:6px;padding:6px 8px}
+.ti-ml{font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px}
+.ti-mv{font-size:13px;font-weight:600;color:rgba(255,255,255,0.8)}
+.ti-mu{font-size:9px;color:rgba(255,255,255,0.35)}
+.add-block{padding:10px 16px;font-size:11px;color:rgba(255,255,255,0.3);cursor:pointer;display:flex;align-items:center;gap:5px}
+.area-bar{padding:10px 16px;border-top:1px solid rgba(255,255,255,0.05)}
+.area-name{font-size:11px;font-weight:600;color:rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.area-hp{font-size:10px;color:#5DCAA5;font-weight:700}
+.sparkline{height:32px;width:100%;display:flex;align-items:flex-end;gap:2px}
+.spark-bar{border-radius:2px 2px 0 0;min-width:5px;flex:1}
+
+.map-center{flex:1;position:relative;background:#2a3520;overflow:hidden}
+.map-svg-wrap{position:absolute;inset:0}
+.map-controls{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px}
+.map-btn{width:28px;height:28px;background:rgba(15,26,20,0.85);border:1px solid rgba(255,255,255,0.15);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.7);font-size:14px;font-weight:500}
+.map-coord-tag{position:absolute;bottom:12px;left:12px;background:rgba(15,26,20,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;font-size:10px;color:rgba(255,255,255,0.5)}
+.legend-box{position:absolute;bottom:12px;right:12px;background:rgba(15,26,20,0.85);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 12px;display:flex;gap:12px}
+.leg-row{display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,0.55)}
+.leg-dot{width:8px;height:8px;border-radius:50%}
+.map-top-bar{position:absolute;top:0;left:0;right:0;background:rgba(15,26,20,0.7);padding:8px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.sat-badge{background:rgba(93,202,165,0.2);border:1px solid rgba(93,202,165,0.3);border-radius:5px;padding:3px 8px;font-size:10px;color:#5DCAA5;font-weight:500}
+.map-btn-grp{display:flex;gap:6px;margin-left:auto}
+.mb2{padding:4px 10px;border-radius:5px;font-size:10px;font-weight:500;color:rgba(255,255,255,0.45);cursor:pointer;border:1px solid rgba(255,255,255,0.12);background:transparent}
+.mb2.on{background:rgba(93,202,165,0.15);color:#5DCAA5;border-color:rgba(93,202,165,0.3)}
+
+.tooltip-box{position:absolute;background:rgba(10,20,14,0.92);border:1px solid rgba(93,202,165,0.3);border-radius:8px;padding:10px 14px;pointer-events:none;min-width:160px}
+.tt-name{font-size:12px;font-weight:700;color:#5DCAA5;margin-bottom:6px}
+.tt-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:3px}
+.tt-val{color:#fff;font-weight:600}
+
+.right-panel{width:200px;background:#0f1a14;border-left:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.right-panel::-webkit-scrollbar{width:3px}
+.right-panel::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1)}
+.rp-header{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.rp-title{font-size:12px;font-weight:600;color:#fff;margin-bottom:8px}
+.rp-search{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;font-size:11px;color:rgba(255,255,255,0.6);outline:none}
+.rp-section{padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.rp-sl{font-size:9px;font-weight:600;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.layer-item{display:flex;align-items:center;justify-content:space-between;padding:5px 0;cursor:pointer}
+.li-name{font-size:11px;color:rgba(255,255,255,0.6)}
+.li-name.active{color:#5DCAA5;font-weight:500}
+.li-pin{width:14px;height:14px;border-radius:3px;background:rgba(93,202,165,0.15);display:flex;align-items:center;justify-content:center}
+.li-pin svg{width:9px;height:9px}
+.li-dots{color:rgba(255,255,255,0.2);font-size:14px;line-height:1}
+.toggle-pill{width:28px;height:14px;border-radius:7px;background:#1a3028;border:1px solid rgba(255,255,255,0.1);position:relative;cursor:pointer}
+.toggle-pill.on{background:#085041}
+.toggle-thumb{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.35);position:absolute;top:1px;left:1px;transition:left 0.15s}
+.toggle-pill.on .toggle-thumb{left:15px;background:#5DCAA5}
+</style>
+
+<div class="shell">
+
+  <div class="left-panel">
+    <div class="lp-header">
+      <div class="lp-logo">
+        <div class="lp-logo-icon">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="#063D2F"><path d="M17 8C8 10 5.9 16.17 3.82 19.34L5.71 21l1-1C8.22 18.5 10 17 12 17c4 0 7-3 7-7V3l-2 5z"/></svg>
+        </div>
+        <div class="lp-logo-name">ARDHI</div>
+      </div>
+      <div class="lp-tabs">
+        <div class="lp-tab on">Terrains</div>
+        <div class="lp-tab">Carte</div>
+        <div class="lp-tab">Stats</div>
+      </div>
+    </div>
+
+    <div class="terrain-item sel" id="ti1" onclick="selectTerrain(1)">
+      <div class="ti-top">
+        <div><div class="ti-name">T1 · Sfax</div><div class="ti-loc">Sfax, Tunisie</div></div>
+        <div style="text-align:right"><span class="ti-score" id="sc1">91</span><span class="ti-deg">°</span><div style="font-size:9px;color:rgba(255,255,255,0.3)">Santé</div></div>
+      </div>
+      <div class="ti-rows">
+        <div class="ti-metric"><div class="ti-ml">Sol</div><div class="ti-mv">Argileux <span class="ti-mu">16.7%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Eau</div><div class="ti-mv">Normale <span class="ti-mu">92%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Précip.</div><div class="ti-mv">19 <span class="ti-mu">mm</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Rend. est.</div><div class="ti-mv">91 <span class="ti-mu">%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Humidité</div><div class="ti-mv">30 <span class="ti-mu">%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Canopée</div><div class="ti-mv">74 <span class="ti-mu">%</span></div></div>
+      </div>
+    </div>
+
+    <div class="terrain-item" id="ti2" onclick="selectTerrain(2)">
+      <div class="ti-top">
+        <div><div class="ti-name">T2 · Sousse</div><div class="ti-loc">Sousse, Tunisie</div></div>
+        <div style="text-align:right"><span class="ti-score" id="sc2">84</span><span class="ti-deg">°</span><div style="font-size:9px;color:rgba(255,255,255,0.3)">Santé</div></div>
+      </div>
+      <div class="ti-rows">
+        <div class="ti-metric"><div class="ti-ml">Sol</div><div class="ti-mv">Limoneux <span class="ti-mu">22%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Eau</div><div class="ti-mv">Barrage <span class="ti-mu">88%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Précip.</div><div class="ti-mv">24 <span class="ti-mu">mm</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Rend. est.</div><div class="ti-mv">84 <span class="ti-mu">%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Humidité</div><div class="ti-mv">45 <span class="ti-mu">%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Canopée</div><div class="ti-mv">68 <span class="ti-mu">%</span></div></div>
+      </div>
+    </div>
+
+    <div class="terrain-item" id="ti3" onclick="selectTerrain(3)">
+      <div class="ti-top">
+        <div><div class="ti-name">T3 · Gabès</div><div class="ti-loc">Gabès, Tunisie</div></div>
+        <div style="text-align:right"><span class="ti-score" id="sc3">78</span><span class="ti-deg">°</span><div style="font-size:9px;color:rgba(255,255,255,0.3)">Santé</div></div>
+      </div>
+      <div class="ti-rows">
+        <div class="ti-metric"><div class="ti-ml">Sol</div><div class="ti-mv">Sableux <span class="ti-mu">11%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Eau</div><div class="ti-mv">Oasis <span class="ti-mu">75%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Précip.</div><div class="ti-mv">12 <span class="ti-mu">mm</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Rend. est.</div><div class="ti-mv">78 <span class="ti-mu">%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Humidité</div><div class="ti-mv">22 <span class="ti-mu">%</span></div></div>
+        <div class="ti-metric"><div class="ti-ml">Canopée</div><div class="ti-mv">55 <span class="ti-mu">%</span></div></div>
+      </div>
+    </div>
+
+    <div class="add-block">
+      <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Ajouter un terrain
+    </div>
+
+    <div class="area-bar">
+      <div class="area-name"><span>T1 · Zone A</span><span class="area-hp">95 HP</span></div>
+      <div class="sparkline" id="spark1"></div>
+    </div>
+    <div class="area-bar">
+      <div class="area-name"><span>T2 · Zone B</span><span class="area-hp" style="color:#EF9F27">84 HP</span></div>
+      <div class="sparkline" id="spark2"></div>
+    </div>
+  </div>
+
+  <div class="map-center">
+    <div class="map-top-bar">
+      <span class="sat-badge">Satellite HD</span>
+      <span style="font-size:11px;color:rgba(255,255,255,0.4)">Tunisie — API Maps</span>
+      <div class="map-btn-grp">
+        <div class="mb2 on">Parcelles</div>
+        <div class="mb2">Infrarouge</div>
+        <div class="mb2">NDVI</div>
+        <div class="mb2">Maladies</div>
+      </div>
+    </div>
+
+    <svg id="mapSvg" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;cursor:crosshair" preserveAspectRatio="xMidYMid slice">
+      <rect width="640" height="640" fill="#3d4a2e"/>
+      <rect x="0" y="0" width="640" height="640" fill="#4a5c35" opacity="0.4"/>
+
+      <polygon points="80,120 260,90 300,220 120,260" fill="#5a7a2e" opacity="0.55"/>
+      <polygon points="260,90 410,75 440,190 300,220" fill="#6a8f38" opacity="0.5"/>
+      <polygon points="420,150 560,120 580,270 440,295" fill="#4a6e26" opacity="0.6"/>
+      <polygon points="120,290 310,265 330,390 130,410" fill="#5e8030" opacity="0.45"/>
+      <polygon points="440,295 570,275 580,380 450,395" fill="#7a9e3f" opacity="0.4"/>
+      <polygon points="200,430 380,410 390,510 205,525" fill="#628428" opacity="0.5"/>
+      <rect x="50" y="470" width="90" height="70" fill="#5a7a2e" opacity="0.45" rx="2"/>
+      <rect x="480" y="440" width="110" height="90" fill="#4a6e26" opacity="0.5" rx="2"/>
+
+      <line x1="0" y1="340" x2="640" y2="340" stroke="#c8a850" stroke-width="6" opacity="0.5"/>
+      <line x1="360" y1="0" x2="360" y2="640" stroke="#c8a850" stroke-width="4" opacity="0.4"/>
+      <line x1="0" y1="160" x2="220" y2="160" stroke="#c8a850" stroke-width="2.5" opacity="0.35"/>
+      <line x1="450" y1="310" x2="640" y2="310" stroke="#c8a850" stroke-width="2" opacity="0.3"/>
+
+      <ellipse cx="540" cy="540" rx="70" ry="38" fill="#4a90c4" opacity="0.45"/>
+      <ellipse cx="80" cy="580" rx="45" ry="22" fill="#4a90c4" opacity="0.35"/>
+      <text x="540" y="544" font-size="10" fill="#a8d4f0" text-anchor="middle" font-family="system-ui">Barrage</text>
+
+      <circle cx="30" cy="110" r="10" fill="#2a5018" opacity="0.7"/>
+      <circle cx="50" cy="98" r="8" fill="#2a5018" opacity="0.7"/>
+      <circle cx="590" cy="140" r="12" fill="#2a5018" opacity="0.7"/>
+      <circle cx="610" cy="155" r="9" fill="#2a5018" opacity="0.7"/>
+      <circle cx="150" cy="560" r="10" fill="#2a5018" opacity="0.6"/>
+      <circle cx="480" cy="60" r="8" fill="#2a5018" opacity="0.6"/>
+
+      <g id="parcelleT1" onclick="selectTerrain(1)" style="cursor:pointer">
+        <polygon id="poly1" points="80,120 260,90 300,220 120,260" fill="#5DCAA5" fill-opacity="0.25" stroke="#5DCAA5" stroke-width="2.5"/>
+        <circle cx="185" cy="170" r="14" fill="#085041" stroke="white" stroke-width="2"/>
+        <text x="185" y="175" font-size="10" fill="white" text-anchor="middle" font-family="system-ui" font-weight="700">T1</text>
+        <rect x="140" y="145" width="90" height="18" rx="4" fill="rgba(8,80,65,0.9)"/>
+        <text x="185" y="157" font-size="9" fill="#5DCAA5" text-anchor="middle" font-family="system-ui" font-weight="600">Sfax · 18 ha</text>
+      </g>
+
+      <g id="parcelleT2" onclick="selectTerrain(2)" style="cursor:pointer">
+        <polygon id="poly2" points="420,150 560,120 580,270 440,295" fill="#5DCAA5" fill-opacity="0.15" stroke="#5DCAA5" stroke-width="2" stroke-dasharray="5,3"/>
+        <circle cx="497" cy="205" r="14" fill="#085041" stroke="white" stroke-width="2"/>
+        <text x="497" y="210" font-size="10" fill="white" text-anchor="middle" font-family="system-ui" font-weight="700">T2</text>
+        <rect x="450" y="182" width="94" height="18" rx="4" fill="rgba(8,80,65,0.9)"/>
+        <text x="497" y="194" font-size="9" fill="#5DCAA5" text-anchor="middle" font-family="system-ui" font-weight="600">Sousse · 16 ha</text>
+      </g>
+
+      <g id="parcelleT3" onclick="selectTerrain(3)" style="cursor:pointer">
+        <polygon id="poly3" points="200,430 380,410 390,510 205,525" fill="#EF9F27" fill-opacity="0.15" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,3"/>
+        <circle cx="296" cy="468" r="14" fill="#854F0B" stroke="white" stroke-width="2"/>
+        <text x="296" y="473" font-size="10" fill="white" text-anchor="middle" font-family="system-ui" font-weight="700">T3</text>
+        <rect x="250" y="445" width="92" height="18" rx="4" fill="rgba(133,79,11,0.9)"/>
+        <text x="296" y="457" font-size="9" fill="#EF9F27" text-anchor="middle" font-family="system-ui" font-weight="600">Gabès · 13 ha</text>
+      </g>
+
+      <g id="nearbyFarm1" style="cursor:pointer">
+        <circle cx="330" cy="155" r="7" fill="#888780" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+        <text x="330" y="159" font-size="7" fill="white" text-anchor="middle" font-family="system-ui">F</text>
+        <rect x="295" y="138" width="70" height="12" rx="3" fill="rgba(40,40,40,0.8)"/>
+        <text x="330" y="147" font-size="7.5" fill="rgba(255,255,255,0.7)" text-anchor="middle" font-family="system-ui">Ferme voisine</text>
+      </g>
+      <g id="nearbyFarm2" style="cursor:pointer">
+        <circle cx="130" cy="320" r="7" fill="#888780" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+        <text x="130" y="324" font-size="7" fill="white" text-anchor="middle" font-family="system-ui">F</text>
+      </g>
+      <g id="nearbyFarm3">
+        <circle cx="520" cy="360" r="7" fill="#888780" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+        <text x="520" y="364" font-size="7" fill="white" text-anchor="middle" font-family="system-ui">F</text>
+      </g>
+
+      <g id="waterSource1">
+        <circle cx="390" cy="350" r="6" fill="#4a90c4" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+        <rect x="354" y="333" width="72" height="12" rx="3" fill="rgba(20,40,60,0.85)"/>
+        <text x="390" y="342" font-size="7.5" fill="#a8d4f0" text-anchor="middle" font-family="system-ui">Puits d'irrigation</text>
+      </g>
+      <g id="waterSource2">
+        <circle cx="165" cy="390" r="6" fill="#4a90c4" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+        <rect x="128" y="373" width="74" height="12" rx="3" fill="rgba(20,40,60,0.85)"/>
+        <text x="165" y="382" font-size="7.5" fill="#a8d4f0" text-anchor="middle" font-family="system-ui">Canal irrigation</text>
+      </g>
+
+      <rect x="2" y="340" width="638" height="2" fill="rgba(200,168,80,0.5)"/>
+    </svg>
+
+    <div id="tooltip" class="tooltip-box" style="display:none;top:160px;left:120px">
+      <div class="tt-name" id="tt-name">T1 · Sfax</div>
+      <div class="tt-row"><span>Superficie</span><span class="tt-val" id="tt-sup">18 ha</span></div>
+      <div class="tt-row"><span>Culture</span><span class="tt-val" id="tt-cult">Tomates</span></div>
+      <div class="tt-row"><span>Santé globale</span><span class="tt-val" id="tt-hp">95 HP</span></div>
+      <div class="tt-row"><span>Humidité sol</span><span class="tt-val" id="tt-hum">30%</span></div>
+      <div class="tt-row"><span>Statut</span><span class="tt-val" style="color:#5DCAA5" id="tt-stat">Loué · Actif</span></div>
+    </div>
+
+    <div class="map-controls">
+      <div class="map-btn">+</div>
+      <div class="map-btn">−</div>
+    </div>
+    <div class="map-coord-tag">33.8°N, 10.2°E — Tunisie</div>
+    <div class="legend-box">
+      <div class="leg-row"><div class="leg-dot" style="background:#5DCAA5"></div>Loué actif</div>
+      <div class="leg-row"><div class="leg-dot" style="background:#EF9F27"></div>Loué · alerte</div>
+      <div class="leg-row"><div class="leg-dot" style="background:#888780"></div>Voisin</div>
+      <div class="leg-row"><div class="leg-dot" style="background:#4a90c4"></div>Eau</div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="rp-header">
+      <div class="rp-title">Couches & Données</div>
+      <input class="rp-search" placeholder="Rechercher..." type="text"/>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-sl">Couches épinglées</div>
+      <div class="layer-item">
+        <div class="li-pin"><svg viewBox="0 0 24 24" fill="none" stroke="#5DCAA5" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg></div>
+        <span class="li-name active">Santé globale</span>
+        <div class="toggle-pill on"><div class="toggle-thumb"></div></div>
+      </div>
+      <div class="layer-item">
+        <div class="li-pin"><svg viewBox="0 0 24 24" fill="none" stroke="#5DCAA5" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg></div>
+        <span class="li-name active">Couverture canopée</span>
+        <div class="toggle-pill on"><div class="toggle-thumb"></div></div>
+      </div>
+      <div class="layer-item">
+        <span class="li-name" style="padding-left:22px">Infrarouge couleur</span>
+        <div class="toggle-pill"><div class="toggle-thumb"></div></div>
+      </div>
+      <div class="layer-item">
+        <span class="li-name" style="padding-left:22px">Thermique HD</span>
+        <div class="toggle-pill"><div class="toggle-thumb"></div></div>
+      </div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-sl">Heatmaps</div>
+      <div class="layer-item">
+        <span class="li-name active" style="padding-left:4px">Nutrition</span>
+        <div class="toggle-pill on"><div class="toggle-thumb"></div></div>
+      </div>
+      <div class="layer-item">
+        <span class="li-name" style="padding-left:4px">Maladies</span>
+        <div class="toggle-pill"><div class="toggle-thumb"></div></div>
+      </div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-sl">Statistiques</div>
+      <div class="layer-item"><span class="li-name active" style="padding-left:4px">Statistiques maladies</span><div class="li-dots">···</div></div>
+      <div class="layer-item"><span class="li-name active" style="padding-left:4px">Statistiques nutrition</span><div class="li-dots">···</div></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-sl">Indices végétation</div>
+      <div class="layer-item"><span class="li-name" style="padding-left:4px">NTD</span><div class="li-dots">···</div></div>
+      <div class="layer-item"><span class="li-name" style="padding-left:4px">EVI</span><div class="li-dots">···</div></div>
+      <div class="layer-item"><span class="li-name active" style="padding-left:4px">NDVI</span><div class="li-dots">···</div></div>
+      <div class="layer-item"><span class="li-name" style="padding-left:4px">Canopée thermique</span><div class="li-dots">···</div></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-sl">Proximité</div>
+      <div class="layer-item"><span class="li-name active" style="padding-left:4px">Fermes voisines</span><div class="toggle-pill on"><div class="toggle-thumb"></div></div></div>
+      <div class="layer-item"><span class="li-name active" style="padding-left:4px">Sources d'eau</span><div class="toggle-pill on"><div class="toggle-thumb"></div></div></div>
+      <div class="layer-item"><span class="li-name" style="padding-left:4px">Routes d'accès</span><div class="toggle-pill"><div class="toggle-thumb"></div></div></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const terrainData = {
+  1:{name:'T1 · Sfax',sup:'18 ha',cult:'Tomates',hp:'95 HP',hum:'30%',stat:'Loué · Actif'},
+  2:{name:'T2 · Sousse',sup:'16 ha',cult:'Olives',hp:'84 HP',hum:'45%',stat:'Loué · Actif'},
+  3:{name:'T3 · Gabès',sup:'13 ha',cult:'Dattes',hp:'78 HP',hum:'22%',stat:'Loué · Alerte eau'}
+};
+
+function selectTerrain(n){
+  [1,2,3].forEach(i=>{
+    const el=document.getElementById('ti'+i);
+    if(el)el.classList.toggle('sel',i===n);
+    const poly=document.getElementById('poly'+i);
+    if(poly){
+      if(i===n){poly.setAttribute('fill-opacity','0.4');poly.setAttribute('stroke-width','3');}
+      else{poly.setAttribute('fill-opacity',i===3?'0.15':'0.15');poly.setAttribute('stroke-width','2');}
+    }
+  });
+  const d=terrainData[n];
+  const tt=document.getElementById('tooltip');
+  document.getElementById('tt-name').textContent=d.name;
+  document.getElementById('tt-sup').textContent=d.sup;
+  document.getElementById('tt-cult').textContent=d.cult;
+  document.getElementById('tt-hp').textContent=d.hp;
+  document.getElementById('tt-hum').textContent=d.hum;
+  document.getElementById('tt-stat').textContent=d.stat;
+  document.getElementById('tt-stat').style.color=n===3?'#EF9F27':'#5DCAA5';
+  const positions={1:{top:'145px',left:'100px'},2:{top:'175px',left:'310px'},3:{top:'345px',left:'120px'}};
+  const p=positions[n];
+  tt.style.top=p.top;tt.style.left=p.left;
+  tt.style.display='block';
+  setTimeout(()=>{tt.style.display='none'},3500);
+}
+
+function buildSpark(id, vals, color){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const max=Math.max(...vals);
+  vals.forEach(v=>{
+    const b=document.createElement('div');
+    b.className='spark-bar';
+    b.style.height=Math.round((v/max)*32)+'px';
+    const c=v>75?color:v>50?'#EF9F27':'#E24B4A';
+    b.style.background=c;
+    el.appendChild(b);
+  });
+}
+
+buildSpark('spark1',[88,92,85,95,90,78,91,88,95,91,85,88,92,95,91],'#5DCAA5');
+buildSpark('spark2',[72,80,84,78,82,75,84,80,76,84,78,82,84,80,84],'#5DCAA5');
+
+selectTerrain(1);
+</script>

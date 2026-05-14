@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #F3F4F6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BilanRemplacementController">
+   <children>
+      <VBox spacing="25.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#retourGestion" style="-fx-background-color: #E5E7EB; -fx-background-radius: 10; -fx-padding: 8 15; -fx-cursor: hand;" text="← Retour Inventaire" />
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="📈 Bilan de Remplacement &amp; Âge du Matériel" textFill="#92400E">
+                           <font>
+                              <Font name="System Bold" size="26.0" />
+                           </font>
+                        </Label>
+                        <Label text="Suivi automatique de la durée de vie et planification du renouvellement" textFill="#6b7280" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Stats Overview -->
+            <HBox spacing="20.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 5);">
+                     <children>
+                        <Label text="À Remplacer 🔴" textFill="#DC2626">
+                           <font><Font name="System Bold" size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="countARemplacer" text="0" textFill="#1E293B">
+                           <font><Font name="System Bold" size="24.0" /></font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 5);">
+                     <children>
+                        <Label text="Bientôt (1 an) 🟠" textFill="#D97706">
+                           <font><Font name="System Bold" size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="countBientot" text="0" textFill="#1E293B">
+                           <font><Font name="System Bold" size="24.0" /></font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 5);">
+                     <children>
+                        <Label text="État Correct 🟢" textFill="#059669">
+                           <font><Font name="System Bold" size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="countOk" text="0" textFill="#1E293B">
+                           <font><Font name="System Bold" size="24.0" /></font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Table -->
+            <VBox style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 15, 0, 0, 8);" VBox.vgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="bilanTable" prefHeight="400.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="colNom" prefWidth="200.0" text="Équipement" />
+                      <TableColumn fx:id="colType" prefWidth="120.0" text="Catégorie" />
+                      <TableColumn fx:id="colDateMiseEnService" prefWidth="150.0" text="Mise en Service" />
+                      <TableColumn fx:id="colDureeVie" prefWidth="120.0" text="Vie (Années)" />
+                      <TableColumn fx:id="colAge" prefWidth="100.0" text="Âge Actuel" />
+                      <TableColumn fx:id="colStatut" prefWidth="180.0" text="Statut Remplacement" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

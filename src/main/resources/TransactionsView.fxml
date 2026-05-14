@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #F8FAFC; -fx-background: #F8FAFC; -fx-border-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TransactionsViewController">
+   <content>
+      <HBox alignment="TOP_CENTER" spacing="25.0" style="-fx-padding: 30;">
+         <children>
+            
+            <!-- PARTIE GAUCHE : FORMULAIRE (Élargi pour plus de clarté) -->
+            <VBox minWidth="550.0" prefWidth="550.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 25; -fx-padding: 35; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 15, 0, 0, 8);">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="15.0">
+                     <children>
+                        <Label style="-fx-background-color: #ECFDF5; -fx-padding: 12; -fx-background-radius: 15;" text="💸" textFill="#059669"><font><Font size="24.0" /></font></Label>
+                        <VBox>
+                           <children>
+                              <Label text="Nouvelle Opération" textFill="#111827">
+                                 <font><Font name="System Bold" size="24.0" /></font>
+                              </Label>
+                              <Label text="Saisissez vos flux financiers avec précision" textFill="#6B7280" style="-fx-font-size: 12;" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <Separator opacity="0.3" />
+
+                  <!-- Type -->
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Type de flux" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
+                        <HBox spacing="15.0">
+                           <children>
+                              <ToggleButton fx:id="btnRevenu" maxWidth="1.7976931348623157E308" prefHeight="55.0" selected="true" style="-fx-background-color: #ECFDF5; -fx-text-fill: #059669; -fx-background-radius: 12; -fx-font-weight: bold; -fx-font-size: 14; -fx-cursor: hand;" text="🟢 REVENU" HBox.hgrow="ALWAYS">
+                                 <toggleGroup><ToggleGroup fx:id="typeGroup" /></toggleGroup>
+                              </ToggleButton>
+                              <ToggleButton fx:id="btnDepense" maxWidth="1.7976931348623157E308" prefHeight="55.0" style="-fx-background-color: #FEE2E2; -fx-text-fill: #EF4444; -fx-background-radius: 12; -fx-font-weight: bold; -fx-font-size: 14; -fx-cursor: hand;" text="🔴 DÉPENSE" toggleGroup="$typeGroup" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Montant -->
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Montant de la transaction" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
+                        <TextField fx:id="montantField" prefHeight="55.0" promptText="0.00 DT" style="-fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12; -fx-background-radius: 12; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 15;" />
+                     </children>
+                  </VBox>
+
+                  <!-- Wallet & Mode -->
+                  <HBox spacing="20.0">
+                     <children>
+                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Wallet / Budget" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
+                              <ComboBox fx:id="walletCombo" maxWidth="1.7976931348623157E308" prefHeight="50.0" promptText="Choisir le budget..." style="-fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12; -fx-background-radius: 12;" />
+                           </children>
+                        </VBox>
+                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Moyen de Paiement" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
+                              <ComboBox fx:id="modePaiementCombo" maxWidth="1.7976931348623157E308" prefHeight="50.0" promptText="Mode..." style="-fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12; -fx-background-radius: 12;" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <!-- SMS -->
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Notification SMS de confirmation (Optionnel)" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
+                        <HBox spacing="12.0">
+                           <children>
+                              <ComboBox fx:id="prefixCombo" prefHeight="50.0" prefWidth="120.0" style="-fx-background-radius: 12; -fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12;" />
+                              <TextField fx:id="phoneField" prefHeight="50.0" promptText="Numéro de téléphone" style="-fx-background-radius: 12; -fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12;" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Description -->
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Notes &amp; Description" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
+                        <TextArea fx:id="descField" prefHeight="100.0" promptText="Détails de l'opération..." style="-fx-background-radius: 12; -fx-border-radius: 12; -fx-background-color: #F9FAFB;" wrapText="true" />
+                     </children>
+                  </VBox>
+
+                  <Button onAction="#handleEnregistrer" prefHeight="60.0" maxWidth="1.7976931348623157E308" style="-fx-background-color: #063D2F; -fx-text-fill: white; -fx-background-radius: 15; -fx-font-weight: bold; -fx-font-size: 16; -fx-cursor: hand;" text="VALIDER LA TRANSACTION" />
+               </children>
+            </VBox>
+
+            <!-- PARTIE DROITE : HISTORIQUE -->
+            <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label text="Historique des Transactions" textFill="#111827">
+                                 <font><Font name="System Bold" size="26.0" /></font>
+                              </Label>
+                              <Label text="Suivi en temps réel de vos activités financières" textFill="#6B7280" style="-fx-font-size: 13;" />
+                           </children>
+                        </VBox>
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Button style="-fx-background-color: white; -fx-border-color: #E5E7EB; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 10 20; -fx-font-weight: bold;" text="🔍 Filtrer">
+                           <graphic>
+                              <Region style="-fx-padding: 0 5 0 0;" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+                  
+                  <VBox fx:id="historyContainer" spacing="15.0">
+                     <!-- Les cartes de transactions seront ajoutées ici dynamiquement -->
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </VBox>
+
+         </children>
+      </HBox>
+   </content>
+</ScrollPane>

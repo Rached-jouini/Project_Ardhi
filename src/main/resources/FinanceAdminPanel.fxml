@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #F8FAFC;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FinanceAdminPanelController">
+   <children>
+      <VBox spacing="40.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Button onAction="#retourDashboard" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);" text="⬅️ Retour Dashboard" />
+                  <VBox>
+                     <children>
+                        <Label text="Administration Financiere" textFill="#063D2F">
+                           <font><Font name="System Bold" size="32.0" /></font>
+                        </Label>
+                        <Label text="Espace reserve au gerant pour la configuration strategique" textFill="#64748B">
+                           <font><Font size="14.0" /></font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Admin Options Grid -->
+            <HBox spacing="30.0">
+               <children>
+                  <!-- Option 1: Capital -->
+                  <VBox onMouseClicked="#ouvrirConfigCapital" prefHeight="300.0" prefWidth="450.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 30; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 20, 0, 0, 10);">
+                     <children>
+                        <Label style="-fx-background-color: #ECFDF5; -fx-padding: 15; -fx-background-radius: 20;" text="💰" textFill="#059669"><font><Font size="30.0" /></font></Label>
+                        <VBox spacing="5.0">
+                           <children>
+                              <Label text="Gestion du Capital" textFill="#1F2937">
+                                 <font><Font name="System Bold" size="22.0" /></font>
+                              </Label>
+                              <Label text="Configurez le montant initial, les sources de financement et les seuils d'alerte." textFill="#6B7280" wrapText="true" />
+                           </children>
+                        </VBox>
+                        <Label text="Configurer →" textFill="#059669" style="-fx-font-weight: bold;" />
+                     </children>
+                  </VBox>
+
+                  <!-- Option 2: Wallets -->
+                  <VBox onMouseClicked="#ouvrirGestionWallets" prefHeight="300.0" prefWidth="450.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 30; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 20, 0, 0, 10);">
+                     <children>
+                        <Label style="-fx-background-color: #EFF6FF; -fx-padding: 15; -fx-background-radius: 20;" text="💼" textFill="#3B82F6"><font><Font size="30.0" /></font></Label>
+                        <VBox spacing="5.0">
+                           <children>
+                              <Label text="Gestion des Budgets" textFill="#1F2937">
+                                 <font><Font name="System Bold" size="22.0" /></font>
+                              </Label>
+                              <Label text="Allouez votre capital a des enveloppes budgetaires (Wallets) par poste de depense." textFill="#6B7280" wrapText="true" />
+                           </children>
+                        </VBox>
+                        <Label text="Gerer les Wallets →" textFill="#3B82F6" style="-fx-font-weight: bold;" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
