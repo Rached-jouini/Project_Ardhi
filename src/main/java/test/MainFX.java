@@ -14,10 +14,11 @@ public class MainFX extends Application {
     public void start(Stage primaryStage) {
         try {
             // Demarrage sur le nouveau Layout avec Sidebar (Style SaaS Pro)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainLayout.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/signin.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 1150, 700);
-            primaryStage.setTitle("Ardhi - Plateforme AgriTech");
+            scene.getStylesheets().add(getClass().getResource("/ardhi.css").toExternalForm());
+            primaryStage.setTitle("Ardhi - Authentification");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
