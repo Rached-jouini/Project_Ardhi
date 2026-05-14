@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefHeight="750.0" prefWidth="1100.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherEvenementsController">
+   
+   <!-- Sidebar Navigation -->
+   <left>
+      <VBox styleClass="sidebar">
+         <children>
+            <Label styleClass="sidebar-title" text="Ardhi Project" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="📅 Événements" />
+             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVoirInscriptions" styleClass="sidebar-button" text="👥 Inscriptions" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🌾 Cultures" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="📈 Statistiques" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSwitchToUser" styleClass="sidebar-button" text="👤 Espace Client" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="⚙️ Paramètres" />
+            <Region VBox.vgrow="ALWAYS" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🚪 Déconnexion" />
+         </children>
+      </VBox>
+   </left>
+
+   <!-- Main Content Area -->
+   <center>
+      <VBox styleClass="content-pane">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Label styleClass="title-label" text="Liste des Événements" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#handleAjouter" styleClass="btn-success" text="+ Nouveau" />
+               </children>
+            </HBox>
+            
+            <!-- Table Card -->
+            <VBox styleClass="card" VBox.vgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="tableEvenements" prefHeight="400.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="colNom" prefWidth="120.0" text="Nom" />
+                      <TableColumn fx:id="colDescription" prefWidth="150.0" text="Description" />
+                      <TableColumn fx:id="colDate" prefWidth="100.0" text="Date" />
+                      <TableColumn fx:id="colLieu" prefWidth="100.0" text="Lieu" />
+                      <TableColumn fx:id="colType" prefWidth="100.0" text="Type" />
+                      <TableColumn fx:id="colCulture" prefWidth="120.0" text="Culture" />
+                      <TableColumn fx:id="colPlaces" prefWidth="80.0" text="Places" />
+                      <TableColumn fx:id="colStatut" prefWidth="100.0" text="Statut" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  
+                  <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleShow" styleClass="btn-success" text="Afficher" />
+                        <Button mnemonicParsing="false" onAction="#handleSupprimer" styleClass="btn-danger" text="Supprimer" />
+                        <Button mnemonicParsing="false" onAction="#handleModifier" styleClass="btn-primary" text="Modifier l'événement" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

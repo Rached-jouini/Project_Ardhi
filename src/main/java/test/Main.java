@@ -3,7 +3,7 @@ package test;
 import controllers.Home;
 
 /**
- * Classe principale fusionnée.
+ * Classe principale fusionnée (Rached + Sabri + Farah).
  * Elle lance l'application via le contrôleur Home (Authentification).
  */
 public class Main {

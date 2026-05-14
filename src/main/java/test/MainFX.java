@@ -13,7 +13,7 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Demarrage sur le nouveau Layout avec Sidebar (Style SaaS Pro)
+            // Démarrage sur l'Authentification (signin.fxml)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/signin.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 1150, 700);
@@ -22,7 +22,7 @@ public class MainFX extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
-            System.out.println("Erreur chargement FXML: " + e.getMessage());
+            System.err.println("Erreur lors du chargement de l'interface : " + e.getMessage());
             e.printStackTrace();
         }
     }

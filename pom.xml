@@ -47,6 +47,11 @@
             <artifactId>javafx-base</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
 
         <!-- GSON -->
         <dependency>
@@ -61,11 +66,15 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
-
         <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1.1</version>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>javax.activation</artifactId>
+            <version>1.2.0</version>
         </dependency>
 
         <!-- JavaCV / OpenCV (Face ID) -->
@@ -74,7 +83,6 @@
             <artifactId>javacv-platform</artifactId>
             <version>${javacv.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>opencv-platform</artifactId>
@@ -88,7 +96,7 @@
             <version>20231013</version>
         </dependency>
 
-        <!-- PDF Generation (iText) -->
+        <!-- PDF Generation (iText 7 - Votre version) -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>kernel</artifactId>
@@ -100,7 +108,14 @@
             <version>7.2.5</version>
         </dependency>
 
-        <!-- SLF4J for iText -->
+        <!-- PDF Generation (iText 5 - Version Farah) -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.3</version>
+        </dependency>
+
+        <!-- SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -117,6 +132,18 @@
             <groupId>com.github.almasb</groupId>
             <artifactId>fxgl</artifactId>
             <version>17.3</version>
+        </dependency>
+
+        <!-- QR CODE GENERATOR (ZXing) -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.5.1</version>
         </dependency>
 
     </dependencies>

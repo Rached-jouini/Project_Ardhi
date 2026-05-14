@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EvenementController">
+   
+   <!-- Sidebar Navigation -->
+   <left>
+      <VBox styleClass="sidebar">
+         <children>
+            <Label styleClass="sidebar-title" text="Ardhi Project" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="📅 Événements" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🌾 Cultures" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="📈 Statistiques" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="⚙️ Paramètres" />
+            <Region VBox.vgrow="ALWAYS" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🚪 Déconnexion" />
+         </children>
+      </VBox>
+   </left>
+
+   <!-- Main Content Area -->
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;">
+         <content>
+            <VBox styleClass="content-pane">
+               <children>
+                  <Label styleClass="title-label" text="Ajouter un Nouvel Événement" />
+                  
+                  <!-- Form Card -->
+                  <VBox styleClass="card">
+                     <children>
+                        <HBox spacing="30.0">
+                           <children>
+                              <VBox spacing="15.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <Label text="Nom de l'événement" />
+                                          <TextField fx:id="nom" promptText="Ex: Foire Agricole" />
+                                       </children>
+                                    </VBox>
+                                    
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <Label text="Description" />
+                                          <TextField fx:id="description" promptText="Détails de l'événement" />
+                                       </children>
+                                    </VBox>
+                                    
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <Label text="Date prévue" />
+                                          <DatePicker fx:id="datePicker" maxWidth="1.7976931348623157E308" promptText="Sélectionner une date" />
+                                       </children>
+                                    </VBox>
+                                    
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <Label text="Lieu" />
+                                          <TextField fx:id="lieu" promptText="Lieu de l'événement" />
+                                       </children>
+                                    </VBox>
+                                    
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <Label text="Type d'événement" />
+                                          <TextField fx:id="type" promptText="Ex: Formation, Salon" />
+                                       </children>
+                                    </VBox>
+                                    
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <Label text="Culture concernée" />
+                                          <TextField fx:id="culture_concernee" promptText="Ex: Blé, Tomates" />
+                                       </children>
+                                    </VBox>
+                                    
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <Label text="Nombre de places" />
+                                          <TextField fx:id="nombre_places" promptText="Capacité maximale" />
+                                       </children>
+                                    </VBox>
+                                    
+                                    <VBox spacing="5.0">
+                                       <children>
+                                          <Label text="Statut initial" />
+                                          <TextField fx:id="statut" promptText="Ex: Ouvert" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                              
+                              <VBox alignment="TOP_CENTER" prefWidth="400.0" spacing="10.0">
+                                 <children>
+                                    <Label style="-fx-font-weight: bold;" text="Localisation" />
+                                    <WebView fx:id="mapView" prefHeight="450.0" prefWidth="350.0" style="-fx-border-color: #ddd; -fx-border-radius: 10;" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        
+                        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#ajouter" styleClass="btn-primary" text="Enregistrer l'événement" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

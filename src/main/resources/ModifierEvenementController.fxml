@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierEvenementController">
+   
+   <!-- Sidebar Navigation (Same as Add) -->
+   <left>
+      <VBox styleClass="sidebar">
+         <children>
+            <Label styleClass="sidebar-title" text="Ardhi Project" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="📅 Événements" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🌾 Cultures" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="📈 Statistiques" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="⚙️ Paramètres" />
+            <Region VBox.vgrow="ALWAYS" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🚪 Déconnexion" />
+         </children>
+      </VBox>
+   </left>
+
+   <!-- Main Content Area -->
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;">
+         <content>
+            <VBox styleClass="content-pane">
+               <children>
+                  <Label styleClass="title-label" text="Modifier l'Événement" />
+                  
+                  <!-- Form Card -->
+                  <VBox styleClass="card">
+                     <children>
+                        <GridPane styleClass="form-grid">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Nom de l'événement" />
+                              <TextField fx:id="nom" promptText="Ex: Foire Agricole" GridPane.columnIndex="1" />
+                              
+                              <Label text="Description" GridPane.rowIndex="1" />
+                              <TextField fx:id="description" promptText="Détails de l'événement" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              
+                              <Label text="Date prévue" GridPane.rowIndex="2" />
+                              <DatePicker fx:id="datePicker" maxWidth="1.7976931348623157E308" promptText="Sélectionner une date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              
+                              <Label text="Lieu" GridPane.rowIndex="3" />
+                              <TextField fx:id="lieu" promptText="Lieu de l'événement" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              
+                              <Label text="Type d'événement" GridPane.rowIndex="4" />
+                              <TextField fx:id="type" promptText="Ex: Formation, Salon" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              
+                              <Label text="Culture concernée" GridPane.rowIndex="5" />
+                              <TextField fx:id="culture_concernee" promptText="Ex: Blé, Tomates" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              
+                              <Label text="Nombre de places" GridPane.rowIndex="6" />
+                              <TextField fx:id="nombre_places" promptText="Capacité maximale" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              
+                              <Label text="Statut" GridPane.rowIndex="7" />
+                              <TextField fx:id="statut" promptText="Ex: Ouvert" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                           </children>
+                        </GridPane>
+                        
+                        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#modifier" styleClass="btn-success" text="Mettre à jour l'événement" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

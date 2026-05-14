@@ -1,7 +1,11 @@
 package test;
 
-public class   Launcher {
+import javafx.application.Application;
+
+public class Launcher {
     public static void main(String[] args) {
-        MainFX.main(args);
+        // Lance MainFX qui gère l'interface graphique (Login)
+        System.out.println("Launching Ardhi Platform...");
+        Application.launch(MainFX.class, args);
     }
 }
