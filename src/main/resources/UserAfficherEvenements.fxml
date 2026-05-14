@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserAfficherEvenementsController">
+   
+   <left>
+      <VBox styleClass="sidebar">
+         <children>
+            <Label styleClass="sidebar-title" text="Ardhi - Espace Client" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="📅 Événements" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSwitchToAdmin" styleClass="sidebar-button" text="🛠️ Administration" />
+            <Region VBox.vgrow="ALWAYS" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🚪 Quitter" />
+         </children>
+      </VBox>
+   </left>
+
+   <center>
+      <VBox styleClass="content-pane">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Label styleClass="title-label" text="Découvrez nos Événements" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label text="📅 Date :" />
+                  <DatePicker fx:id="filterDate" onAction="#handleFilterDate" promptText="Calendrier" />
+                  <Button mnemonicParsing="false" onAction="#handleResetFilter" styleClass="btn-secondary" text="Tous" />
+               </children>
+            </HBox>
+            
+            <VBox styleClass="card" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox spacing="15.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <TableView fx:id="tableEvenements" prefHeight="400.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="colNom" prefWidth="150.0" text="Événement" />
+                            <TableColumn fx:id="colDescription" prefWidth="250.0" text="Description" />
+                            <TableColumn fx:id="colDate" prefWidth="120.0" text="Date" />
+                            <TableColumn fx:id="colLieu" prefWidth="120.0" text="Lieu" />
+                            <TableColumn fx:id="colPlaces" prefWidth="100.0" text="Places restantes" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        
+                        <VBox alignment="TOP_CENTER" minWidth="300.0" prefWidth="300.0" spacing="10.0">
+                           <children>
+                              <Label style="-fx-font-weight: bold; -fx-text-fill: #2D5D34;" text="📍 Localisation" />
+                              <WebView fx:id="mapView" style="-fx-border-color: #ddd; -fx-border-radius: 10;" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  
+                  <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleChatbot" styleClass="btn-ai" text="🤖 Assistant IA" />
+                        <Button mnemonicParsing="false" onAction="#handleInscrire" styleClass="btn-success" text="S'inscrire maintenant" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherInscriptionsController">
+   
+   <left>
+      <VBox styleClass="sidebar">
+         <children>
+            <Label styleClass="sidebar-title" text="Ardhi Project" />
+            <Button onAction="#navEvenements" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="📅 Événements" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="👥 Inscriptions" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🌾 Cultures" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🚪 Déconnexion" />
+         </children>
+      </VBox>
+   </left>
+
+   <center>
+      <VBox styleClass="content-pane">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Label styleClass="title-label" text="Gestion des Inscriptions" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="searchField" prefWidth="250.0" promptText="Rechercher un client..." styleClass="text-field" />
+               </children>
+            </HBox>
+            
+            <TableView fx:id="inscriptionsTable" VBox.vgrow="ALWAYS" styleClass="card">
+              <columns>
+                <TableColumn fx:id="colNom" prefWidth="200.0" text="Nom du Client" />
+                <TableColumn fx:id="colEmail" prefWidth="250.0" text="E-mail" />
+                <TableColumn fx:id="colDate" prefWidth="180.0" text="Date Inscription" />
+                <TableColumn fx:id="colStatut" prefWidth="150.0" text="Statut" />
+              </columns>
+            </TableView>
+
+            <HBox spacing="15.0" alignment="CENTER_RIGHT">
+               <children>
+                  <Button onAction="#marquerAbsent" styleClass="btn-danger" text="Marquer comme Absent" />
+                  <Button onAction="#marquerPresent" styleClass="btn-success" text="Valider Présence (Manuel)" />
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

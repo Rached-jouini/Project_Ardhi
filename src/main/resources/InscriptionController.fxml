@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefHeight="500.0" prefWidth="700.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InscriptionController">
+   
+   <center>
+      <VBox alignment="CENTER" spacing="20.0" styleClass="content-pane">
+         <children>
+            <Label fx:id="eventTitle" styleClass="title-label" text="S'inscrire à l'événement" />
+            
+            <VBox maxWidth="500.0" styleClass="card" spacing="20.0">
+               <children>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Votre Nom Complet" />
+                        <TextField fx:id="nomUser" promptText="Ex: Jean Dupont" />
+                     </children>
+                  </VBox>
+                  
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Votre Adresse Email" />
+                        <TextField fx:id="emailUser" promptText="Ex: jean.dupont@email.com" />
+                     </children>
+                  </VBox>
+                  
+                  <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleCancel" styleClass="btn-danger" text="Annuler" />
+                        <Button mnemonicParsing="false" onAction="#handleRegister" styleClass="btn-success" text="Confirmer l'inscription" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
