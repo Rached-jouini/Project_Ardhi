@@ -35,11 +35,26 @@ public final class EnvLoader {
 
     private static Map<String, String> loadDotEnv() {
         Map<String, String> values = new HashMap<>();
-        Path envPath = Path.of(".env");
+        Path[] potentialPaths = {
+            Path.of(".env"),
+            Path.of("Project_Ardhi", ".env"),
+            Path.of("..", ".env")
+        };
 
-        if (!Files.isRegularFile(envPath)) {
+        Path envPath = null;
+        for (Path p : potentialPaths) {
+            if (Files.isRegularFile(p)) {
+                envPath = p;
+                break;
+            }
+        }
+
+        if (envPath == null) {
+            System.err.println("Warning: .env file not found in any potential locations.");
             return values;
         }
+
+        System.out.println("Loading environment variables from: " + envPath.toAbsolutePath());
 
         try (BufferedReader reader = Files.newBufferedReader(envPath, StandardCharsets.UTF_8)) {
             String line;

@@ -37,6 +37,12 @@
             </VBox>
 
             <VBox spacing="10" styleClass="sidebar-panel">
+                <Label text="Gestion" styleClass="sidebar-panel-title"/>
+                <Button text="Gestion Terrains" onAction="#handleOpenTerrain" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                <Button text="Gestion Plantes" onAction="#handleOpenPlante" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+            </VBox>
+
+            <VBox spacing="10" styleClass="sidebar-panel">
                 <Label text="Resume" styleClass="sidebar-panel-title"/>
                 <Label text="Recherchez un utilisateur, selectionnez-le dans le tableau puis utilisez le panneau de droite pour modifier ou bannir le compte."
                        wrapText="true" styleClass="sidebar-subtitle"/>

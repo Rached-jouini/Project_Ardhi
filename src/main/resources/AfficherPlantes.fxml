@@ -3,57 +3,79 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="700.0" prefWidth="1100.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherPlantesController">
+<BorderPane prefHeight="700.0" prefWidth="1100.0" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherPlantesController">
    <left>
-      <VBox prefWidth="240.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+      <VBox prefWidth="270.0" spacing="16" styleClass="sidebar" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="28.0" left="22.0" right="22.0" top="28.0" />
+         </padding>
          <children>
-            <Label styleClass="sidebar-title" text="Ardhi Admin" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#allerVersTerrains" styleClass="sidebar-button" text="Gestion Terrains" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="Gestion Plantes" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#retourAccueil" style="-fx-background-color: transparent; -fx-text-fill: #6B7280; -fx-padding: 30 0 0 0;" text="🏠 Retour Accueil" />
+            <Label styleClass="sidebar-title" text="Ardhi" />
+            <Label text="Gestion des Plantes" styleClass="sidebar-section-title"/>
+            <VBox spacing="10" styleClass="sidebar-panel">
+                <Label text="Raccourcis" styleClass="sidebar-panel-title"/>
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#retourAccueil" styleClass="sidebar-nav-button" text="Tableau de Bord" />
+            </VBox>
          </children>
       </VBox>
    </left>
    <center>
-      <VBox spacing="25.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-         </padding>
-         <children>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
+      <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="content-scroll">
+         <content>
+            <VBox spacing="25.0" styleClass="content-box">
+               <padding>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </padding>
                <children>
-                  <VBox HBox.hgrow="ALWAYS">
+                  <VBox spacing="12" styleClass="admin-header-card">
                      <children>
-                        <Label styleClass="title-page" text="Liste des Plantes" />
-                        <Label styleClass="label-standard" text="Consultez et gérez le catalogue botanique de l'exploitation." />
+                        <Label styleClass="page-title" text="Liste des Plantes" />
+                        <Label styleClass="auth-subtitle" text="Consultez et gérez le catalogue botanique de l'exploitation." />
+                        <HBox spacing="10">
+                           <children>
+                              <Label text="Catalogue" styleClass="admin-chip"/>
+                              <Label text="Botanique" styleClass="admin-chip"/>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" onAction="#allerVersAjout" styleClass="button-primary" text="+ Ajouter une Plante" />
-               </children>
-            </HBox>
-            
-            <VBox styleClass="card" VBox.vgrow="ALWAYS">
-               <children>
-                  <TableView fx:id="planteTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                    <columns>
-                      <TableColumn fx:id="colNom" prefWidth="120.0" text="Nom" />
-                      <TableColumn fx:id="colType" prefWidth="120.0" text="Type" />
-                        <TableColumn fx:id="colDebut" prefWidth="120.0" text="Début Plantation" />
-                        <TableColumn fx:id="colFin" prefWidth="120.0" text="Fin Plantation" />
-                        <TableColumn fx:id="colEau" prefWidth="100.0" text="Besoin Eau" />
-                        <TableColumn fx:id="colDesc" prefWidth="150.0" text="Description" />
-                        <TableColumn fx:id="colActions" prefWidth="200.0" text="Actions" />
-                    </columns>
-                  </TableView>
+                  
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#allerVersAjout" styleClass="btn-primary" text="+ Ajouter une Plante" />
+                     </children>
+                  </HBox>
+                  
+                  <VBox styleClass="card, table-card" VBox.vgrow="ALWAYS">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <TableView fx:id="planteTable" prefHeight="470" styleClass="table-compact" VBox.vgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="colNom" prefWidth="150.0" text="Nom" />
+                            <TableColumn fx:id="colType" prefWidth="150.0" text="Type" />
+                              <TableColumn fx:id="colDebut" prefWidth="140.0" text="Début Plantation" />
+                              <TableColumn fx:id="colFin" prefWidth="140.0" text="Fin Plantation" />
+                              <TableColumn fx:id="colEau" prefWidth="130.0" text="Besoin Eau" />
+                              <TableColumn fx:id="colDesc" prefWidth="210.0" text="Description" />
+                              <TableColumn fx:id="colActions" prefWidth="210.0" text="Actions" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
-         </children>
-      </VBox>
+         </content>
+      </ScrollPane>
    </center>
 </BorderPane>

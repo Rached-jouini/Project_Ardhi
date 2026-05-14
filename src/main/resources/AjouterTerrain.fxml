@@ -2,15 +2,16 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="1000.0" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterPlanteController">
+<BorderPane prefHeight="700.0" prefWidth="1000.0" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ajouterTerrain">
    <left>
       <VBox prefWidth="270.0" spacing="16" styleClass="sidebar" BorderPane.alignment="CENTER">
          <padding>
@@ -18,7 +19,7 @@
          </padding>
          <children>
             <Label styleClass="sidebar-title" text="Ardhi" />
-            <Label text="Édition Plante" styleClass="sidebar-section-title"/>
+            <Label text="Édition Terrain" styleClass="sidebar-section-title"/>
             <VBox spacing="10" styleClass="sidebar-panel">
                 <Label text="Raccourcis" styleClass="sidebar-panel-title"/>
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#retourListe" styleClass="sidebar-nav-button" text="⬅ Retour à la liste" />
@@ -36,8 +37,8 @@
                <children>
                   <VBox spacing="12" styleClass="admin-header-card">
                      <children>
-                        <Label fx:id="mainTitle" styleClass="page-title" text="Ajouter une Nouvelle Plante" />
-                        <Label styleClass="auth-subtitle" text="Enregistrez les caractéristiques et les besoins de cette espèce." />
+                        <Label styleClass="page-title" text="Ajouter un Nouveau Terrain" />
+                        <Label styleClass="auth-subtitle" text="Remplissez les informations ci-dessous pour enregistrer une nouvelle parcelle." />
                      </children>
                   </VBox>
                   
@@ -50,14 +51,14 @@
                            <children>
                               <VBox spacing="8.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label styleClass="field-label" text="Nom de la Plante" />
-                                    <TextField fx:id="nom_p" promptText="Ex: Olive, Tomate..." styleClass="text-field" />
+                                    <Label styleClass="field-label" text="Superficie (m²)" />
+                                    <TextField fx:id="superficie_t" promptText="Ex: 1500.50" styleClass="text-field" />
                                  </children>
                               </VBox>
                               <VBox spacing="8.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label styleClass="field-label" text="Type / Catégorie" />
-                                    <TextField fx:id="type_p" promptText="Légume, Fruitier..." styleClass="text-field" />
+                                    <Label styleClass="field-label" text="Région" />
+                                    <TextField fx:id="region_t" promptText="Ex: Béja, Zaghouan..." styleClass="text-field" />
                                  </children>
                               </VBox>
                            </children>
@@ -67,14 +68,14 @@
                            <children>
                               <VBox spacing="8.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label styleClass="field-label" text="Début Plantation" />
-                                    <DatePicker fx:id="date_debut_p" maxWidth="1.7976931348623157E308" styleClass="text-field" />
+                                    <Label styleClass="field-label" text="Type de Sol" />
+                                    <TextField fx:id="type_sole_t" promptText="Argileux, Sablonneux..." styleClass="text-field" />
                                  </children>
                               </VBox>
                               <VBox spacing="8.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label styleClass="field-label" text="Fin Plantation" />
-                                    <DatePicker fx:id="date_fin_p" maxWidth="1.7976931348623157E308" styleClass="text-field" />
+                                    <Label styleClass="field-label" text="Statut" />
+                                    <TextField fx:id="statut_t" promptText="Disponible, Occupé..." styleClass="text-field" />
                                  </children>
                               </VBox>
                            </children>
@@ -82,22 +83,34 @@
                         
                         <VBox spacing="8.0">
                            <children>
-                              <Label styleClass="field-label" text="Besoin en Eau" />
-                              <TextField fx:id="besoin_eau_p" promptText="Faible, Moyen, Élevé..." styleClass="text-field" />
+                              <Label styleClass="field-label" text="Image 360° (URL ou chemin)" />
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <TextField fx:id="coordonnees_gps_t" promptText="Ex: /images/panorama.jpg" styleClass="text-field" HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" onAction="#importerImage" styleClass="btn-secondary" text="Parcourir..." />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                         
                         <VBox spacing="8.0">
                            <children>
-                              <Label styleClass="field-label" text="Description" />
-                              <TextField fx:id="description_p" promptText="Détails supplémentaires..." styleClass="text-field" />
+                              <Label styleClass="field-label" text="Coordonnées Maps (Lat, Long)" />
+                              <TextField fx:id="gps_coordinates_t" promptText="Ex: 36.8065, 10.1815" styleClass="text-field" />
+                           </children>
+                        </VBox>
+                        
+                        <VBox spacing="8.0">
+                           <children>
+                              <Label styleClass="field-label" text="Prix de Location (TND/mois)" />
+                              <TextField fx:id="prix_location_t" promptText="Ex: 450.00" styleClass="text-field" />
                            </children>
                         </VBox>
                         
                         <HBox alignment="CENTER_RIGHT" spacing="15.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#retourListe" styleClass="btn-secondary" text="Annuler" />
-                              <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save_plante" styleClass="btn-primary" text="Enregistrer la Plante" />
+                              <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save_terrain" styleClass="btn-primary" text="Enregistrer le Terrain" />
                            </children>
                            <padding>
                               <Insets top="10.0" />

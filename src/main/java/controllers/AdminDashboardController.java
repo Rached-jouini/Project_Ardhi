@@ -251,6 +251,24 @@ public class AdminDashboardController {
     }
 
     @FXML
+    public void handleOpenTerrain(ActionEvent event) {
+        try {
+            loadScene(event, "/AfficherTerrains.fxml", "Ardhi - Gestion Terrains");
+        } catch (IOException e) {
+            showError(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleOpenPlante(ActionEvent event) {
+        try {
+            loadScene(event, "/AfficherPlantes.fxml", "Ardhi - Gestion Plantes");
+        } catch (IOException e) {
+            showError(e.getMessage());
+        }
+    }
+
+    @FXML
     public void handleLogout(ActionEvent event) {
         try {
             SessionManager.clear();

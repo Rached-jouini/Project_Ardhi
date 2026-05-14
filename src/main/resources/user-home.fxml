@@ -61,18 +61,6 @@
 
                     <FlowPane hgap="18" vgap="18" prefWrapLength="900">
                         <VBox spacing="10" styleClass="module-card">
-                            <Label text="Terrains" styleClass="module-title"/>
-                            <Label text="Centralisez vos informations liees aux espaces agricoles."
-                                   wrapText="true" styleClass="module-text"/>
-                            <Button text="Ouvrir Terrains" onAction="#handleOpenModule" styleClass="btn-primary"/>
-                        </VBox>
-                        <VBox spacing="10" styleClass="module-card">
-                            <Label text="Plantes" styleClass="module-title"/>
-                            <Label text="Gerez votre catalogue de plantes, allocations et suivi de cultures."
-                                   wrapText="true" styleClass="module-text"/>
-                            <Button text="Ouvrir Plantes" onAction="#handleOpenModule" styleClass="btn-primary"/>
-                        </VBox>
-                        <VBox spacing="10" styleClass="module-card">
                             <Label text="Catalogue" styleClass="module-title"/>
                             <Label text="Parcourez le catalogue des terrains disponibles a la location."
                                    wrapText="true" styleClass="module-text"/>
