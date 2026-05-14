@@ -1,6 +1,5 @@
 package services;
 
-import models.GoogleUserInfo;
 import models.Utilisateur;
 import utils.MyDataBase;
 
@@ -208,34 +207,7 @@ public class UtilisateurService implements ardhi<Utilisateur> {
         }
     }
 
-    public Utilisateur findOrCreateGoogleUser(GoogleUserInfo info) throws SQLException {
-        if (info == null || info.email == null || info.email.isBlank()) {
-            return null;
-        }
 
-        Utilisateur existing = findByEmail(info.email.trim());
-        if (existing != null) {
-            return existing;
-        }
-
-        String prenom = (info.given_name != null && !info.given_name.isBlank()) ? info.given_name.trim() : "Google";
-        String nom = (info.family_name != null && !info.family_name.isBlank()) ? info.family_name.trim() : "User";
-
-        Utilisateur googleUser = new Utilisateur(
-                nom,
-                prenom,
-                info.email.trim(),
-                "google-auth",
-                "00000000",
-                LocalDate.now(),
-                "actif",
-                2,
-                info.picture,
-                null
-        );
-        add(googleUser);
-        return findByEmail(info.email.trim());
-    }
 
     private Utilisateur mapRow(ResultSet rs) throws SQLException {
         Date date = rs.getDate("date_inscription");
