@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.UserHomeController" styleClass="home-pane">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="home-topbar">
+            <padding>
+                <Insets top="18" right="24" bottom="18" left="24"/>
+            </padding>
+            <Label text="Ardhi" styleClass="home-brand"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Mon profil" onAction="#handleOpenProfile" styleClass="btn-secondary"/>
+            <Button text="Se deconnecter" onAction="#handleLogout" styleClass="btn-secondary"/>
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="content-scroll">
+            <content>
+                <VBox spacing="24" styleClass="home-content">
+                    <padding>
+                        <Insets top="28" right="28" bottom="28" left="28"/>
+                    </padding>
+
+                    <VBox spacing="10" styleClass="hero-card">
+                        <Label fx:id="welcomeLabel" text="Bienvenue" styleClass="hero-heading"/>
+                        <Label text="Votre espace d'accueil vous donne un point d'entree clair vers les principaux modules du projet."
+                               wrapText="true" styleClass="hero-copy"/>
+                    </VBox>
+
+                    <GridPane hgap="16" vgap="16" styleClass="stats-grid">
+                        <VBox spacing="6" styleClass="stat-card" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                            <Label text="Role" styleClass="stat-title"/>
+                            <Label fx:id="roleLabel" text="Utilisateur" styleClass="stat-value"/>
+                        </VBox>
+                        <VBox spacing="6" styleClass="stat-card" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                            <Label text="Email" styleClass="stat-title"/>
+                            <Label fx:id="emailLabel" text="-" styleClass="stat-value"/>
+                        </VBox>
+                        <VBox spacing="6" styleClass="stat-card" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                            <Label text="Statut" styleClass="stat-title"/>
+                            <Label fx:id="statusLabel" text="-" styleClass="stat-value"/>
+                        </VBox>
+                        <VBox spacing="6" styleClass="stat-card" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                            <Label text="Inscription" styleClass="stat-title"/>
+                            <Label fx:id="joinedLabel" text="-" styleClass="stat-value"/>
+                        </VBox>
+                    </GridPane>
+
+                    <Label text="Explorer les modules" styleClass="section-title"/>
+
+                    <FlowPane hgap="18" vgap="18" prefWrapLength="900">
+                        <VBox spacing="10" styleClass="module-card">
+                            <Label text="Terrains" styleClass="module-title"/>
+                            <Label text="Centralisez vos informations liees aux espaces agricoles."
+                                   wrapText="true" styleClass="module-text"/>
+                            <Button text="Ouvrir Terrains" onAction="#handleOpenModule" styleClass="btn-primary"/>
+                        </VBox>
+                        <VBox spacing="10" styleClass="module-card">
+                            <Label text="Plantes" styleClass="module-title"/>
+                            <Label text="Gerez votre catalogue de plantes, allocations et suivi de cultures."
+                                   wrapText="true" styleClass="module-text"/>
+                            <Button text="Ouvrir Plantes" onAction="#handleOpenModule" styleClass="btn-primary"/>
+                        </VBox>
+                        <VBox spacing="10" styleClass="module-card">
+                            <Label text="Catalogue" styleClass="module-title"/>
+                            <Label text="Parcourez le catalogue des terrains disponibles a la location."
+                                   wrapText="true" styleClass="module-text"/>
+                            <Button text="Ouvrir Catalogue" onAction="#handleOpenModule" styleClass="btn-primary"/>
+                        </VBox>
+                        <VBox spacing="10" styleClass="module-card">
+                            <Label text="Evenements" styleClass="module-title"/>
+                            <Label text="Organisez vos activites et gardez une vue claire sur les rendez-vous."
+                                   wrapText="true" styleClass="module-text"/>
+                            <Button text="Ouvrir Evenements" onAction="#handleOpenModule" styleClass="btn-primary"/>
+                        </VBox>
+                        <VBox spacing="10" styleClass="module-card">
+                            <Label text="Equipements" styleClass="module-title"/>
+                            <Label text="Suivez les ressources materielle et leurs disponibilites."
+                                   wrapText="true" styleClass="module-text"/>
+                            <Button text="Ouvrir Equipements" onAction="#handleOpenModule" styleClass="btn-primary"/>
+                        </VBox>
+                        <VBox spacing="10" styleClass="module-card">
+                            <Label text="Capital" styleClass="module-title"/>
+                            <Label text="Donnez plus de lisibilite a vos donnees financieres et a vos indicateurs."
+                                   wrapText="true" styleClass="module-text"/>
+                            <Button text="Ouvrir Capital" onAction="#handleOpenModule" styleClass="btn-primary"/>
+                        </VBox>
+                    </FlowPane>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane prefHeight="500.0" prefWidth="700.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetailTerrainController">
+   <center>
+      <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox spacing="10.0" styleClass="card" maxWidth="450.0">
+               <children>
+                  <Label styleClass="title-page" text="Détails du Terrain Ajouté" />
+                  <HBox spacing="10.0">
+                     <children>
+                        <Label text="Région:" styleClass="label-standard" />
+                        <Label fx:id="regionLabel" text="-" style="-fx-font-weight: bold; -fx-text-fill: #1F2937;" />
+                     </children>
+                  </HBox>
+                  <HBox spacing="10.0">
+                     <children>
+                        <Label text="Superficie:" styleClass="label-standard" />
+                        <Label fx:id="superficieLabel" text="-" style="-fx-font-weight: bold; -fx-text-fill: #1F2937;" />
+                     </children>
+                  </HBox>
+                  <HBox spacing="10.0">
+                     <children>
+                        <Label text="Prix:" styleClass="label-standard" />
+                        <Label fx:id="prixLabel" text="-" style="-fx-font-weight: bold; -fx-text-fill: #1F2937;" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Button mnemonicParsing="false" onAction="#retourALaListe" styleClass="button-primary" text="Retour au Formulaire" />
+         </children>
+         <padding>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

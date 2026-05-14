@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="700.0" prefWidth="1100.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherPlantesController">
+   <left>
+      <VBox prefWidth="240.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="sidebar-title" text="Ardhi Admin" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#allerVersTerrains" styleClass="sidebar-button" text="Gestion Terrains" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="Gestion Plantes" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#retourAccueil" style="-fx-background-color: transparent; -fx-text-fill: #6B7280; -fx-padding: 30 0 0 0;" text="🏠 Retour Accueil" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <VBox spacing="25.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="title-page" text="Liste des Plantes" />
+                        <Label styleClass="label-standard" text="Consultez et gérez le catalogue botanique de l'exploitation." />
+                     </children>
+                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#allerVersAjout" styleClass="button-primary" text="+ Ajouter une Plante" />
+               </children>
+            </HBox>
+            
+            <VBox styleClass="card" VBox.vgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="planteTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="colNom" prefWidth="120.0" text="Nom" />
+                      <TableColumn fx:id="colType" prefWidth="120.0" text="Type" />
+                        <TableColumn fx:id="colDebut" prefWidth="120.0" text="Début Plantation" />
+                        <TableColumn fx:id="colFin" prefWidth="120.0" text="Fin Plantation" />
+                        <TableColumn fx:id="colEau" prefWidth="100.0" text="Besoin Eau" />
+                        <TableColumn fx:id="colDesc" prefWidth="150.0" text="Description" />
+                        <TableColumn fx:id="colActions" prefWidth="200.0" text="Actions" />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

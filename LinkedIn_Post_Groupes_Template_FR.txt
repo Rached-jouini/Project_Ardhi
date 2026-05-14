@@ -1,0 +1,92 @@
+MODELE DE PUBLICATION LINKEDIN - PROJET (VERSION FRANCAISE)
+
+Instructions d'utilisation :
+1) Ce modele est a adapter par chaque etudiant individuellement.
+2) Garde la structure commune pour harmoniser la communication.
+3) Ajoute une courte introduction personnelle (2 a 4 lignes max).
+4) Insere les captures d'ecran aux emplacements indiques.
+
+==================================================
+GROUPE : [Nom du groupe]
+PROJET : [Nom du projet]
+ETUDIANT : [Nom et prenom]
+ROLE : [Ex: Backend / Frontend / IA / Integration / Test]
+==================================================
+
+[INTRODUCTION PERSONNALISEE - courte]
+Exemple :
+Ravi(e) de partager une etape importante de notre projet realise en equipe.
+Cette experience m'a permis de renforcer mes competences techniques et collaboratives.
+
+[CONTENU COMMUN A CONSERVER]
+Dans le cadre de notre projet academique, nous avons concu et developpe [description courte du projet].
+L'objectif principal etait de [objectif principal].
+
+Mes contributions principales :
+- [Contribution 1]
+- [Contribution 2]
+- [Contribution 3]
+
+Technologies utilisees :
+- [Techno 1]
+- [Techno 2]
+- [Techno 3]
+
+Ce que j'ai appris :
+- [Apprentissage 1]
+- [Apprentissage 2]
+
+Remerciements :
+Merci a mon equipe [noms ou groupe] et a nos encadrants pour leur accompagnement.
+
+[EMPLACEMENT CAPTURES D'ECRAN]
+Capture 1 (interface principale) : [AJOUTER IMAGE ICI]
+Capture 2 (fonctionnalite cle) : [AJOUTER IMAGE ICI]
+Capture 3 (resultat/test/dashboard) : [AJOUTER IMAGE ICI]
+
+[CONCLUSION]
+Fier(e) du travail accompli et motive(e) a poursuivre sur de nouveaux defis.
+
+Hashtags suggerees :
+#Projet #Developpement #IngenierieLogicielle #TeamWork #Etudiant #Innovation
+
+==================================================
+VARIANTE "PAR GROUPE" (si vous voulez un post global du groupe)
+==================================================
+
+Nous sommes heureux de presenter notre projet : [Nom du projet].
+Notre equipe a travaille sur [problematique] et propose une solution basee sur [idee/produit].
+
+Repartition des contributions :
+- [Membre 1] : [taches]
+- [Membre 2] : [taches]
+- [Membre 3] : [taches]
+- [Membre 4] : [taches]
+
+Resultats obtenus :
+- [Resultat 1]
+- [Resultat 2]
+
+Captures a inserer dans ce post groupe :
+- Image A : Vue globale de l'application [AJOUTER IMAGE ICI]
+- Image B : Fonctionnalite principale [AJOUTER IMAGE ICI]
+- Image C : Impact / Statistiques / Demo [AJOUTER IMAGE ICI]
+
+==================================================
+OU AJOUTER LES SCREENSHOTS SUR LINKEDIN
+==================================================
+
+Option recommandee (simple) :
+1) Copie-colle le texte final dans le champ de publication LinkedIn.
+2) Clique sur l'icone "Photo" / "Media".
+3) Ajoute 2 a 4 captures max (qualite claire).
+4) Garde l'ordre mentionne dans le texte :
+   - Capture 1 = interface principale
+   - Capture 2 = fonctionnalite cle
+   - Capture 3 = resultat / test
+
+Astuce :
+Ajoute une petite ligne avant les hashtags :
+"Quelques apercus en images :"
+Puis laisse les images attachees au post (pas besoin d'inserer dans le corps du texte).
+
