@@ -1,196 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="950.0" style="-fx-background-color: #F3F4F6;"
-    xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="controllers.FormulaireEquipementController">
-   <children>
-      <VBox alignment="CENTER" spacing="20.0"
-            AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0"
-            AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="20.0">
-         <children>
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FormulaireEquipementController">
+    <content>
+        <BorderPane style="-fx-background-color: transparent;">
+            
+            <!-- Sidebar Gauche -->
+            <left>
+                <VBox prefWidth="270" spacing="16" styleClass="sidebar">
+                    <padding>
+                        <Insets top="28" right="22" bottom="28" left="22"/>
+                    </padding>
+                    <Label text="Ardhi" styleClass="sidebar-title"/>
+                    <Label text="Edition Equipement" styleClass="sidebar-section-title" wrapText="true"/>
+                    
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Raccourcis" styleClass="sidebar-panel-title"/>
+                        <Button text="Retour a la liste" onAction="#retourAction" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+                    
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Label text="Nouveau Materiel" styleClass="feature-pill"/>
+                </VBox>
+            </left>
 
-            <!-- Header -->
-            <HBox alignment="CENTER_LEFT" spacing="15">
-               <children>
-                  <Button onAction="#retourAction"
-                          style="-fx-background-color: #E5E7EB; -fx-background-radius: 10; -fx-padding: 8 15; -fx-cursor: hand;"
-                          text="← Retour" />
-                  <Label text="Ajouter un Équipement" textFill="#2d5d34">
-                     <font><Font name="System Bold" size="26.0" /></font>
-                  </Label>
-               </children>
-            </HBox>
+            <center>
+                <VBox spacing="24" styleClass="content-box">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
 
-            <!-- Main Card -->
-            <HBox spacing="25.0"
-                  style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 15, 0, 0, 8);">
-               <children>
+                    <!-- Header Card -->
+                    <VBox spacing="12" styleClass="admin-header-card">
+                        <Label text="Fiche Technique du Materiel" styleClass="page-title" textFill="WHITE"/>
+                        <Label text="Remplissez les specifications techniques pour assurer un suivi precis de la maintenance et du cycle de vie de vos outils." 
+                               wrapText="true" styleClass="auth-subtitle" textFill="WHITE"/>
+                    </VBox>
 
-                  <!-- LEFT: Informations générales + cycle de vie -->
-                  <VBox spacing="18.0" HBox.hgrow="ALWAYS">
-                     <children>
-
-                        <!-- Section 1: Infos générales -->
-                        <Label text="📋  Informations Générales" textFill="#2d5d34">
-                           <font><Font name="System Bold" size="14.0" /></font>
-                        </Label>
-
-                        <HBox spacing="12">
-                           <children>
-                              <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="Nom de l'équipement" textFill="#6B7280"><font><Font size="11"/></font></Label>
-                                    <TextField fx:id="nomTextField" prefHeight="40.0" promptText="Ex: John Deere 5075E" style="-fx-background-radius: 10;" />
-                                 </children>
-                              </VBox>
-                              <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="Catégorie" textFill="#6B7280"><font><Font size="11"/></font></Label>
-                                    <TextField fx:id="typeTextField" prefHeight="40.0" promptText="tracteur / outil / drone..." style="-fx-background-radius: 10;" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-
-                        <HBox spacing="12">
-                           <children>
-                              <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="Quantité Totale" textFill="#6B7280"><font><Font size="11"/></font></Label>
-                                    <TextField fx:id="qteTotaleTextField" prefHeight="40.0" promptText="Ex: 5" style="-fx-background-radius: 10;" />
-                                 </children>
-                              </VBox>
-                              <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="Quantité Disponible" textFill="#6B7280"><font><Font size="11"/></font></Label>
-                                    <TextField fx:id="qteDispoTextField" prefHeight="40.0" promptText="Ex: 5" style="-fx-background-radius: 10;" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-
-                        <HBox spacing="12">
-                           <children>
-                              <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="État" textFill="#6B7280"><font><Font size="11"/></font></Label>
-                                    <ComboBox fx:id="etatComboBox" prefHeight="40.0" prefWidth="200.0" style="-fx-background-radius: 10;" />
-                                 </children>
-                              </VBox>
-                              <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="Prix location / jour (DT)" textFill="#6B7280"><font><Font size="11"/></font></Label>
-                                    <TextField fx:id="prixTextField" prefHeight="40.0" promptText="Ex: 150.00" style="-fx-background-radius: 10;" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-
-                        <!-- Photo -->
-                        <VBox spacing="4">
-                           <children>
-                              <Label text="Photo" textFill="#6B7280"><font><Font size="11"/></font></Label>
-                              <HBox spacing="10">
-                                 <children>
-                                    <TextField fx:id="photoTextField" editable="false" prefHeight="40.0"
-                                               promptText="Aucune image sélectionnée" HBox.hgrow="ALWAYS"
-                                               style="-fx-background-radius: 10;" />
-                                    <Button onAction="#choisirPhotoAction" prefHeight="40.0"
-                                            style="-fx-background-color: #2d5d34; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;"
-                                            text="📁 Parcourir" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-
-                        <!-- Section 2: Cycle de vie -->
-                        <Separator />
-                        <Label text="🔄  Cycle de Vie &amp; Remplacement" textFill="#B45309">
-                           <font><Font name="System Bold" size="14.0" /></font>
-                        </Label>
-
-                        <HBox spacing="12">
-                           <children>
-                              <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="Date de mise en service" textFill="#6B7280"><font><Font size="11"/></font></Label>
-                                    <DatePicker fx:id="dateMiseEnServicePicker" prefHeight="40.0" prefWidth="200.0"
-                                                promptText="Date d'achat / mise en service"
-                                                style="-fx-background-radius: 10;" />
-                                 </children>
-                              </VBox>
-                              <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="Durée de vie (années)" textFill="#6B7280"><font><Font size="11"/></font></Label>
-                                    <TextField fx:id="dureeVieTextField" prefHeight="40.0"
-                                               promptText="Ex: 10 (tracteur), 3 (PC)..."
-                                               style="-fx-background-radius: 10;" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-
-                        <!-- Info box -->
-                        <HBox spacing="8" style="-fx-background-color: #FEF3C7; -fx-padding: 10 15; -fx-background-radius: 10;">
-                           <children>
-                              <Label text="💡" />
-                              <Label text="Ces informations permettent au système de détecter automatiquement les équipements à remplacer."
-                                     textFill="#92400E" wrapText="true" HBox.hgrow="ALWAYS">
-                                 <font><Font size="11"/></font>
-                              </Label>
-                           </children>
-                        </HBox>
-
-                     </children>
-                  </VBox>
-
-                  <!-- RIGHT: Aperçu photo -->
-                  <VBox alignment="CENTER" prefWidth="220.0" spacing="12.0"
-                        style="-fx-background-color: #F9FAFB; -fx-background-radius: 15; -fx-border-color: #E5E7EB; -fx-border-radius: 15; -fx-padding: 20;">
-                     <children>
-                        <Label text="🖼️" style="-fx-font-size: 30;"/>
-                        <Label text="Aperçu des Photos" textFill="#6b7280">
-                           <font><Font name="System Bold" size="12"/></font>
-                        </Label>
+                    <!-- Main Form Section -->
+                    <VBox spacing="25.0" styleClass="card">
+                        <padding>
+                            <Insets top="30" right="30" bottom="30" left="30"/>
+                        </padding>
                         
-                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="280.0" prefWidth="180.0" 
-                                    style="-fx-background-color: transparent; -fx-background: transparent;">
-                           <content>
-                              <FlowPane fx:id="photosContainer" hgap="10" vgap="10" alignment="TOP_CENTER" 
-                                        style="-fx-padding: 5;">
-                                 <!-- Les images s'ajouteront ici -->
-                              </FlowPane>
-                           </content>
-                        </ScrollPane>
+                        <HBox spacing="25.0">
+                            <children>
+                                <!-- LEFT: Form Fields -->
+                                <VBox spacing="18.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="📋  Informations Generales" styleClass="section-title"/>
 
-                        <Label text="Sélectionnez une ou plusieurs photos"
-                               textFill="#9CA3AF" wrapText="true" textAlignment="CENTER">
-                           <font><Font size="10"/></font>
-                        </Label>
-                     </children>
-                  </VBox>
+                                        <HBox spacing="12">
+                                            <children>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label text="Nom de l'equipement" styleClass="field-label" />
+                                                        <TextField fx:id="nomTextField" prefHeight="45.0" promptText="Ex: John Deere 5075E" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label text="Categorie" styleClass="field-label" />
+                                                        <TextField fx:id="typeTextField" prefHeight="45.0" promptText="tracteur / outil / drone..." />
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
 
-               </children>
-            </HBox>
+                                        <HBox spacing="12">
+                                            <children>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label text="Quantite Totale" styleClass="field-label" />
+                                                        <TextField fx:id="qteTotaleTextField" prefHeight="45.0" promptText="Ex: 5" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label text="Quantite Disponible" styleClass="field-label" />
+                                                        <TextField fx:id="qteDispoTextField" prefHeight="45.0" promptText="Ex: 5" />
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
 
-            <!-- Buttons -->
-            <HBox alignment="CENTER" spacing="15.0">
-               <children>
-                  <Button onAction="#ajouterEquipementAction" prefHeight="48.0" prefWidth="220.0"
-                          style="-fx-background-color: #2d5d34; -fx-text-fill: white; -fx-background-radius: 12; -fx-font-weight: bold; -fx-font-size: 14; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(45,93,52,0.4), 10, 0, 0, 4);"
-                          text="✅  ENREGISTRER" />
-                  <Button onAction="#retourAction" prefHeight="48.0" prefWidth="150.0"
-                          style="-fx-background-color: #9CA3AF; -fx-text-fill: white; -fx-background-radius: 12; -fx-cursor: hand;"
-                          text="ANNULER" />
-               </children>
-            </HBox>
+                                        <HBox spacing="12">
+                                            <children>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label text="Etat" styleClass="field-label" />
+                                                        <ComboBox fx:id="etatComboBox" prefHeight="45.0" prefWidth="200.0" maxWidth="1.7976931348623157E308" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label text="Prix location / jour (DT)" styleClass="field-label" />
+                                                        <TextField fx:id="prixTextField" prefHeight="45.0" promptText="Ex: 150.00" />
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
 
-         </children>
-      </VBox>
-   </children>
-</AnchorPane>
+                                        <VBox spacing="4">
+                                            <children>
+                                                <Label text="Photo" styleClass="field-label" />
+                                                <HBox spacing="10">
+                                                    <children>
+                                                        <TextField fx:id="photoTextField" editable="false" prefHeight="45.0"
+                                                                   promptText="Aucune image selectionnee" HBox.hgrow="ALWAYS" />
+                                                        <Button onAction="#choisirPhotoAction" prefHeight="45.0"
+                                                                styleClass="btn-secondary" text="📁 Parcourir" />
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+
+                                        <Separator opacity="0.3" />
+                                        
+                                        <Label text="🔄  Cycle de Vie &amp; Remplacement" styleClass="section-title" style="-fx-text-fill: #B45309;"/>
+
+                                        <HBox spacing="12">
+                                            <children>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label text="Date de mise en service" styleClass="field-label" />
+                                                        <DatePicker fx:id="dateMiseEnServicePicker" prefHeight="45.0" prefWidth="200.0" maxWidth="1.7976931348623157E308" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label text="Duree de vie (annees)" styleClass="field-label" />
+                                                        <TextField fx:id="dureeVieTextField" prefHeight="45.0" promptText="Ex: 10" />
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+
+                                        <HBox spacing="8" style="-fx-background-color: #FEF3C7; -fx-padding: 12; -fx-background-radius: 12; -fx-border-color: #FCD34D; -fx-border-radius: 12;">
+                                            <children>
+                                                <Label text="💡" />
+                                                <Label text="Ces informations permettent au systeme de detecter automatiquement les equipements a remplacer."
+                                                       textFill="#92400E" wrapText="true" HBox.hgrow="ALWAYS">
+                                                    <font><Font size="12"/></font>
+                                                </Label>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+
+                                <!-- RIGHT: Image Preview -->
+                                <VBox alignment="TOP_CENTER" prefWidth="250.0" spacing="15.0"
+                                      style="-fx-background-color: #F9FAFB; -fx-background-radius: 20; -fx-border-color: #E5E7EB; -fx-border-radius: 20; -fx-padding: 20;">
+                                    <children>
+                                        <Label text="🖼️" style="-fx-font-size: 35;"/>
+                                        <Label text="Aperçu des Photos" styleClass="section-title" />
+                                        
+                                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="320.0" 
+                                                    style="-fx-background-color: transparent; -fx-background: transparent;">
+                                            <content>
+                                                <FlowPane fx:id="photosContainer" hgap="10" vgap="10" alignment="TOP_CENTER">
+                                                    <!-- Les images s'ajouteront ici -->
+                                                </FlowPane>
+                                            </content>
+                                        </ScrollPane>
+
+                                        <Label text="Selectionnez une ou plusieurs photos" styleClass="muted-label" textAlignment="CENTER" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <Separator opacity="0.3" />
+
+                        <HBox alignment="CENTER" spacing="20.0">
+                            <children>
+                                <Button onAction="#ajouterEquipementAction" prefHeight="55.0" prefWidth="250.0"
+                                        styleClass="btn-primary" text="✅  ENREGISTRER LE MATERIEL" />
+                                <Button onAction="#retourAction" prefHeight="55.0" prefWidth="150.0"
+                                        styleClass="btn-secondary" text="ANNULER" />
+                            </children>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </content>
+</ScrollPane>

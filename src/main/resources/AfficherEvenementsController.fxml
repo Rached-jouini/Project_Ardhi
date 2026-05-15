@@ -1,72 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="750.0" prefWidth="1100.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherEvenementsController">
-   
-   <!-- Sidebar Navigation -->
-   <left>
-      <VBox styleClass="sidebar">
-         <children>
-            <Label styleClass="sidebar-title" text="Ardhi Project" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="📅 Événements" />
-             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVoirInscriptions" styleClass="sidebar-button" text="👥 Inscriptions" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🌾 Cultures" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="📈 Statistiques" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSwitchToUser" styleClass="sidebar-button" text="👤 Espace Client" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="⚙️ Paramètres" />
-            <Region VBox.vgrow="ALWAYS" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🚪 Déconnexion" />
-         </children>
-      </VBox>
-   </left>
-
-   <!-- Main Content Area -->
-   <center>
-      <VBox styleClass="content-pane">
-         <children>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-               <children>
-                  <Label styleClass="title-label" text="Liste des Événements" />
-                  <Region HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#handleAjouter" styleClass="btn-success" text="+ Nouveau" />
-               </children>
-            </HBox>
+<BorderPane prefHeight="750.0" prefWidth="1150.0" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherEvenementsController">
+    
+    <!-- Sidebar Gauche -->
+    <left>
+        <VBox prefWidth="270" spacing="16" styleClass="sidebar" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="28" right="22" bottom="28" left="22"/>
+            </padding>
+            <Label text="Ardhi" styleClass="sidebar-title"/>
+            <Label text="Gestion des Evenements" styleClass="sidebar-section-title" wrapText="true"/>
             
-            <!-- Table Card -->
-            <VBox styleClass="card" VBox.vgrow="ALWAYS">
-               <children>
-                  <TableView fx:id="tableEvenements" prefHeight="400.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
-                    <columns>
-                      <TableColumn fx:id="colNom" prefWidth="120.0" text="Nom" />
-                      <TableColumn fx:id="colDescription" prefWidth="150.0" text="Description" />
-                      <TableColumn fx:id="colDate" prefWidth="100.0" text="Date" />
-                      <TableColumn fx:id="colLieu" prefWidth="100.0" text="Lieu" />
-                      <TableColumn fx:id="colType" prefWidth="100.0" text="Type" />
-                      <TableColumn fx:id="colCulture" prefWidth="120.0" text="Culture" />
-                      <TableColumn fx:id="colPlaces" prefWidth="80.0" text="Places" />
-                      <TableColumn fx:id="colStatut" prefWidth="100.0" text="Statut" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                  
-                  <HBox alignment="CENTER_RIGHT" spacing="15.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleShow" styleClass="btn-success" text="Afficher" />
-                        <Button mnemonicParsing="false" onAction="#handleSupprimer" styleClass="btn-danger" text="Supprimer" />
-                        <Button mnemonicParsing="false" onAction="#handleModifier" styleClass="btn-primary" text="Modifier l'événement" />
-                     </children>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
+            <VBox spacing="10" styleClass="sidebar-panel">
+                <Label text="Raccourcis" styleClass="sidebar-panel-title"/>
+                <Button text="Tableau de Bord" onAction="#handleRetourDashboard" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                <Button text="👥 Voir Inscriptions" onAction="#handleVoirInscriptions" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
             </VBox>
-         </children>
-      </VBox>
-   </center>
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            <Label text="Module Evenementiel" styleClass="feature-pill"/>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+            <content>
+                <VBox spacing="24" styleClass="content-box">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+
+                    <!-- Header Card -->
+                    <VBox spacing="12" styleClass="admin-header-card">
+                        <Label text="Annuaire des Evenements" styleClass="page-title" textFill="WHITE"/>
+                        <Label text="Organisez des formations, des salons et des journees portes ouvertes. Suivez les inscriptions en temps reel." 
+                               wrapText="true" styleClass="auth-subtitle" textFill="WHITE"/>
+                        <HBox spacing="10">
+                            <Label text="Formations" styleClass="admin-chip"/>
+                            <Label text="Expositions" styleClass="admin-chip"/>
+                            <Label text="Networking" styleClass="admin-chip"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Main Table Card -->
+                    <VBox spacing="20" styleClass="card">
+                        <padding>
+                            <Insets top="24" right="24" bottom="24" left="24"/>
+                        </padding>
+                        
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <VBox spacing="4">
+                                    <Label text="Liste des evenements planifies" styleClass="section-title"/>
+                                    <Label text="Selectionnez un evenement pour le modifier, le supprimer ou voir les details." styleClass="muted-label"/>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button text="+ Nouvel Evenement" onAction="#handleAjouter" styleClass="btn-primary" prefHeight="45"/>
+                            </children>
+                        </HBox>
+
+                        <Separator/>
+
+                        <TableView fx:id="tableEvenements" prefHeight="450.0" styleClass="table-compact" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colNom" prefWidth="120.0" text="Nom" />
+                                <TableColumn fx:id="colDescription" prefWidth="180.0" text="Description" />
+                                <TableColumn fx:id="colDate" prefWidth="100.0" text="Date" />
+                                <TableColumn fx:id="colLieu" prefWidth="100.0" text="Lieu" />
+                                <TableColumn fx:id="colType" prefWidth="100.0" text="Type" />
+                                <TableColumn fx:id="colCulture" prefWidth="120.0" text="Culture" />
+                                <TableColumn fx:id="colPlaces" prefWidth="80.0" text="Places" />
+                                <TableColumn fx:id="colStatut" prefWidth="100.0" text="Statut" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                        
+                        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                            <children>
+                                <Button text="👁️ Afficher" onAction="#handleShow" styleClass="btn-secondary" prefWidth="120"/>
+                                <Button text="🗑️ Supprimer" onAction="#handleSupprimer" styleClass="btn-danger" prefWidth="120"/>
+                                <Button text="✏️ Modifier l'evenement" onAction="#handleModifier" styleClass="btn-primary" prefWidth="180"/>
+                            </children>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
 </BorderPane>

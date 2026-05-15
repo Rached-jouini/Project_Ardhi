@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -431,7 +432,27 @@ public class PanierController {
     }
 
     @FXML
+    void handleBackHome(ActionEvent event) throws java.io.IOException {
+        loadScene(event, "/user-home.fxml");
+    }
+
+    private void loadScene(ActionEvent event, String resource) throws java.io.IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(resource));
+        Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+        scene.setRoot(root);
+    }
+
+    @FXML
+    void close(ActionEvent event) {
+        try {
+            loadScene(event, "/LocationEquipement.fxml");
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     void close() {
-        ((Stage) totalLabel.getScene().getWindow()).close();
+        // Fallback for cases where close is called without event
     }
 }

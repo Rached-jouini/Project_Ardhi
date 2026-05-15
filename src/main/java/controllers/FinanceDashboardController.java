@@ -323,9 +323,27 @@ public class FinanceDashboardController implements Initializable {
     }
 
     @FXML
+    void handleBackHome(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/user-home.fxml"));
+        totalCapitalLabel.getScene().setRoot(root);
+    }
+
+    @FXML
+    void handleOpenTransactions(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/TransactionsView.fxml"));
+        totalCapitalLabel.getScene().setRoot(root);
+    }
+
+    @FXML
+    void handleOpenWallets(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/GestionWallets.fxml"));
+        totalCapitalLabel.getScene().setRoot(root);
+    }
+
+    @FXML
     void retourAccueil(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Home.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/user-home.fxml"));
             totalCapitalLabel.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();

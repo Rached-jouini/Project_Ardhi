@@ -107,8 +107,9 @@ public class GestionEquipementController {
             FormulaireEquipementController controller = loader.getController();
             controller.setEquipementAModifier(eq); // I will add this method to FormulaireEquipementController
             
-            // On utilise le singleton pour changer la page
-            MainLayoutController.getInstance().setContent(root);
+            // On change le root de la scene actuelle
+            javafx.scene.Scene scene = equipementTable.getScene();
+            scene.setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -158,11 +159,23 @@ public class GestionEquipementController {
 
     @FXML
     void ouvrirFormulaireAjout(ActionEvent event) {
-        MainLayoutController.getInstance().loadPage("/FormulaireEquipement.fxml");
+        try {
+            javafx.scene.Parent root = FXMLLoader.load(getClass().getResource("/FormulaireEquipement.fxml"));
+            javafx.scene.Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+            scene.setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void retourAccueil(ActionEvent event) {
-        MainLayoutController.getInstance().loadPage("/FinanceDashboard.fxml");
+        try {
+            javafx.scene.Parent root = FXMLLoader.load(getClass().getResource("/admin-dashboard.fxml"));
+            javafx.scene.Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+            scene.setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,132 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
 
-<ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #F8FAFC; -fx-background: #F8FAFC; -fx-border-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TransactionsViewController">
-   <content>
-      <HBox alignment="TOP_CENTER" spacing="25.0" style="-fx-padding: 30;">
-         <children>
+<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TransactionsViewController">
+    <content>
+        <BorderPane style="-fx-background-color: transparent;">
             
-            <!-- PARTIE GAUCHE : FORMULAIRE (Élargi pour plus de clarté) -->
-            <VBox minWidth="550.0" prefWidth="550.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 25; -fx-padding: 35; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 15, 0, 0, 8);">
-               <children>
-                  <HBox alignment="CENTER_LEFT" spacing="15.0">
-                     <children>
-                        <Label style="-fx-background-color: #ECFDF5; -fx-padding: 12; -fx-background-radius: 15;" text="💸" textFill="#059669"><font><Font size="24.0" /></font></Label>
-                        <VBox>
-                           <children>
-                              <Label text="Nouvelle Opération" textFill="#111827">
-                                 <font><Font name="System Bold" size="24.0" /></font>
-                              </Label>
-                              <Label text="Saisissez vos flux financiers avec précision" textFill="#6B7280" style="-fx-font-size: 12;" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
+            <!-- Sidebar Gauche (Style Finance) -->
+            <left>
+                <VBox prefWidth="270" spacing="16" styleClass="sidebar">
+                    <padding>
+                        <Insets top="28" right="22" bottom="28" left="22"/>
+                    </padding>
+                    <Label text="Ardhi" styleClass="sidebar-title"/>
+                    <Label text="Mes Transactions" styleClass="sidebar-section-title" wrapText="true"/>
+                    
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Navigation" styleClass="sidebar-panel-title"/>
+                        <Button text="Tableau de bord Finance" onAction="#handleBackToDashboard" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                        <Button text="Retour Accueil" onAction="#handleBackToHome" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+                    
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Finance" styleClass="sidebar-panel-title"/>
+                        <Button text="Comptes et Cartes" onAction="#handleOpenWallets" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
 
-                  <Separator opacity="0.3" />
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Label text="Suivi securise" styleClass="feature-pill"/>
+                </VBox>
+            </left>
 
-                  <!-- Type -->
-                  <VBox spacing="10.0">
-                     <children>
-                        <Label text="Type de flux" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
-                        <HBox spacing="15.0">
-                           <children>
-                              <ToggleButton fx:id="btnRevenu" maxWidth="1.7976931348623157E308" prefHeight="55.0" selected="true" style="-fx-background-color: #ECFDF5; -fx-text-fill: #059669; -fx-background-radius: 12; -fx-font-weight: bold; -fx-font-size: 14; -fx-cursor: hand;" text="🟢 REVENU" HBox.hgrow="ALWAYS">
-                                 <toggleGroup><ToggleGroup fx:id="typeGroup" /></toggleGroup>
-                              </ToggleButton>
-                              <ToggleButton fx:id="btnDepense" maxWidth="1.7976931348623157E308" prefHeight="55.0" style="-fx-background-color: #FEE2E2; -fx-text-fill: #EF4444; -fx-background-radius: 12; -fx-font-weight: bold; -fx-font-size: 14; -fx-cursor: hand;" text="🔴 DÉPENSE" toggleGroup="$typeGroup" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+            <center>
+                <VBox spacing="24" styleClass="content-box">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
 
-                  <!-- Montant -->
-                  <VBox spacing="10.0">
-                     <children>
-                        <Label text="Montant de la transaction" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
-                        <TextField fx:id="montantField" prefHeight="55.0" promptText="0.00 DT" style="-fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12; -fx-background-radius: 12; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 15;" />
-                     </children>
-                  </VBox>
+                    <!-- Header Card -->
+                    <VBox spacing="12" styleClass="admin-header-card">
+                        <Label text="Historique des Transactions" styleClass="page-title" textFill="WHITE"/>
+                        <Label text="Enregistrez vos nouvelles operations et suivez l'evolution de vos flux financiers en temps reel." 
+                               wrapText="true" styleClass="auth-subtitle" textFill="WHITE"/>
+                    </VBox>
 
-                  <!-- Wallet & Mode -->
-                  <HBox spacing="20.0">
-                     <children>
-                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Wallet / Budget" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
-                              <ComboBox fx:id="walletCombo" maxWidth="1.7976931348623157E308" prefHeight="50.0" promptText="Choisir le budget..." style="-fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12; -fx-background-radius: 12;" />
-                           </children>
-                        </VBox>
-                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Moyen de Paiement" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
-                              <ComboBox fx:id="modePaiementCombo" maxWidth="1.7976931348623157E308" prefHeight="50.0" promptText="Mode..." style="-fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12; -fx-background-radius: 12;" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
+                    <HBox spacing="25.0">
+                        <children>
+                            <!-- LEFT: FORMULAIRE -->
+                            <VBox minWidth="500.0" prefWidth="500.0" spacing="20.0" styleClass="card">
+                                <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
+                                <children>
+                                    <Label text="💸 Nouvelle Operation" styleClass="section-title"/>
+                                    
+                                    <VBox spacing="10.0">
+                                        <children>
+                                            <Label text="Type de flux" styleClass="field-label" />
+                                            <HBox spacing="15.0">
+                                                <children>
+                                                    <ToggleButton fx:id="btnRevenu" maxWidth="1.7976931348623157E308" prefHeight="50.0" selected="true" style="-fx-background-color: #ECFDF5; -fx-text-fill: #059669; -fx-background-radius: 12; -fx-font-weight: bold; -fx-cursor: hand;" text="🟢 REVENU" HBox.hgrow="ALWAYS">
+                                                        <toggleGroup><ToggleGroup fx:id="typeGroup" /></toggleGroup>
+                                                    </ToggleButton>
+                                                    <ToggleButton fx:id="btnDepense" maxWidth="1.7976931348623157E308" prefHeight="50.0" style="-fx-background-color: #FEE2E2; -fx-text-fill: #EF4444; -fx-background-radius: 12; -fx-font-weight: bold; -fx-cursor: hand;" text="🔴 DEPENSE" toggleGroup="$typeGroup" HBox.hgrow="ALWAYS" />
+                                                </children>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
 
-                  <!-- SMS -->
-                  <VBox spacing="10.0">
-                     <children>
-                        <Label text="Notification SMS de confirmation (Optionnel)" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
-                        <HBox spacing="12.0">
-                           <children>
-                              <ComboBox fx:id="prefixCombo" prefHeight="50.0" prefWidth="120.0" style="-fx-background-radius: 12; -fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12;" />
-                              <TextField fx:id="phoneField" prefHeight="50.0" promptText="Numéro de téléphone" style="-fx-background-radius: 12; -fx-background-color: #F9FAFB; -fx-border-color: #E5E7EB; -fx-border-radius: 12;" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+                                    <VBox spacing="8.0">
+                                        <children>
+                                            <Label text="Montant (DT)" styleClass="field-label" />
+                                            <TextField fx:id="montantField" prefHeight="50.0" promptText="0.00" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+                                        </children>
+                                    </VBox>
 
-                  <!-- Description -->
-                  <VBox spacing="10.0">
-                     <children>
-                        <Label text="Notes &amp; Description" style="-fx-font-weight: bold; -fx-font-size: 14;" textFill="#374151" />
-                        <TextArea fx:id="descField" prefHeight="100.0" promptText="Détails de l'opération..." style="-fx-background-radius: 12; -fx-border-radius: 12; -fx-background-color: #F9FAFB;" wrapText="true" />
-                     </children>
-                  </VBox>
+                                    <HBox spacing="15.0">
+                                        <children>
+                                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                                <children>
+                                                    <Label text="Budget / Wallet" styleClass="field-label" />
+                                                    <ComboBox fx:id="walletCombo" maxWidth="1.7976931348623157E308" prefHeight="45.0" />
+                                                </children>
+                                            </VBox>
+                                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                                <children>
+                                                    <Label text="Mode de Paiement" styleClass="field-label" />
+                                                    <ComboBox fx:id="modePaiementCombo" maxWidth="1.7976931348623157E308" prefHeight="45.0" />
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </HBox>
 
-                  <Button onAction="#handleEnregistrer" prefHeight="60.0" maxWidth="1.7976931348623157E308" style="-fx-background-color: #063D2F; -fx-text-fill: white; -fx-background-radius: 15; -fx-font-weight: bold; -fx-font-size: 16; -fx-cursor: hand;" text="VALIDER LA TRANSACTION" />
-               </children>
-            </VBox>
+                                    <VBox spacing="8.0">
+                                        <children>
+                                            <Label text="📱 Notification SMS (Optionnel)" styleClass="field-label" />
+                                            <HBox spacing="10.0">
+                                                <children>
+                                                    <ComboBox fx:id="prefixCombo" prefHeight="45.0" prefWidth="100.0" />
+                                                    <TextField fx:id="phoneField" prefHeight="45.0" promptText="Numero de telephone" HBox.hgrow="ALWAYS" />
+                                                </children>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
 
-            <!-- PARTIE DROITE : HISTORIQUE -->
-            <VBox spacing="20.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <HBox alignment="CENTER_LEFT">
-                     <children>
-                        <VBox>
-                           <children>
-                              <Label text="Historique des Transactions" textFill="#111827">
-                                 <font><Font name="System Bold" size="26.0" /></font>
-                              </Label>
-                              <Label text="Suivi en temps réel de vos activités financières" textFill="#6B7280" style="-fx-font-size: 13;" />
-                           </children>
-                        </VBox>
-                        <Pane HBox.hgrow="ALWAYS" />
-                        <Button style="-fx-background-color: white; -fx-border-color: #E5E7EB; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 10 20; -fx-font-weight: bold;" text="🔍 Filtrer">
-                           <graphic>
-                              <Region style="-fx-padding: 0 5 0 0;" />
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-                  
-                  <VBox fx:id="historyContainer" spacing="15.0">
-                     <!-- Les cartes de transactions seront ajoutées ici dynamiquement -->
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </VBox>
+                                    <VBox spacing="8.0">
+                                        <children>
+                                            <Label text="Description" styleClass="field-label" />
+                                            <TextArea fx:id="descField" prefHeight="80.0" promptText="Notes sur l'operation..." wrapText="true" />
+                                        </children>
+                                    </VBox>
 
-         </children>
-      </HBox>
-   </content>
+                                    <Button onAction="#handleEnregistrer" prefHeight="55.0" maxWidth="1.7976931348623157E308" styleClass="btn-primary" text="🚀 VALIDER LA TRANSACTION" />
+                                </children>
+                            </VBox>
+
+                            <!-- RIGHT: HISTORIQUE -->
+                            <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+                                <children>
+                                    <VBox spacing="15.0" styleClass="card">
+                                        <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT">
+                                                <children>
+                                                    <VBox>
+                                                        <Label text="Historique Recent" styleClass="section-title"/>
+                                                        <Label text="Suivi de vos activites financieres" styleClass="muted-label" />
+                                                    </VBox>
+                                                    <Region HBox.hgrow="ALWAYS" />
+                                                    <Button styleClass="btn-secondary" text="🔍 Filtrer" />
+                                                </children>
+                                            </HBox>
+                                            
+                                            <Separator opacity="0.3"/>
+                                            
+                                            <VBox fx:id="historyContainer" spacing="12.0">
+                                                <!-- Cartes de transactions dynamiques -->
+                                            </VBox>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </VBox>
+                        </children>
+                    </HBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </content>
 </ScrollPane>

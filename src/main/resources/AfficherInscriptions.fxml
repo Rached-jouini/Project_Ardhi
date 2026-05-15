@@ -1,54 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherInscriptionsController">
-   
-   <left>
-      <VBox styleClass="sidebar">
-         <children>
-            <Label styleClass="sidebar-title" text="Ardhi Project" />
-            <Button onAction="#navEvenements" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="📅 Événements" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="👥 Inscriptions" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🌾 Cultures" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🚪 Déconnexion" />
-         </children>
-      </VBox>
-   </left>
-
-   <center>
-      <VBox styleClass="content-pane">
-         <children>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-               <children>
-                  <Label styleClass="title-label" text="Gestion des Inscriptions" />
-                  <Region HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="searchField" prefWidth="250.0" promptText="Rechercher un client..." styleClass="text-field" />
-               </children>
-            </HBox>
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherInscriptionsController">
+    <content>
+        <BorderPane style="-fx-background-color: transparent;">
             
-            <TableView fx:id="inscriptionsTable" VBox.vgrow="ALWAYS" styleClass="card">
-              <columns>
-                <TableColumn fx:id="colNom" prefWidth="200.0" text="Nom du Client" />
-                <TableColumn fx:id="colEmail" prefWidth="250.0" text="E-mail" />
-                <TableColumn fx:id="colDate" prefWidth="180.0" text="Date Inscription" />
-                <TableColumn fx:id="colStatut" prefWidth="150.0" text="Statut" />
-              </columns>
-            </TableView>
+            <!-- Sidebar Gauche -->
+            <left>
+                <VBox prefWidth="270" spacing="16" styleClass="sidebar">
+                    <padding>
+                        <Insets top="28" right="22" bottom="28" left="22"/>
+                    </padding>
+                    <Label text="Ardhi" styleClass="sidebar-title"/>
+                    <Label text="Gestion Inscriptions" styleClass="sidebar-section-title" wrapText="true"/>
+                    
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Raccourcis" styleClass="sidebar-panel-title"/>
+                        <Button text="Retour aux Evenements" onAction="#navEvenements" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+                    
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Label text="Suivi des Participants" styleClass="feature-pill"/>
+                </VBox>
+            </left>
 
-            <HBox spacing="15.0" alignment="CENTER_RIGHT">
-               <children>
-                  <Button onAction="#marquerAbsent" styleClass="btn-danger" text="Marquer comme Absent" />
-                  <Button onAction="#marquerPresent" styleClass="btn-success" text="Valider Présence (Manuel)" />
-               </children>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+            <center>
+                <VBox spacing="24" styleClass="content-box">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+
+                    <!-- Header Card -->
+                    <VBox spacing="12" styleClass="admin-header-card">
+                        <Label text="Participants aux Evenements" styleClass="page-title" textFill="WHITE"/>
+                        <Label text="Gerez la liste des inscrits, validez leur presence le jour J et suivez l'engagement de votre communaute." 
+                               wrapText="true" styleClass="auth-subtitle" textFill="WHITE"/>
+                    </VBox>
+
+                    <!-- Main Table Section -->
+                    <VBox spacing="20" styleClass="card">
+                        <padding>
+                            <Insets top="24" right="24" bottom="24" left="24"/>
+                        </padding>
+                        
+                        <HBox alignment="CENTER_LEFT" spacing="15">
+                            <children>
+                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                    <Label text="Liste des Inscriptions" styleClass="section-title"/>
+                                    <TextField fx:id="searchField" promptText="Rechercher un client ou un email..." prefHeight="40" maxWidth="400"/>
+                                </VBox>
+                                <HBox spacing="10" alignment="CENTER_RIGHT">
+                                    <Button text="Marquer Absent" onAction="#marquerAbsent" styleClass="btn-secondary" style="-fx-text-fill: #EF4444; -fx-border-color: #EF4444;" prefHeight="45"/>
+                                    <Button text="Valider Presence" onAction="#marquerPresent" styleClass="btn-primary" prefHeight="45"/>
+                                </HBox>
+                            </children>
+                        </HBox>
+
+                        <Separator opacity="0.4"/>
+
+                        <TableView fx:id="inscriptionsTable" prefHeight="500.0" styleClass="table-compact" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colNom" prefWidth="200.0" text="Nom du Client" />
+                                <TableColumn fx:id="colEmail" prefWidth="250.0" text="E-mail" />
+                                <TableColumn fx:id="colDate" prefWidth="180.0" text="Date Inscription" />
+                                <TableColumn fx:id="colStatut" prefWidth="150.0" text="Statut" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </content>
+</ScrollPane>

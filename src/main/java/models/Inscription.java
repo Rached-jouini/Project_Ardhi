@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class Inscription {
     private int id;
     private int id_evenement;
+    private int id_utilisateur; // Ajout du champ manquant
     private String nom;
     private String email;
     private LocalDateTime date_inscription;
@@ -12,17 +13,19 @@ public class Inscription {
 
     public Inscription() {}
 
-    public Inscription(int id_evenement, String nom, String email) {
+    public Inscription(int id_evenement, int id_utilisateur, String nom, String email) {
         this.id_evenement = id_evenement;
+        this.id_utilisateur = id_utilisateur;
         this.nom = nom;
         this.email = email;
         this.date_inscription = LocalDateTime.now();
         this.statut_participation = "En attente";
     }
 
-    public Inscription(int id, int id_evenement, String nom, String email, LocalDateTime date_inscription, String statut_participation) {
+    public Inscription(int id, int id_evenement, int id_utilisateur, String nom, String email, LocalDateTime date_inscription, String statut_participation) {
         this.id = id;
         this.id_evenement = id_evenement;
+        this.id_utilisateur = id_utilisateur;
         this.nom = nom;
         this.email = email;
         this.date_inscription = date_inscription;
@@ -35,6 +38,9 @@ public class Inscription {
 
     public int getId_evenement() { return id_evenement; }
     public void setId_evenement(int id_evenement) { this.id_evenement = id_evenement; }
+
+    public int getId_utilisateur() { return id_utilisateur; }
+    public void setId_utilisateur(int id_utilisateur) { this.id_utilisateur = id_utilisateur; }
 
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }

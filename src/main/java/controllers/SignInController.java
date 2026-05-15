@@ -234,7 +234,7 @@ public class SignInController {
         if (connected.getIdRole() == 1) {
             loadScene(event, "/admin-dashboard.fxml", "Ardhi - Dashboard Admin");
         } else {
-            loadScene(event, "/MainLayout.fxml", "Ardhi - Dashboard");
+            loadScene(event, "/user-home.fxml", "Ardhi - Accueil");
         }
     }
 

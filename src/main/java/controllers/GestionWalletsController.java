@@ -18,7 +18,10 @@ import java.util.List;
 public class GestionWalletsController {
 
     @FXML private FlowPane walletsFlowPane;
+    @FXML private FlowPane cardsFlowPane;
+
     private WalletService walletService = new WalletService();
+    private services.SourceFinancementService sourceService = new services.SourceFinancementService();
 
     @FXML
     public void initialize() {
@@ -27,8 +30,17 @@ public class GestionWalletsController {
 
     private void loadData() {
         try {
-            List<Wallet> list = walletService.select();
-            renderWallets(list);
+            // Budgets en lecture seule pour l'utilisateur
+            List<Wallet> wallets = walletService.select();
+            renderWallets(wallets);
+
+            // Cartes bancaires avec gestion totale pour l'utilisateur
+            List<models.SourceFinancement> sources = sourceService.select();
+            List<models.SourceFinancement> cards = sources.stream()
+                .filter(s -> s.getType() != null && s.getType().toLowerCase().contains("carte"))
+                .collect(java.util.stream.Collectors.toList());
+            renderCards(cards);
+
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
@@ -39,109 +51,126 @@ public class GestionWalletsController {
         }
     }
 
+    private void renderCards(List<models.SourceFinancement> cards) {
+        cardsFlowPane.getChildren().clear();
+        for (models.SourceFinancement c : cards) {
+            cardsFlowPane.getChildren().add(createCardUI(c));
+        }
+    }
+
+    private VBox createCardUI(models.SourceFinancement sf) {
+        VBox card = new VBox(12);
+        card.setPrefSize(280, 160);
+        
+        String startColor = "#1E293B", endColor = "#0F172A"; 
+        if (sf.getNom().toUpperCase().contains("VISA")) { startColor = "#1E293B"; endColor = "#0F172A"; }
+        else if (sf.getNom().toUpperCase().contains("MASTERCARD")) { startColor = "#B91C1C"; endColor = "#7F1D1D"; }
+        else if (sf.getNom().toUpperCase().contains("POSTE")) { startColor = "#0369A1"; endColor = "#075985"; }
+
+        card.setStyle("-fx-background-color: linear-gradient(to bottom right, " + startColor + ", " + endColor + "); " +
+                     "-fx-background-radius: 20; -fx-padding: 20; " +
+                     "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0, 0, 8);");
+
+        HBox header = new HBox(10);
+        header.setAlignment(Pos.CENTER_LEFT);
+        Label icon = new Label("💳");
+        icon.setStyle("-fx-font-size: 20; -fx-text-fill: white;");
+        Label name = new Label(sf.getNom());
+        name.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 13;");
+        header.getChildren().addAll(icon, name);
+
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+
+        Label amount = new Label(String.format("%.2f DT", sf.getMontant()));
+        amount.setStyle("-fx-font-weight: bold; -fx-font-size: 22; -fx-text-fill: white;");
+
+        HBox actions = new HBox(10);
+        actions.setAlignment(Pos.CENTER_RIGHT);
+        
+        Button btnDelete = new Button("✕ Supprimer");
+        btnDelete.setStyle("-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 10; -fx-cursor: hand;");
+        btnDelete.setOnAction(e -> {
+            try {
+                sourceService.delete(sf.getId());
+                loadData();
+            } catch (SQLException ex) { ex.printStackTrace(); }
+        });
+
+        actions.getChildren().add(btnDelete);
+        card.getChildren().addAll(header, spacer, amount, actions);
+        return card;
+    }
+
     private VBox createWalletCard(Wallet w) {
         VBox card = new VBox(15);
-        card.setPrefSize(300, 220);
-        card.setStyle("-fx-background-color: white; -fx-background-radius: 25; -fx-padding: 25; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 10);");
+        card.setPrefSize(280, 180);
+        card.setStyle("-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 15, 0, 0, 8);");
 
-        // Header: Icon + Name + Delete
         HBox header = new HBox(12);
         header.setAlignment(Pos.CENTER_LEFT);
-        
-        // Icon Circle
-        Label iconLabel = new Label("💰"); // On pourra changer l'icone selon le nom plus tard
-        iconLabel.setStyle("-fx-background-color: #ECFDF5; -fx-text-fill: #059669; -fx-background-radius: 50; -fx-min-width: 45; -fx-min-height: 45; -fx-alignment: center; -fx-font-size: 20;");
+        Label iconLabel = new Label("💰");
+        iconLabel.setStyle("-fx-background-color: #ECFDF5; -fx-text-fill: #059669; -fx-background-radius: 50; -fx-min-width: 40; -fx-min-height: 40; -fx-alignment: center; -fx-font-size: 18;");
         
         VBox titleBox = new VBox(2);
         Label name = new Label(w.getNom());
-        name.setStyle("-fx-font-weight: bold; -fx-font-size: 17; -fx-text-fill: #1F2937;");
-        Label subTitle = new Label("Budget Alloué");
-        subTitle.setStyle("-fx-text-fill: #9CA3AF; -fx-font-size: 11;");
+        name.setStyle("-fx-font-weight: bold; -fx-font-size: 15; -fx-text-fill: #1F2937;");
+        Label subTitle = new Label("Budget Alloue");
+        subTitle.setStyle("-fx-text-fill: #9CA3AF; -fx-font-size: 10;");
         titleBox.getChildren().addAll(name, subTitle);
-        
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-        
-        Button btnEdit = new Button("✏");
-        btnEdit.setStyle("-fx-background-color: #E0F2FE; -fx-text-fill: #0EA5E9; -fx-background-radius: 8; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 5 10;");
-        btnEdit.setOnAction(e -> ouvrirModificationWallet(w));
+        header.getChildren().addAll(iconLabel, titleBox);
 
-        Button btnDelete = new Button("✕");
-        btnDelete.setStyle("-fx-background-color: #FEE2E2; -fx-text-fill: #EF4444; -fx-background-radius: 8; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 5 10;");
-        btnDelete.setOnAction(e -> supprimerWallet(w));
-        
-        header.getChildren().addAll(iconLabel, titleBox, spacer, btnEdit, btnDelete);
-
-        // Progress logic
         double progress = w.getBudgetInitial() > 0 ? w.getBudgetActuel() / w.getBudgetInitial() : 0;
-        
         VBox progressSection = new VBox(8);
         ProgressBar pb = new ProgressBar(progress);
-        pb.setPrefWidth(250);
-        pb.setPrefHeight(10);
+        pb.setPrefWidth(240);
+        pb.setPrefHeight(8);
         
-        // Color logic
-        String color = "#10B981"; // Green
-        if (progress < 0.2) color = "#EF4444"; // Red
-        else if (progress < 0.5) color = "#F59E0B"; // Orange
-        pb.setStyle("-fx-accent: " + color + "; -fx-background-radius: 10; -fx-control-inner-background: #F3F4F6;");
+        String color = "#10B981";
+        if (progress < 0.2) color = "#EF4444";
+        else if (progress < 0.5) color = "#F59E0B";
+        pb.setStyle("-fx-accent: " + color + "; -fx-background-radius: 10;");
 
-        HBox labels = new HBox();
         Label percent = new Label(String.format("%.0f%% restant", progress * 100));
-        percent.setStyle("-fx-font-size: 11; -fx-text-fill: " + color + "; -fx-font-weight: bold;");
-        labels.getChildren().add(percent);
-        progressSection.getChildren().addAll(pb, labels);
+        percent.setStyle("-fx-font-size: 10; -fx-text-fill: " + color + "; -fx-font-weight: bold;");
+        progressSection.getChildren().addAll(pb, percent);
 
-        // Balance
-        VBox balanceBox = new VBox(2);
         Label remaining = new Label(String.format("%.2f DT", w.getBudgetActuel()));
-        remaining.setStyle("-fx-font-weight: 900; -fx-font-size: 24; -fx-text-fill: #111827;");
-        Label total = new Label("sur " + w.getBudgetInitial() + " DT au total");
-        total.setStyle("-fx-text-fill: #6B7280; -fx-font-size: 12;");
+        remaining.setStyle("-fx-font-weight: 900; -fx-font-size: 20; -fx-text-fill: #111827;");
         
-        balanceBox.getChildren().addAll(remaining, total);
-        
-        card.getChildren().addAll(header, progressSection, balanceBox);
-        
+        card.getChildren().addAll(header, progressSection, remaining);
         return card;
     }
 
     @FXML
-    void ouvrirAjoutWallet(ActionEvent event) throws IOException {
-        chargerFormulaire(null);
-    }
-
-    private void ouvrirModificationWallet(Wallet w) {
-        try {
-            chargerFormulaire(w);
-        } catch (IOException e) { e.printStackTrace(); }
-    }
-
-    private void chargerFormulaire(Wallet w) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FormulaireWallet.fxml"));
+    void ouvrirAjoutCarte(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FormulaireCartePremium.fxml"));
         Parent root = loader.load();
-        
-        if (w != null) {
-            FormulaireWalletController controller = loader.getController();
-            controller.setWalletData(w);
-        }
-        
         Stage stage = new Stage();
-        stage.setTitle(w == null ? "Nouveau Budget" : "Modifier Budget");
+        stage.setTitle("Nouvelle Carte Bancaire");
         stage.setScene(new javafx.scene.Scene(root));
         stage.showAndWait();
         loadData();
     }
 
-    private void supprimerWallet(Wallet w) {
-        try {
-            walletService.delete(w.getId());
-            loadData();
-        } catch (SQLException e) { e.printStackTrace(); }
+    @FXML
+    void handleBackToDashboard(ActionEvent event) throws IOException {
+        loadScene(event, "/FinanceDashboard.fxml", "Ardhi - Finance Dashboard");
     }
 
     @FXML
-    void retourDashboard(ActionEvent event) {
-        MainLayoutController.getInstance().loadPage("/FinanceDashboard.fxml");
+    void handleBackToHome(ActionEvent event) throws IOException {
+        loadScene(event, "/user-home.fxml", "Ardhi - Accueil");
+    }
+
+    @FXML
+    void handleOpenTransactions(ActionEvent event) throws IOException {
+        loadScene(event, "/TransactionsView.fxml", "Ardhi - Mes Transactions");
+    }
+
+    private void loadScene(ActionEvent event, String resource, String title) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(resource));
+        javafx.scene.Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+        scene.setRoot(root);
     }
 }

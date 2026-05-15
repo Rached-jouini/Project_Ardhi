@@ -135,8 +135,7 @@ public class AfficherInscriptionsController {
     @FXML
     void navEvenements(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/AfficherEvenementsController.fxml"));
-        Stage stage = (Stage) inscriptionsTable.getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+        Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+        scene.setRoot(root);
     }
 }

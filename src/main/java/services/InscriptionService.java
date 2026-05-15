@@ -12,24 +12,21 @@ public class InscriptionService {
     }
 
     public int add(Inscription ins) throws SQLException {
-        // Étape 1 : Créer les colonnes manquantes si elles n'existent pas
+        // Étape 1 : Créer les colonnes manquantes ou corriger leur taille
         try (Statement st = connection.createStatement()) {
             st.executeUpdate("ALTER TABLE inscription ADD COLUMN IF NOT EXISTS nom VARCHAR(255)");
             st.executeUpdate("ALTER TABLE inscription ADD COLUMN IF NOT EXISTS email VARCHAR(255)");
-            st.executeUpdate("ALTER TABLE inscription ADD COLUMN IF NOT EXISTS statut_participation VARCHAR(50) DEFAULT 'En attente'");
-        } catch (Exception e) {}
-
-        // S'assurer que date_inscription est bien de type DATETIME (et non DATE)
-        try (Statement st = connection.createStatement()) {
+            st.executeUpdate("ALTER TABLE inscription MODIFY COLUMN statut_participation VARCHAR(50) DEFAULT 'En attente'");
             st.executeUpdate("ALTER TABLE inscription MODIFY COLUMN date_inscription DATETIME");
         } catch (Exception e) {}
 
         // Étape 2 : Inscription avec NOW() pour garantir l'heure exacte
-        String req = "INSERT INTO inscription (id_evenement, nom, email, date_inscription, statut_participation) VALUES (?, ?, ?, NOW(), 'En attente')";
+        String req = "INSERT INTO inscription (id_evenement, id_utilisateur, nom, email, date_inscription, statut_participation) VALUES (?, ?, ?, ?, NOW(), 'En attente')";
         PreparedStatement ps = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, ins.getId_evenement());
-        ps.setString(2, ins.getNom());
-        ps.setString(3, ins.getEmail());
+        ps.setInt(2, ins.getId_utilisateur());
+        ps.setString(3, ins.getNom());
+        ps.setString(4, ins.getEmail());
         ps.executeUpdate();
         
         int generatedId = -1;
@@ -76,6 +73,7 @@ public class InscriptionService {
             Inscription ins = new Inscription(
                 rs.getInt("id"),
                 rs.getInt("id_evenement"),
+                rs.getInt("id_utilisateur"),
                 rs.getString("nom"),
                 rs.getString("email"),
                 rs.getTimestamp("date_inscription").toLocalDateTime(),

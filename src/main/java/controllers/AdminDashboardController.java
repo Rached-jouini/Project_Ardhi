@@ -134,19 +134,16 @@ public class AdminDashboardController {
         colPrenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colTelephone.setCellValueFactory(data -> new SimpleStringProperty(
-                data.getValue().getTelephone() != null ? data.getValue().getTelephone() : "-"
-        ));
+                data.getValue().getTelephone() != null ? data.getValue().getTelephone() : "-"));
         colStatut.setCellValueFactory(data -> new SimpleStringProperty(
-                data.getValue().isBanned() ? "banni" : data.getValue().getStatut()
-        ));
+                data.getValue().isBanned() ? "banni" : data.getValue().getStatut()));
         colRole.setCellValueFactory(data -> new SimpleStringProperty(
-                data.getValue().getIdRole() == 1 ? "Admin" : "Utilisateur"
-        ));
+                data.getValue().getIdRole() == 1 ? "Admin" : "Utilisateur"));
         colBanUntil.setCellValueFactory(data -> new SimpleStringProperty(
-                data.getValue().getBanUntil() != null ? data.getValue().getBanUntil().format(banFormatter) : "-"
-        ));
+                data.getValue().getBanUntil() != null ? data.getValue().getBanUntil().format(banFormatter) : "-"));
 
-        userTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> populateFormFromSelection(newValue));
+        userTable.getSelectionModel().selectedItemProperty()
+                .addListener((obs, oldValue, newValue) -> populateFormFromSelection(newValue));
         refreshAll();
     }
 
@@ -154,7 +151,8 @@ public class AdminDashboardController {
     public void handleSearch() {
         try {
             String keyword = searchField.getText().trim();
-            List<Utilisateur> users = keyword.isEmpty() ? utilisateurService.select() : utilisateurService.search(keyword);
+            List<Utilisateur> users = keyword.isEmpty() ? utilisateurService.select()
+                    : utilisateurService.search(keyword);
             populateTable(users);
             updateStats(utilisateurService.select());
         } catch (SQLException e) {
@@ -269,6 +267,47 @@ public class AdminDashboardController {
     }
 
     @FXML
+    public void handleOpenCapitale(ActionEvent event) {
+        try {
+            loadScene(event, "/ConfigCapitale.fxml", "Ardhi - Gestion Capitale");
+        } catch (IOException e) {
+            showError(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleOpenBudgets(ActionEvent event) {
+        try {
+            loadScene(event, "/AdminGestionBudgets.fxml", "Ardhi - Gestion Budgets");
+        } catch (IOException e) {
+            showError(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleOpenEquipements(ActionEvent event) {
+        try {
+            loadScene(event, "/FormulaireEquipement.fxml", "Ardhi - Gestion Equipements");
+        } catch (IOException e) {
+            showError(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleOpenEvenements(ActionEvent event) {
+        try {
+            loadScene(event, "/AfficherEvenementsController.fxml", "Ardhi - Gestion Evenements");
+        } catch (IOException e) {
+            showError(e.getMessage());
+        }
+    }
+
+    @FXML
+    void handleOpenProfile(ActionEvent event) throws IOException {
+        loadScene(event, "/profile.fxml", "Ardhi - Mon Profil");
+    }
+
+    @FXML
     public void handleLogout(ActionEvent event) {
         try {
             SessionManager.clear();
@@ -297,7 +336,8 @@ public class AdminDashboardController {
         long total = users.size();
         long admins = users.stream().filter(user -> user.getIdRole() == 1).count();
         long banned = users.stream().filter(Utilisateur::isBanned).count();
-        long active = users.stream().filter(user -> "actif".equalsIgnoreCase(user.getStatut()) && !user.isBanned()).count();
+        long active = users.stream().filter(user -> "actif".equalsIgnoreCase(user.getStatut()) && !user.isBanned())
+                .count();
 
         totalUsersLabel.setText(String.valueOf(total));
         adminUsersLabel.setText(String.valueOf(admins));
@@ -332,7 +372,8 @@ public class AdminDashboardController {
         String statut = statutBox.getValue();
         Integer role = roleBox.getValue();
 
-        if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || password.isEmpty() || statut == null || role == null) {
+        if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || password.isEmpty() || statut == null
+                || role == null) {
             throw new IllegalArgumentException("Tous les champs principaux sont obligatoires.");
         }
         if (!nom.matches("^[A-Za-zÀ-ÿ\\s-]{2,}$") || !prenom.matches("^[A-Za-zÀ-ÿ\\s-]{2,}$")) {

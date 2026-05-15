@@ -42,6 +42,27 @@ public class TransactionsViewController {
         loadHistory();
     }
 
+    @FXML
+    void handleBackToDashboard(ActionEvent event) throws java.io.IOException {
+        loadScene(event, "/FinanceDashboard.fxml", "Ardhi - Finance Dashboard");
+    }
+
+    @FXML
+    void handleBackToHome(ActionEvent event) throws java.io.IOException {
+        loadScene(event, "/user-home.fxml", "Ardhi - Accueil");
+    }
+
+    @FXML
+    void handleOpenWallets(ActionEvent event) throws java.io.IOException {
+        loadScene(event, "/GestionWallets.fxml", "Ardhi - Comptes et Cartes");
+    }
+
+    private void loadScene(ActionEvent event, String resource, String title) throws java.io.IOException {
+        javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(getClass().getResource(resource));
+        javafx.scene.Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+        scene.setRoot(root);
+    }
+
     private void setupForm() {
         // --- GESTION DES TOGGLE BUTTONS (REVENU/DEPENSE) ---
         typeGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {

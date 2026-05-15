@@ -1,10 +1,9 @@
 package controllers;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import models.Evenement;
 import services.EvenementService;
 
@@ -14,55 +13,40 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.geometry.Pos;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.web.WebView;
 
 public class EvenementController {
 
-    @FXML
-    private TextField nom;
-
-    @FXML
-    private TextField description;
-
-    @FXML
-    private DatePicker datePicker;
-
-    @FXML
-    private TextField lieu;
-
-    @FXML
-    private TextField type;
-
-    @FXML
-    private TextField culture_concernee;
-
-    @FXML
-    private TextField nombre_places;
-
-    @FXML
-    private TextField statut;
-
-
-    @FXML
-    private javafx.scene.web.WebView mapView;
+    @FXML private TextField nom;
+    @FXML private TextArea description;
+    @FXML private DatePicker datePicker;
+    @FXML private TextField lieu;
+    @FXML private ComboBox<String> typeCombo;
+    @FXML private ComboBox<String> statutCombo;
+    @FXML private TextField culture_concernee;
+    @FXML private TextField nombre_places;
+    @FXML private WebView mapView;
 
     private EvenementService ps = new EvenementService();
 
     @FXML
     public void initialize() {
-        // Mode compatibilité maximale : on se fait passer pour IE11
-        mapView.getEngine().setUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
+        // On remet les vrais noms car la DB est normalement réparée
+        typeCombo.setItems(FXCollections.observableArrayList(
+            "Formation", "Salon", "Atelier", "Seminaire", "Conference", "Visite"
+        ));
+        typeCombo.setValue("Formation");
 
-        // Test si le WebView fonctionne
-        mapView.getEngine().loadContent("<html><body style='background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;'><h3>Chargement de la carte...</h3></body></html>");
+        statutCombo.setItems(FXCollections.observableArrayList(
+            "Ouvert", "Ferme", "Annule", "Termine"
+        ));
+        statutCombo.setValue("Ouvert");
 
-        // Initialiser la carte avec une vue par défaut (Tunisie)
+        // Configuration WebView
+        mapView.getEngine().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36");
         updateMap("Tunisie");
 
-        // Ajouter un écouteur sur le champ lieu pour mettre à jour la carte en temps réel
+        // Ecouteur sur le champ lieu pour la carte
         lieu.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.trim().isEmpty()) {
                 updateMap(newValue);
@@ -71,59 +55,49 @@ public class EvenementController {
     }
 
     private void updateMap(String location) {
-        if (location == null || location.trim().isEmpty()) {
-            location = "Tunisie";
-        }
-        // Solution DuckDuckGo Maps (Apple Maps HD) - Stable et sans blocage
         String url = "https://duckduckgo.com/?q=" + location.replace(" ", "+") + "&iaxm=maps";
-        
-        mapView.getEngine().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36");
         mapView.getEngine().load(url);
     }
-
 
     @FXML
     void ajouter(ActionEvent event) {
         if (nom.getText().isEmpty() || description.getText().isEmpty() || datePicker.getValue() == null ||
-                lieu.getText().isEmpty() || type.getText().isEmpty() || culture_concernee.getText().isEmpty() ||
-                nombre_places.getText().isEmpty() || statut.getText().isEmpty()) {
+                lieu.getText().isEmpty() || typeCombo.getValue() == null || culture_concernee.getText().isEmpty() ||
+                nombre_places.getText().isEmpty() || statutCombo.getValue() == null) {
 
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Champs manquants");
-            alert.setHeaderText(null);
-            alert.setContentText("Veuillez remplir tous les champs, y compris la date.");
-            alert.showAndWait();
+            new Alert(Alert.AlertType.WARNING, "Veuillez remplir tous les champs.").show();
             return;
         }
 
         try {
             int places = Integer.parseInt(nombre_places.getText());
-            ps.add(new Evenement(nom.getText(), description.getText(), datePicker.getValue(), lieu.getText(), type.getText(), culture_concernee.getText(), places, statut.getText()));
+            ps.add(new Evenement(
+                nom.getText(), 
+                description.getText(), 
+                datePicker.getValue(), 
+                lieu.getText(), 
+                typeCombo.getValue(), 
+                culture_concernee.getText(), 
+                places, 
+                statutCombo.getValue()
+            ));
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Succès");
-            alert.setHeaderText(null);
-            alert.setContentText("Événement ajouté avec succès !");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Evenement ajoute avec succes !");
             alert.showAndWait();
 
-            // Retour à la liste
-            Parent root = FXMLLoader.load(getClass().getResource("/AfficherEvenementsController.fxml"));
-            Stage stage = (Stage) nom.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+            handleRetourListe(event);
 
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de format");
-            alert.setHeaderText(null);
-            alert.setContentText("Le nombre de places doit être un nombre entier.");
-            alert.showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Le nombre de places doit etre un nombre entier.").show();
         } catch (SQLException | IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText(null);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Erreur : " + e.getMessage()).show();
         }
+    }
+
+    @FXML
+    void handleRetourListe(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/AfficherEvenementsController.fxml"));
+        Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+        scene.setRoot(root);
     }
 }

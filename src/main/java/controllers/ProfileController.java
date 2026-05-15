@@ -74,7 +74,8 @@ public class ProfileController {
         telephoneField.setText(currentUser.getTelephone() != null ? currentUser.getTelephone() : "");
         roleLabel.setText(currentUser.getIdRole() == 1 ? "Administrateur" : "Utilisateur");
         statusLabel.setText(currentUser.isBanned() ? "Banni" : currentUser.getStatut());
-        joinedLabel.setText(currentUser.getDateInscription() != null ? currentUser.getDateInscription().toString() : "-");
+        joinedLabel
+                .setText(currentUser.getDateInscription() != null ? currentUser.getDateInscription().toString() : "-");
         loadProfileImage(currentUser.getPhoto());
     }
 
@@ -180,7 +181,14 @@ public class ProfileController {
 
     @FXML
     public void handleBackHome(ActionEvent event) throws IOException {
-        goToScene(event, "/user-home.fxml", "Ardhi - Accueil");
+        String resource = "/user-home.fxml";
+        if (currentUser != null && currentUser.getIdRole() == 1) { // 1 = Admin
+            resource = "/admin-dashboard.fxml";
+        }
+        
+        Parent root = FXMLLoader.load(getClass().getResource(resource));
+        Scene scene = ((Node) event.getSource()).getScene();
+        scene.setRoot(root);
     }
 
     @FXML
@@ -203,7 +211,8 @@ public class ProfileController {
 
         try {
             if (photoPath != null && !photoPath.isBlank()) {
-                if (photoPath.startsWith("http://") || photoPath.startsWith("https://") || photoPath.startsWith("file:")) {
+                if (photoPath.startsWith("http://") || photoPath.startsWith("https://")
+                        || photoPath.startsWith("file:")) {
                     image = new Image(photoPath, true);
                 } else {
                     File file = new File(photoPath);

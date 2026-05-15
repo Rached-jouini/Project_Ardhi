@@ -184,7 +184,17 @@ public class ConfigCapitaleController {
 
     @FXML
     void retourDashboard(ActionEvent event) {
-        MainLayoutController.getInstance().loadPage("/FinanceDashboard.fxml");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-dashboard.fxml"));
+            Parent root = loader.load();
+            javafx.scene.Scene scene = new javafx.scene.Scene(root, 1150, 700);
+            scene.getStylesheets().add(getClass().getResource("/ardhi.css").toExternalForm());
+            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Ardhi - Dashboard Admin");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -409,3 +409,20 @@
 .chart-symbol {
     -fx-background-color: transparent;
 }
+
+/* Style de la legende des graphiques */
+.chart-legend {
+   -fx-background-color: transparent;
+   -fx-padding: 15 0 0 0;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #1d3b2a;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.chart-legend-item-symbol {
+   -fx-background-radius: 50%; /* Symboles ronds pour la legende */
+}
+

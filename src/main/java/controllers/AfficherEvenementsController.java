@@ -188,4 +188,19 @@ public class AfficherEvenementsController {
             System.out.println(e.getMessage());
         }
     }
+
+    @FXML
+    void handleRetourDashboard(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-dashboard.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 1150, 700);
+            scene.getStylesheets().add(getClass().getResource("/ardhi.css").toExternalForm());
+            Stage stage = (Stage) tableEvenements.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Ardhi - Dashboard Admin");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

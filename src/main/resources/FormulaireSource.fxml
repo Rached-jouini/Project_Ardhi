@@ -1,40 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
 
-<VBox spacing="20.0" style="-fx-background-color: white; -fx-padding: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FormulaireSourceController">
+<VBox prefWidth="450.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 20;" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FormulaireSourceController">
+   <padding>
+      <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+   </padding>
    <children>
-      <Label text="Ajouter une Source" textFill="#085041">
-         <font><Font name="System Bold" size="20.0" /></font>
-      </Label>
-      
-      <VBox spacing="5.0">
+      <!-- Header Section -->
+      <VBox spacing="8.0">
          <children>
-            <Label text="Nom de la source (ex: Banque)" textFill="#4B5563" />
-            <TextField fx:id="nomField" prefHeight="40.0" style="-fx-background-radius: 10;" />
+            <Label text="💰 Source de Financement" styleClass="auth-title">
+               <font><Font name="System Bold" size="22.0" /></font>
+            </Label>
+            <Label text="Remplissez les informations pour enregistrer un nouveau capital." styleClass="auth-subtitle" wrapText="true" />
          </children>
       </VBox>
-      
-      <VBox spacing="5.0">
+
+      <Separator opacity="0.4" />
+
+      <!-- Form Fields -->
+      <VBox spacing="18.0">
          <children>
-            <Label text="Type de financement" textFill="#4B5563" />
-            <ComboBox fx:id="typeCombo" prefHeight="40.0" prefWidth="400.0" style="-fx-background-radius: 10;" />
+            <VBox spacing="8.0">
+               <children>
+                  <Label text="Nom de la source" styleClass="field-label" />
+                  <TextField fx:id="nomField" prefHeight="45.0" promptText="Ex: Banque Centrale, Fonds Propres..." styleClass="text-field" />
+               </children>
+            </VBox>
+
+            <VBox spacing="8.0">
+               <children>
+                  <Label text="Type de financement" styleClass="field-label" />
+                  <ComboBox fx:id="typeCombo" maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="combo-box" />
+               </children>
+            </VBox>
+
+            <VBox spacing="8.0">
+               <children>
+                  <Label text="Montant (DT)" styleClass="field-label" />
+                  <TextField fx:id="montantField" prefHeight="45.0" promptText="0.00" styleClass="text-field" />
+               </children>
+            </VBox>
          </children>
       </VBox>
-      
-      <VBox spacing="5.0">
+
+      <Region VBox.vgrow="ALWAYS" />
+
+      <!-- Action Buttons -->
+      <HBox spacing="15.0" alignment="CENTER_RIGHT">
          <children>
-            <Label text="Montant (DT)" textFill="#4B5563" />
-            <TextField fx:id="montantField" prefHeight="40.0" style="-fx-background-radius: 10;" />
-         </children>
-      </VBox>
-      
-      <HBox alignment="CENTER_RIGHT" spacing="15.0">
-         <children>
-            <Button onAction="#annulerAction" style="-fx-background-color: #F3F4F6; -fx-background-radius: 10; -fx-padding: 10 20;" text="Annuler" />
-            <Button onAction="#enregistrerAction" style="-fx-background-color: #085041; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 25; -fx-font-weight: bold;" text="Enregistrer" />
+            <Button onAction="#annulerAction" prefHeight="45.0" prefWidth="120.0" styleClass="btn-secondary" text="Annuler" />
+            <Button onAction="#enregistrerAction" prefHeight="45.0" prefWidth="150.0" styleClass="btn-primary" text="Enregistrer" />
          </children>
       </HBox>
    </children>

@@ -143,4 +143,28 @@ public class EquipementService implements ardhi<Equipement> {
         preparedStatement.setInt(3, quantityToReduce);
         preparedStatement.executeUpdate();
     }
+
+    public Equipement findById(int id) throws SQLException {
+        String sql = "SELECT * FROM equipement WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            Equipement e = new Equipement();
+            e.setId(rs.getInt("id"));
+            e.setNom(rs.getString("nom"));
+            e.setType(rs.getString("type"));
+            e.setQuantite_totale(rs.getInt("quantite_totale"));
+            e.setQuantite_dispo(rs.getInt("quantite_dispo"));
+            e.setEtat(rs.getString("etat"));
+            e.setPhoto(rs.getString("photo"));
+            e.setPrix_location_jour(rs.getDouble("prix_location_jour"));
+            java.sql.Date dms = rs.getDate("date_mise_en_service");
+            if (dms != null) e.setDate_mise_en_service(dms.toLocalDate());
+            e.setDuree_vie_annees(rs.getInt("duree_vie_annees"));
+            e.setPhotos(loadPhotos(e.getId()));
+            return e;
+        }
+        return null;
+    }
 }

@@ -16,51 +16,62 @@
 <?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.AdminDashboardController" styleClass="root-pane">
-    <left>
-        <VBox prefWidth="270" spacing="16" styleClass="sidebar" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets top="28" right="22" bottom="28" left="22"/>
-            </padding>
-
-            <Label text="Ardhi" styleClass="sidebar-title"/>
-            <Label text="Admin Console" styleClass="sidebar-section-title"/>
-            <Label text="Supervisez les comptes, suivez les indicateurs et gerez les bannissements depuis un seul espace."
-                   wrapText="true" styleClass="sidebar-subtitle"/>
-
-            <VBox spacing="10" styleClass="sidebar-panel">
-                <Label text="Raccourcis" styleClass="sidebar-panel-title"/>
-                <Button text="Accueil principal" onAction="#handleOpenMainMenu" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
-                <Button text="Se deconnecter" onAction="#handleLogout" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
-            </VBox>
-
-            <VBox spacing="10" styleClass="sidebar-panel">
-                <Label text="Gestion" styleClass="sidebar-panel-title"/>
-                <Button text="Gestion Terrains" onAction="#handleOpenTerrain" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
-                <Button text="Gestion Plantes" onAction="#handleOpenPlante" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
-            </VBox>
-
-            <VBox spacing="10" styleClass="sidebar-panel">
-                <Label text="Resume" styleClass="sidebar-panel-title"/>
-                <Label text="Recherchez un utilisateur, selectionnez-le dans le tableau puis utilisez le panneau de droite pour modifier ou bannir le compte."
-                       wrapText="true" styleClass="sidebar-subtitle"/>
-            </VBox>
-
-            <Region VBox.vgrow="ALWAYS"/>
-            <Label text="Espace admin securise" styleClass="feature-pill"/>
-        </VBox>
-    </left>
-
-    <center>
-        <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="content-scroll">
-            <content>
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminDashboardController">
+    <content>
+        <BorderPane style="-fx-background-color: transparent;">
+            <left>
+                <VBox prefWidth="270" spacing="16" styleClass="sidebar">
+                    <padding>
+                        <Insets top="28" right="22" bottom="28" left="22"/>
+                    </padding>
+        
+                    <Label text="Ardhi" styleClass="sidebar-title"/>
+                    <Label text="Admin Console" styleClass="sidebar-section-title"/>
+                    <Label text="Supervisez les comptes, suivez les indicateurs et gerez les bannissements."
+                           wrapText="true" styleClass="sidebar-subtitle"/>
+        
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Raccourcis" styleClass="sidebar-panel-title"/>
+                        <Button text="Mon Profil" onAction="#handleOpenProfile" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+        
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Gestion Agricole" styleClass="sidebar-panel-title"/>
+                        <Button text="Gestion Terrains" onAction="#handleOpenTerrain" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                        <Button text="Gestion Plantes" onAction="#handleOpenPlante" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+        
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Gestion Financiere" styleClass="sidebar-panel-title"/>
+                        <Button text="Gestion Capitale" onAction="#handleOpenCapitale" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                        <Button text="Gestion Budgets" onAction="#handleOpenBudgets" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+        
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Gestion Equipements" styleClass="sidebar-panel-title"/>
+                        <Button text="Gestion Equipements" onAction="#handleOpenEquipements" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+        
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Gestion Evenements" styleClass="sidebar-panel-title"/>
+                        <Button text="Gestion Evenements" onAction="#handleOpenEvenements" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+        
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Button text="Se deconnecter" onAction="#handleLogout" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #FCA5A5;"/>
+                    <Label text="Espace admin securise" styleClass="feature-pill"/>
+                </VBox>
+            </left>
+        
+            <center>
                 <VBox spacing="20" styleClass="content-box">
                     <padding>
                         <Insets top="24" right="24" bottom="24" left="24"/>
                     </padding>
-
+        
                     <VBox spacing="12" styleClass="admin-header-card">
                         <Label text="Pilotage des utilisateurs" styleClass="page-title"/>
                         <Label text="Gardez une vue claire sur la base utilisateurs, filtrez les comptes et appliquez les actions importantes sans perdre le contexte."
@@ -71,7 +82,7 @@
                             <Label text="Bannissement temporaire" styleClass="admin-chip"/>
                         </HBox>
                     </VBox>
-
+        
                     <HBox spacing="16">
                         <VBox spacing="6" styleClass="stat-card admin-stat-card" HBox.hgrow="ALWAYS">
                             <Label text="Total utilisateurs" styleClass="stat-title"/>
@@ -90,14 +101,14 @@
                             <Label fx:id="bannedUsersLabel" text="0" styleClass="stat-value"/>
                         </VBox>
                     </HBox>
-
+        
                     <HBox spacing="18" alignment="TOP_LEFT">
                         <VBox spacing="16" HBox.hgrow="ALWAYS">
                             <VBox spacing="12" styleClass="card table-card">
                                 <padding>
                                     <Insets top="20" right="20" bottom="20" left="20"/>
                                 </padding>
-
+        
                                 <HBox alignment="CENTER_LEFT" spacing="12">
                                     <VBox spacing="4">
                                         <Label text="Annuaire utilisateurs" styleClass="section-title"/>
@@ -108,7 +119,7 @@
                                     <TextField fx:id="searchField" promptText="Rechercher un compte..." HBox.hgrow="ALWAYS"/>
                                     <Button text="Rechercher" onAction="#handleSearch" styleClass="btn-primary"/>
                                 </HBox>
-
+        
                                 <TableView fx:id="userTable" prefHeight="470" styleClass="table-compact">
                                     <columns>
                                         <TableColumn fx:id="colId" text="ID" prefWidth="55"/>
@@ -124,7 +135,7 @@
                                 </TableView>
                             </VBox>
                         </VBox>
-
+        
                         <VBox spacing="16" prefWidth="360" minWidth="340" maxWidth="380">
                             <VBox spacing="12" styleClass="card form-card">
                                 <padding>
@@ -133,40 +144,40 @@
                                 <Label text="Fiche utilisateur" styleClass="section-title"/>
                                 <Label text="Les modifications s'appliquent au compte selectionne dans le tableau."
                                        wrapText="true" styleClass="muted-label"/>
-
+        
                                 <GridPane hgap="12" vgap="10" styleClass="admin-grid">
                                     <Label text="ID" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                                     <TextField fx:id="idField" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
+        
                                     <Label text="Nom" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                                     <TextField fx:id="nomField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
+        
                                     <Label text="Prenom" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                                     <TextField fx:id="prenomField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
+        
                                     <Label text="Email" styleClass="field-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                                     <TextField fx:id="emailField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
+        
                                     <Label text="Mot de passe" styleClass="field-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                                     <PasswordField fx:id="passwordField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
+        
                                     <Label text="Telephone" styleClass="field-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
                                     <TextField fx:id="telephoneField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
+        
                                     <Label text="Statut" styleClass="field-label" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
                                     <ComboBox fx:id="statutBox" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-
+        
                                     <Label text="Role" styleClass="field-label" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
                                     <ComboBox fx:id="roleBox" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
                                 </GridPane>
-
+        
                                 <HBox spacing="10">
                                     <Button text="Modifier" onAction="#handleUpdate" styleClass="btn-primary" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
                                     <Button text="Vider" onAction="#handleClear" styleClass="btn-secondary" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
                                 </HBox>
                                 <Button text="Supprimer" onAction="#handleDelete" styleClass="btn-danger" maxWidth="1.7976931348623157E308"/>
                             </VBox>
-
+        
                             <VBox spacing="12" styleClass="card form-card">
                                 <padding>
                                     <Insets top="20" right="20" bottom="20" left="20"/>
@@ -174,24 +185,24 @@
                                 <Label text="Moderation" styleClass="section-title"/>
                                 <Label text="Choisissez une duree de bannissement, appliquez-la, puis retirez-la a tout moment."
                                        wrapText="true" styleClass="muted-label"/>
-
+        
                                 <Label text="Duree du ban" styleClass="field-label"/>
                                 <HBox spacing="10">
                                     <Spinner fx:id="banDurationSpinner" prefWidth="96"/>
                                     <ComboBox fx:id="banUnitBox" prefWidth="130"/>
                                 </HBox>
-
+        
                                 <HBox spacing="10">
                                     <Button text="Bannir" onAction="#handleBan" styleClass="btn-danger" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
                                     <Button text="Debannir" onAction="#handleUnban" styleClass="btn-secondary" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
                                 </HBox>
-
+        
                                 <Label fx:id="selectionStatusLabel" styleClass="status-banner" wrapText="true"/>
                             </VBox>
                         </VBox>
                     </HBox>
                 </VBox>
-            </content>
-        </ScrollPane>
-    </center>
-</BorderPane>
+            </center>
+        </BorderPane>
+    </content>
+</ScrollPane>

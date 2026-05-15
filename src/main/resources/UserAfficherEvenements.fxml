@@ -1,75 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserAfficherEvenementsController">
-   
-   <left>
-      <VBox styleClass="sidebar">
-         <children>
-            <Label styleClass="sidebar-title" text="Ardhi - Espace Client" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button, sidebar-button-active" text="📅 Événements" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSwitchToAdmin" styleClass="sidebar-button" text="🛠️ Administration" />
-            <Region VBox.vgrow="ALWAYS" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="sidebar-button" text="🚪 Quitter" />
-         </children>
-      </VBox>
-   </left>
-
-   <center>
-      <VBox styleClass="content-pane">
-         <children>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-               <children>
-                  <Label styleClass="title-label" text="Découvrez nos Événements" />
-                  <Region HBox.hgrow="ALWAYS" />
-                  <Label text="📅 Date :" />
-                  <DatePicker fx:id="filterDate" onAction="#handleFilterDate" promptText="Calendrier" />
-                  <Button mnemonicParsing="false" onAction="#handleResetFilter" styleClass="btn-secondary" text="Tous" />
-               </children>
-            </HBox>
+<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserAfficherEvenementsController">
+    <content>
+        <BorderPane style="-fx-background-color: transparent;">
             
-            <VBox styleClass="card" VBox.vgrow="ALWAYS">
-               <children>
-                  <HBox spacing="15.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <TableView fx:id="tableEvenements" prefHeight="400.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
-                          <columns>
-                            <TableColumn fx:id="colNom" prefWidth="150.0" text="Événement" />
-                            <TableColumn fx:id="colDescription" prefWidth="250.0" text="Description" />
-                            <TableColumn fx:id="colDate" prefWidth="120.0" text="Date" />
-                            <TableColumn fx:id="colLieu" prefWidth="120.0" text="Lieu" />
-                            <TableColumn fx:id="colPlaces" prefWidth="100.0" text="Places restantes" />
-                          </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
-                        </TableView>
-                        
-                        <VBox alignment="TOP_CENTER" minWidth="300.0" prefWidth="300.0" spacing="10.0">
-                           <children>
-                              <Label style="-fx-font-weight: bold; -fx-text-fill: #2D5D34;" text="📍 Localisation" />
-                              <WebView fx:id="mapView" style="-fx-border-color: #ddd; -fx-border-radius: 10;" VBox.vgrow="ALWAYS" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  
-                  <HBox alignment="CENTER_RIGHT" spacing="15.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleChatbot" styleClass="btn-ai" text="🤖 Assistant IA" />
-                        <Button mnemonicParsing="false" onAction="#handleInscrire" styleClass="btn-success" text="S'inscrire maintenant" />
-                     </children>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-            </VBox>
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+            <!-- Sidebar Gauche -->
+            <left>
+                <VBox prefWidth="270" spacing="16" styleClass="sidebar">
+                    <padding>
+                        <Insets top="28" right="22" bottom="28" left="22"/>
+                    </padding>
+                    <Label text="Ardhi" styleClass="sidebar-title"/>
+                    <Label text="Espace Evenements" styleClass="sidebar-section-title" wrapText="true"/>
+                    
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Navigation" styleClass="sidebar-panel-title"/>
+                        <Button text="Retour Accueil" onAction="#handleBackHome" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Button text="🤖 Assistant IA" onAction="#handleChatbot" styleClass="btn-primary" maxWidth="1.7976931348623157E308" style="-fx-background-color: #4F46E5;"/>
+                </VBox>
+            </left>
+
+            <center>
+                <VBox spacing="24" styleClass="content-box">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+
+                    <!-- Header Card -->
+                    <VBox spacing="12" styleClass="admin-header-card">
+                        <HBox alignment="CENTER_LEFT" spacing="20">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Salons et Formations Agricoles" styleClass="page-title" textFill="WHITE"/>
+                                <Label text="Participez aux evenements majeurs du secteur pour developper votre expertise." 
+                                       wrapText="true" styleClass="auth-subtitle" textFill="WHITE"/>
+                            </VBox>
+                            <VBox spacing="8">
+                                <Label text="Filtrer par date" textFill="WHITE" style="-fx-font-size: 11;"/>
+                                <DatePicker fx:id="filterDate" onAction="#handleFilterDate" prefHeight="40" style="-fx-background-radius: 10;"/>
+                            </VBox>
+                            <Button text="Tous" onAction="#handleResetFilter" styleClass="btn-secondary" prefHeight="40"/>
+                        </HBox>
+                    </VBox>
+
+                    <HBox spacing="25.0" VBox.vgrow="ALWAYS">
+                        <children>
+                            <!-- LEFT: EVENTS GRID/LIST -->
+                            <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+                                <children>
+                                    <VBox spacing="15.0" styleClass="card" VBox.vgrow="ALWAYS">
+                                        <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+                                        <children>
+                                            <Label text="📅 Evenements Disponibles" styleClass="section-title"/>
+                                            <Separator opacity="0.3"/>
+                                            
+                                            <!-- On remplace la table par un conteneur dynamique -->
+                                            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+                                                <VBox fx:id="eventsContainer" spacing="15.0">
+                                                    <!-- Les cartes d'evenements seront chargees ici -->
+                                                </VBox>
+                                            </ScrollPane>
+                                            
+                                            <Region VBox.vgrow="ALWAYS"/>
+                                            <HBox alignment="CENTER_RIGHT" spacing="15">
+                                                <Button text="🚀 S'inscrire a la selection" onAction="#handleInscrire" styleClass="btn-primary" prefHeight="45" prefWidth="250"/>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </VBox>
+
+                            <!-- RIGHT: MAP SECTION -->
+                            <VBox minWidth="350.0" prefWidth="350.0" spacing="20.0">
+                                <children>
+                                    <VBox spacing="15.0" styleClass="card" VBox.vgrow="ALWAYS">
+                                        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                                        <children>
+                                            <Label text="📍 Localisation" styleClass="section-title"/>
+                                            <Label text="Visualisez le lieu de l'evenement" styleClass="muted-label" />
+                                            <WebView fx:id="mapView" minHeight="400" VBox.vgrow="ALWAYS" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-overflow: hidden;"/>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </VBox>
+                        </children>
+                    </HBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </content>
+</ScrollPane>

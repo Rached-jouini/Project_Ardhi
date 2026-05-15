@@ -5,35 +5,87 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1100.0" style="-fx-background-color: #F3F4F6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GestionWalletsController">
-   <children>
-      <VBox spacing="25.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="25.0">
-         <children>
-            <!-- Header -->
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-               <children>
-                  <Button onAction="#retourDashboard" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);" text="⬅️ Retour Dashboard" />
-                  <VBox HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label text="Gestion des Budgets (Wallets)" textFill="#063D2F">
-                           <font><Font name="System Bold" size="26.0" /></font>
-                        </Label>
-                        <Label text="Allouez votre capital a des enveloppes budgetaires intelligentes" textFill="#6B7280" />
-                     </children>
-                  </VBox>
-                  <Button onAction="#ouvrirAjoutWallet" style="-fx-background-color: #063D2F; -fx-text-fill: white; -fx-background-radius: 12; -fx-font-weight: bold; -fx-padding: 12 25;" text="+ Creer un Budget" />
-               </children>
-            </HBox>
+<BorderPane prefHeight="750.0" prefWidth="1150.0" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GestionWalletsController">
+    
+    <!-- Sidebar Gauche -->
+    <left>
+        <VBox prefWidth="270" spacing="16" styleClass="sidebar">
+            <padding>
+                <Insets top="28" right="22" bottom="28" left="22"/>
+            </padding>
+            <Label text="Ardhi" styleClass="sidebar-title"/>
+            <Label text="Comptes et Cartes" styleClass="sidebar-section-title" wrapText="true"/>
+            
+            <VBox spacing="10" styleClass="sidebar-panel">
+                <Label text="Navigation" styleClass="sidebar-panel-title"/>
+                <Button text="Tableau de bord Finance" onAction="#handleBackToDashboard" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                <Button text="Retour Accueil" onAction="#handleBackToHome" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+            </VBox>
+            
+            <VBox spacing="10" styleClass="sidebar-panel">
+                <Label text="Operations" styleClass="sidebar-panel-title"/>
+                <Button text="Mes Transactions" onAction="#handleOpenTransactions" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+            </VBox>
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            <Label text="Espace Securise" styleClass="feature-pill"/>
+        </VBox>
+    </left>
 
-            <!-- Wallets Grid -->
-            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
-               <content>
-                  <FlowPane fx:id="walletsFlowPane" hgap="25.0" vgap="25.0">
-                     <padding><Insets bottom="20.0" left="5.0" right="20.0" top="20.0" /></padding>
-                  </FlowPane>
-               </content>
-            </ScrollPane>
-         </children>
-      </VBox>
-   </children>
-</AnchorPane>
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+            <content>
+                <VBox spacing="30" styleClass="content-box">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+
+                    <!-- Header Card -->
+                    <VBox spacing="12" styleClass="admin-header-card">
+                        <Label text="Gestion de vos actifs financiers" styleClass="page-title" textFill="WHITE"/>
+                        <Label text="Gerez vos cartes de paiement personnelles et suivez l'etat des budgets qui vous sont alloues." 
+                               wrapText="true" styleClass="auth-subtitle" textFill="WHITE"/>
+                    </VBox>
+
+                    <!-- SECTION 1: CARTES BANCAIRES -->
+                    <VBox spacing="20" styleClass="card">
+                        <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <VBox spacing="4">
+                                    <Label text="💳 Mes Cartes Bancaires" styleClass="section-title"/>
+                                    <Label text="Ajoutez, modifiez ou supprimez vos cartes de paiement." styleClass="muted-label"/>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button text="+ Ajouter une Carte" onAction="#ouvrirAjoutCarte" styleClass="btn-primary" prefHeight="45"/>
+                            </children>
+                        </HBox>
+                        <Separator/>
+                        <FlowPane fx:id="cardsFlowPane" hgap="20" vgap="20">
+                            <!-- Les cartes bancaires seront ajoutées ici -->
+                        </FlowPane>
+                    </VBox>
+
+                    <!-- SECTION 2: BUDGETS (WALLETS) -->
+                    <VBox fx:id="budgetSection" spacing="20" styleClass="card">
+                        <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <VBox spacing="4">
+                                    <Label text="📊 Budgets et Wallets" styleClass="section-title"/>
+                                    <Label fx:id="budgetStatusLabel" text="Consultez l'etat de vos enveloppes budgetaires." styleClass="muted-label"/>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button fx:id="btnAjouterWallet" text="+ Nouveau Budget" onAction="#ouvrirAjoutWallet" styleClass="btn-primary" prefHeight="45" visible="false" managed="false"/>
+                            </children>
+                        </HBox>
+                        <Separator/>
+                        <FlowPane fx:id="walletsFlowPane" hgap="24" vgap="24">
+                            <!-- Les wallets seront ajoutés ici -->
+                        </FlowPane>
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

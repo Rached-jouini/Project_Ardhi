@@ -52,30 +52,42 @@ public class UserHomeController {
     }
 
     @FXML
+    public void handleOpenFinanceDashboard(ActionEvent event) throws IOException {
+        openFxml(event, "/FinanceDashboard.fxml", "Ardhi - Finance Dashboard", true);
+    }
+
+    @FXML
+    public void handleOpenTransactions(ActionEvent event) throws IOException {
+        openFxml(event, "/TransactionsView.fxml", "Ardhi - Mes Transactions", true);
+    }
+
+    @FXML
+    public void handleOpenWallets(ActionEvent event) throws IOException {
+        openFxml(event, "/GestionWallets.fxml", "Ardhi - Comptes et Cartes", true);
+    }
+
+    @FXML
     public void handleOpenModule(ActionEvent event) {
         String moduleName = ((Button) event.getSource()).getText();
         try {
             // Dispatch selon le nom du bouton
-            if (moduleName.contains("Terrains")) {
-                openFxml(event, "/AfficherTerrains.fxml", "Ardhi - Gestion des terrains", false);
-            } else if (moduleName.contains("Plantes")) {
-                openFxml(event, "/AfficherPlantes.fxml", "Ardhi - Gestion des plantes", false);
-            } else if (moduleName.contains("Catalogue")) {
-                openFxml(event, "/CatalogueTerrains.fxml", "Ardhi - Catalogue des terrains", false);
+            if (moduleName.contains("Catalogue")) {
+                openFxml(event, "/CatalogueTerrains.fxml", "Ardhi - Catalogue", false);
+            } else if (moduleName.contains("Evenements")) {
+                openFxml(event, "/UserAfficherEvenements.fxml", "Ardhi - Evenements", true);
+            } else if (moduleName.contains("Location")) {
+                openFxml(event, "/LocationEquipement.fxml", "Ardhi - Location", true);
+            } else if (moduleName.contains("Finance") || moduleName.contains("Capitale")) {
+                openFxml(event, "/FinanceDashboard.fxml", "Ardhi - Finance Dashboard", true);
             } else {
-                // Modules non encore implémentés
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Module");
                 alert.setHeaderText(moduleName);
-                alert.setContentText("Cette section est prete a accueillir le module correspondant.");
+                alert.setContentText("Cette section est en cours de developpement.");
                 alert.showAndWait();
             }
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Impossible d'ouvrir le module " + moduleName);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            e.printStackTrace();
         }
     }
 

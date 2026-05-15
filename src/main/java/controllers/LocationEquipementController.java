@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -39,27 +40,33 @@ public class LocationEquipementController {
         loadData();
         
         // Mettre à jour le compteur du panier automatiquement
-        cartCountLabel.setText(String.valueOf(services.CartManager.getCount()));
-        services.CartManager.getCartEntries().addListener((javafx.collections.ListChangeListener<services.CartManager.CartEntry>) c -> {
+        if (cartCountLabel != null) {
             cartCountLabel.setText(String.valueOf(services.CartManager.getCount()));
-        });
+            services.CartManager.getCartEntries().addListener((javafx.collections.ListChangeListener<services.CartManager.CartEntry>) c -> {
+                cartCountLabel.setText(String.valueOf(services.CartManager.getCount()));
+            });
+        }
+    }
 
-        // Ouvrir le panier au clic
-        cartBtn.getParent().setOnMouseClicked(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/PanierView.fxml"));
-                Parent root = loader.load();
-                Stage stage = new Stage();
-                stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-                stage.initStyle(javafx.stage.StageStyle.TRANSPARENT);
-                Scene scene = new Scene(root);
-                scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
-                stage.setScene(scene);
-                stage.show();
-            } catch (java.io.IOException e) {
-                e.printStackTrace();
-            }
-        });
+    @FXML
+    void handleBackHome(ActionEvent event) throws IOException {
+        loadScene(event, "/user-home.fxml");
+    }
+
+    @FXML
+    void handleOpenCart(ActionEvent event) throws IOException {
+        loadScene(event, "/PanierView.fxml");
+    }
+
+    @FXML
+    void handleOpenTransactions(ActionEvent event) throws IOException {
+        loadScene(event, "/HistoriqueLocations.fxml");
+    }
+
+    private void loadScene(ActionEvent event, String resource) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(resource));
+        Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+        scene.setRoot(root);
     }
 
     private void loadData() {

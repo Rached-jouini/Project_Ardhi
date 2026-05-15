@@ -157,6 +157,12 @@ public class FormulaireEquipementController {
 
     @FXML
     void retourAction(ActionEvent event) {
-        MainLayoutController.getInstance().loadPage("/GestionEquipement.fxml");
+        try {
+            javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(getClass().getResource("/GestionEquipement.fxml"));
+            javafx.scene.Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+            scene.setRoot(root);
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.File;
 import java.sql.SQLException;
 import services.EmailService;
+import utils.SessionManager;
 import controllers.InscriptionController;
 
 public class InscriptionController {
@@ -63,7 +64,8 @@ public class InscriptionController {
         new Thread(() -> {
             try {
                 // Étape 1 : Enregistrement BDD
-                Inscription ins = new Inscription(selectedEvent.getId(), nomSaisi, emailSaisi);
+                int currentUserId = SessionManager.getCurrentUser() != null ? SessionManager.getCurrentUser().getId() : 1;
+                Inscription ins = new Inscription(selectedEvent.getId(), currentUserId, nomSaisi, emailSaisi);
                 int inscriptionId = is.add(ins);
 
                 // Étape 2 : Génération QR Code

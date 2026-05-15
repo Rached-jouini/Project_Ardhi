@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" styleClass="root-pane" stylesheets="@ardhi.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HistoriqueLocationsController">
+    <content>
+        <BorderPane style="-fx-background-color: transparent;">
+            
+            <!-- Sidebar Gauche -->
+            <left>
+                <VBox prefWidth="270" spacing="16" styleClass="sidebar">
+                    <padding>
+                        <Insets top="28" right="22" bottom="28" left="22"/>
+                    </padding>
+                    <Label text="Ardhi" styleClass="sidebar-title"/>
+                    <Label text="Mes Locations" styleClass="sidebar-section-title" wrapText="true"/>
+                    
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Navigation" styleClass="sidebar-panel-title"/>
+                        <Button text="Catalogue Location" onAction="#handleOpenCatalogue" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                        <Button text="Retour Accueil" onAction="#handleBackHome" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+
+                    <VBox spacing="10" styleClass="sidebar-panel">
+                        <Label text="Panier" styleClass="sidebar-panel-title"/>
+                        <Button text="Mon Panier" onAction="#handleOpenCart" styleClass="sidebar-nav-button" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Label text="Historique securise" styleClass="feature-pill"/>
+                </VBox>
+            </left>
+
+            <center>
+                <VBox spacing="24" styleClass="content-box">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+
+                    <!-- Header Card -->
+                    <VBox spacing="12" styleClass="admin-header-card">
+                        <Label text="Historique de vos Locations" styleClass="page-title" textFill="WHITE"/>
+                        <Label text="Suivez l'etat de vos locations en cours et consultez vos archives passees." 
+                               wrapText="true" styleClass="auth-subtitle" textFill="WHITE"/>
+                    </VBox>
+
+                    <!-- Locations List -->
+                    <VBox spacing="20.0" styleClass="card">
+                        <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+                        <children>
+                            <HBox alignment="CENTER_LEFT">
+                                <children>
+                                    <VBox>
+                                        <Label text="Liste des contrats" styleClass="section-title"/>
+                                        <Label text="Toutes vos reservations de materiel" styleClass="muted-label" />
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button styleClass="btn-secondary" text="🔍 Filtrer" />
+                                </children>
+                            </HBox>
+                            
+                            <Separator opacity="0.3"/>
+                            
+                            <VBox fx:id="locationsContainer" spacing="15.0">
+                                <!-- Les cartes de location seront ajoutées ici dynamiquement -->
+                                <Label text="Chargement de vos locations..." styleClass="muted-label" />
+                            </VBox>
+                        </children>
+                    </VBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </content>
+</ScrollPane>

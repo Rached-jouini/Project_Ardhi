@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.UserHomeController" styleClass="home-pane">
+            fx:controller="controllers.UserHomeController" styleClass="home-pane" stylesheets="@ardhi.css">
     <top>
         <HBox alignment="CENTER_LEFT" spacing="12" styleClass="home-topbar">
             <padding>
@@ -59,31 +59,34 @@
 
                     <Label text="Explorer les modules" styleClass="section-title"/>
 
-                    <FlowPane hgap="18" vgap="18" prefWrapLength="900">
+                    <FlowPane hgap="18" vgap="18" prefWrapLength="1000">
                         <VBox spacing="10" styleClass="module-card">
                             <Label text="Catalogue" styleClass="module-title"/>
-                            <Label text="Parcourez le catalogue des terrains disponibles a la location."
+                            <Label text="Parcourez le catalogue des terrains et ressources disponibles."
                                    wrapText="true" styleClass="module-text"/>
                             <Button text="Ouvrir Catalogue" onAction="#handleOpenModule" styleClass="btn-primary"/>
                         </VBox>
                         <VBox spacing="10" styleClass="module-card">
                             <Label text="Evenements" styleClass="module-title"/>
-                            <Label text="Organisez vos activites et gardez une vue claire sur les rendez-vous."
+                            <Label text="Inscrivez-vous aux salons, formations et seminaires."
                                    wrapText="true" styleClass="module-text"/>
                             <Button text="Ouvrir Evenements" onAction="#handleOpenModule" styleClass="btn-primary"/>
                         </VBox>
                         <VBox spacing="10" styleClass="module-card">
-                            <Label text="Equipements" styleClass="module-title"/>
-                            <Label text="Suivez les ressources materielle et leurs disponibilites."
+                            <Label text="Location Equipements" styleClass="module-title"/>
+                            <Label text="Louez du materiel agricole performant pour vos projets."
                                    wrapText="true" styleClass="module-text"/>
-                            <Button text="Ouvrir Equipements" onAction="#handleOpenModule" styleClass="btn-primary"/>
+                            <Button text="Ouvrir Location" onAction="#handleOpenModule" styleClass="btn-primary"/>
                         </VBox>
+                        
+                        <!-- Nouveaux Modules Finance -->
                         <VBox spacing="10" styleClass="module-card">
-                            <Label text="Capital" styleClass="module-title"/>
-                            <Label text="Donnez plus de lisibilite a vos donnees financieres et a vos indicateurs."
+                            <Label text="Finance Dashboard" styleClass="module-title"/>
+                            <Label text="Visualisez vos indicateurs financiers et indicateurs de performance."
                                    wrapText="true" styleClass="module-text"/>
-                            <Button text="Ouvrir Capital" onAction="#handleOpenModule" styleClass="btn-primary"/>
+                            <Button text="Ouvrir Finance" onAction="#handleOpenFinanceDashboard" styleClass="btn-primary"/>
                         </VBox>
+
                     </FlowPane>
                 </VBox>
             </content>

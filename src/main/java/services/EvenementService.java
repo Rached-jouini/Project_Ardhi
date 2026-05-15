@@ -12,11 +12,19 @@ public class EvenementService implements ardhi<Evenement> {
 
     public EvenementService() {
         this.connection = MyDataBase.getInstance().getConnection();
+        try {
+            // Tentative de réparation automatique des colonnes
+            Statement st = connection.createStatement();
+            st.executeUpdate("ALTER TABLE evenement MODIFY COLUMN `type` VARCHAR(255)");
+            st.executeUpdate("ALTER TABLE evenement MODIFY COLUMN `statut` VARCHAR(255)");
+        } catch (SQLException e) {
+            System.out.println("Note: Les colonnes n'ont pas pu être modifiées, elles sont peut-être déjà correctes.");
+        }
     }
 
     @Override
     public void add(Evenement ev) throws SQLException {
-        String req = "INSERT INTO evenement (nom, description, date, lieu ,type, culture_concernee, nombre_places, statut) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String req = "INSERT INTO evenement (nom, description, date, lieu ,`type`, culture_concernee, nombre_places, statut) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = connection.prepareStatement(req);
         ps.setString(1, ev.getNom());
         ps.setString(2, ev.getDescription());
@@ -32,7 +40,7 @@ public class EvenementService implements ardhi<Evenement> {
 
     @Override
     public void update(Evenement ev) throws SQLException {
-        String req = "UPDATE evenement SET nom=?, description=?, date=?, lieu=?, type=?, culture_concernee=?, nombre_places=?, statut=? WHERE id=?";
+        String req = "UPDATE evenement SET nom=?, description=?, date=?, lieu=?, `type`=?, culture_concernee=?, nombre_places=?, statut=? WHERE id=?";
         PreparedStatement ps = connection.prepareStatement(req);
         ps.setString(1, ev.getNom());
         ps.setString(2, ev.getDescription());
